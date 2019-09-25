@@ -49,7 +49,7 @@ const done = (target) => {
 /* 1.5e+6 */
 let progressBar;
 const countDown = () => {
-    progressBar = setInterval(progress, 15000);
+    progressBar = setInterval(progress, 1875);
 };
 
 /*15000 */
@@ -59,26 +59,30 @@ const counter = (i) => {
     counterField.textContent='Minutes done: ' + i;
 };
 
-let width = 1;
+let width = 0.875;
 const progress =()=> {
 	const progressField = document.getElementById('progress');	
+	progressField.style.width = width + '%';
 	if (width >= 100) {
 		clearInterval(progressBar)
-		width = 1;
-
+		width = 0.875;
 	}else{
 		if (width >= 90){
-			width++;
+			width = width + 0.125;
 			progressField.style.width = width + '%';
-			progressField.innerHTML = width + '%';
 			progressField.classList.add('progress-bar-danger');
+			if (width % 1 === 0){
+				progressField.innerHTML = width + '%';
+			}
 
 		} else {
-			width++;
+			width = width + 0.125;
 			progressField.style.width = width + '%';
-			progressField.innerHTML = width + '%';
 			progressField.classList.remove('progress-bar-danger');
-
+			if (width % 1 === 0){
+				progressField.innerHTML = width + '%';
+			}
+			
 		}
 
 
