@@ -1,21 +1,31 @@
 
 body{
-    background-color: rgb(155, 250, 209, .2);
+    background-color: rgba(155, 250, 209, 0.452);
 }
 
 
 #stats {
-    background-color: rgb(155, 250, 209, .3);
+    background-color: rgba(0, 255, 145, 0.432);
     padding: 10px;
+    border-radius: 10px;
 
 }
 
+#date {
+    font-size: 20px;
+    font-weight: 400;
+}
+
+#counter {
+    font-weight: 500;
+    font-size: 20px;
+}
 
 #progress-bar {
     height: 10%;
     width: 100%;
     background-color: rgb(255, 255, 255);
-    border-radius: 10px;
+    border-radius: 15px;
 }
 
 #progress{
@@ -36,7 +46,6 @@ body{
     flex-flow: row wrap;
     justify-content: space-around;
     align-items: center;
-    border: 1px green solid; 
     padding: 5px;
     margin: 5px;
   }
@@ -81,11 +90,17 @@ body{
     height: 200px;
     justify-content: space-around;
     align-items: center;
-    margin: 0 auto;
+    margin: 10 auto;
     font-size: 30px;
 }
 
 #start-button:hover{
     cursor: pointer;
     background-color: rgb(11, 238, 30);
+}
+
+footer {
+    text-align: center;
+    border-top: 1px solid rgb(11, 238, 30);
+    padding: 20px;
 }

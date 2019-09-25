@@ -17,6 +17,8 @@ const showDate =()=>{
 
 showDate();
 
+setInterval(showDate, 1);
+
 startButton.addEventListener('click', ()=>{
 	container.style.display = 'flex';
 	startButton.style.display = 'none';
