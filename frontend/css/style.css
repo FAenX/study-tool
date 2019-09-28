@@ -1,0 +1,153 @@
+
+body{
+    background-color: rgba(155, 250, 209, 0.452);
+}
+
+.hidden {
+    display: none;
+}
+
+#stats {
+    background-color: rgba(0, 255, 145, 0.432);
+    padding: 10px;
+    border-radius: 10px;
+
+}
+
+.stats-item {
+    margin: 5px;
+}
+
+#random-check-popup-div {
+    flex-flow: column;
+    justify-content: space-around;
+    align-items: center;
+    position: fixed;
+    left: 40%;
+    top:40%;
+    z-index: 1;
+    height: 100px;
+    width: 300px;
+    background-color: rgba(0, 255, 145, 0.432);
+    text-align: left;
+}
+
+#random-check-popup-div button {
+    width: 40%;
+}
+
+#date {
+    font-size: 20px;
+    font-weight: 400;
+}
+
+#counter {
+    font-weight: 500;
+    font-size: 20px;
+}
+
+#progress-bar {
+    display: none;
+    height: 3px;
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+    border-radius: 15px;
+}
+
+#progress-percentage {
+    align-self: flex-end;
+}
+
+#progress{
+    height: 3px;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.progress-bar-normal {
+    background-color: rgb(11, 238, 30);
+}
+
+.progress-bar-danger {
+    background-color: rgb(238, 64, 11);
+}
+
+.flex-container {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    align-items: center;
+    padding: 5px;
+    margin: 5px;
+  }
+
+.flex-column-container {
+    display: flex;
+    flex-flow: column;
+    justify-content: space-around;
+}
+
+#activity-panel {
+    flex-flow: column;
+    justify-content: space-between;
+    
+
+}
+
+.p-1{
+    background-color: rgb(243, 240, 240);
+    width: 100px;
+    height: 100px;
+    margin: 10px;
+    text-align: center;
+    line-height: 75px;
+    font-size: 30px;
+    border: 1px solid rgb(22, 240, 146);
+}
+
+.p-1-disabled{
+    pointer-events: none;
+    opacity: 0.6;
+    background-color: grey;
+}
+
+.p-clicked{
+    background-color: rgb(11, 238, 30);
+    pointer-events: none;
+    font-size: 17px;
+}
+
+.p-done{
+    background-color: rgb(238, 64, 11);
+    opacity: 1;
+    font-size: 17px;
+}
+
+#add-button{
+    margin: 5px 5px;
+    color: rgb(22, 240, 146);
+    font-size: 30px;
+}
+
+#start-button{
+    display: flex;
+    background-color: rgb(155, 250, 209);
+    border-radius: 10px;
+    width: 200px;
+    height: 200px;
+    justify-content: space-around;
+    align-items: center;
+    margin: 10 auto;
+    font-size: 30px;
+}
+
+#start-button:hover{
+    cursor: pointer;
+    background-color: rgb(11, 238, 30);
+}
+
+footer {
+    text-align: center;
+    border-top: 1px solid rgb(11, 238, 30);
+    padding: 20px;
+}
