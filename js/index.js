@@ -3,7 +3,7 @@ const panels = document.querySelectorAll('.p-1');
 const clicked = () =>{
     for (let i = 0; i < panels.length; i++){
         panels[i].addEventListener('click', ($event)=>{
-            let target = $event.target
+            let target = $event.target;
             target.classList.add('p-clicked'); 
             console.log(target);
             done(target);
@@ -15,7 +15,7 @@ const clicked = () =>{
 
 
 const done = (target) => {
-    console.log('Timeout started');
+    alert('25 minute countdown started');
     setTimeout(()=>{
         target.classList.add('p-done');
         alert('1 pomodoro cycle done');
@@ -24,8 +24,7 @@ const done = (target) => {
 
 const countDown = () => {
     setInterval(() => {
-        let currentDate = '[' + new Date().toUTCString() + '] ';
-        alert(currentDate);
+        alert('10 minutes done');
     }, 600000);
 };
 
