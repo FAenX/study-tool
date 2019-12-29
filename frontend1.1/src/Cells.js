@@ -6,24 +6,33 @@ class Cells extends React.Component {
 		this.state = {
 			clicked: false,
             color: 'grey',
-			progress: 0,
 			activeID: ""
+			
 		};
 	};
+
+	componentDidMount=()=>{
+		this.setState({
+			activeID: this.props.number
+		})
+	}
 
 	handleClick = (event) => {
 		event.preventDefault()
 		if (this.state.clicked === true || this.props.active === true){
 			return
 		}else if (this.state.clicked === false && this.props.active === false){
-			this.setState({
+			this.setState((prevState, props)=>({
 				clicked: true,
 				color: 'green',
-				activeID: event.target.id
-			});	
-			setTimeout(()=>{this.props.progressBar(this.state)}, 1500)
-			}	
+			}));	
+			
 		}
+
+		//update table state
+		this.props.clicked(this.state)	
+		
+	}
 		
 
 	render(){

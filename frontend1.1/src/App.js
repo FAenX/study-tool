@@ -1,6 +1,5 @@
 import React from 'react';
-import PomodoroTable from './pomodoroTable';
-import StartButton from './startButton';
+import CellTable from "./CellsTable"
 
 import './App.css';
 
@@ -8,23 +7,20 @@ class App extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      startDisplay: 'flex',
-      cellDisplay: "none",
+      
+      
     }
   }
 
-  toggleDisplayCells = () => {
-		this.setState({
-			cellDisplay: 'flex',
-			startDisplay: 'none',
-		})		
-	}
+  
   
   render(){
     return (
-      <div className="flex-column-container"> 
-            <StartButton action = {this.toggleDisplayCells} display={this.state.startDisplay}/> 
-            <PomodoroTable display={this.state.cellDisplay}/>   
+      <div className="App">
+        <div className="App-header"> </div>
+      <div className="flex-column-container">             
+            <CellTable />   
+      </div>
       </div>
     );
   };
