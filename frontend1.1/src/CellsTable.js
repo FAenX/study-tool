@@ -63,7 +63,7 @@ class Table extends React.Component {
           		<div className="flex-row-container"  id="pomodoro-table" style={{display: this.props.display}}> 
 					{this.makeList().map(i => {
 						return <Cells number={i} key={i} clicked={this.handleCellClick} 
-						active={this.state.active}/>
+						active={this.state.active} completed={this.state.completed}/>
 					})}
 				</div>
 					{progress}	
