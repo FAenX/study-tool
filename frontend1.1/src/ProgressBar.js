@@ -14,8 +14,7 @@ class Progress extends React.Component {
 	componentDidMount =()=>{
 		this.timerID = setInterval(
 			()=>this.tick(),
-			//18000
-			1000
+			18000
 		)
 	}
 
