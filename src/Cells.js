@@ -6,14 +6,21 @@ class Cells extends React.Component {
 		this.state = {
 			clicked: false,
             color: 'grey',
-			activeID: ""
+			activeID: "",
 			
 		};
 	};
 
 	componentDidMount=()=>{
+		const completed = JSON.parse(localStorage.getItem("completed"))
+		if (completed.includes(this.props.number)){
+			this.setState({
+				clicked: true,
+				color: "red"
+			})
+		}
 		this.setState({
-			activeID: this.props.number
+			activeID: this.props.number,
 		})
 	}
 
@@ -32,6 +39,11 @@ class Cells extends React.Component {
 		//update table state
 		this.props.clicked(this.state)	
 		
+	}
+
+	checkIfCompleted=()=>{
+		const completed = JSON.parse(localStorage.getItem("completed"))
+
 	}
 		
 

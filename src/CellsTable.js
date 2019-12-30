@@ -16,11 +16,23 @@ class Table extends React.Component {
 		}
 		
 	};
+	componentDidMount =()=>{
+		this.setState({
+			completed: JSON.parse(localStorage.getItem("completed"))
+
+		})
+	}
+
+	componentDidUpdate=()=>{
+		localStorage.setItem("completed", JSON.stringify(this.state.completed))
+	}
 
 	//add completed cell to list
-	addToCompleted=(active)=>{		
+	addToCompleted=(active)=>{	
+		let completed = this.state.completed
+        completed[active] = active	
 		this.setState((prevState, props)=>({
-		  completed: prevState.completed + active
+		  completed,
 		}))
 	}
 
@@ -60,7 +72,7 @@ class Table extends React.Component {
 
 		return (
 			<div>  				
-          		<div className="flex-row-container"  id="pomodoro-table" style={{display: this.props.display}}> 
+          		<div className="flex-row-container"  id="pomodoro-table"> 
 					{this.makeList().map(i => {
 						return <Cells number={i} key={i} clicked={this.handleCellClick} 
 						active={this.state.active} completed={this.state.completed}/>
