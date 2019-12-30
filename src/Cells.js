@@ -16,7 +16,7 @@ class Cells extends React.Component {
 		if (completed.includes(this.props.number)){
 			this.setState({
 				clicked: true,
-				color: "red"
+				color: "maroon"
 			})
 		}
 		this.setState({
