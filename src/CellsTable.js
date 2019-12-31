@@ -30,7 +30,11 @@ class Table extends React.Component {
 	//add completed cell to list
 	addToCompleted=(active)=>{	
 		let completed = this.state.completed
-        completed[active] = active	
+		try{
+			completed[active] = active	
+		}catch{
+			completed = [active]
+		}        
 		this.setState((prevState, props)=>({
 		  completed,
 		}))
