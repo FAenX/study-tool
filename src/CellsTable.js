@@ -1,7 +1,20 @@
 import React from 'react';
-import Cells from "./Cells";
+import Cell from "./Cell";
 import Progress from "./ProgressBar";
+import {Paper, Card, Button} from "@material-ui/core"
 
+
+class ResetButton extends React.Component{
+	handleReset=(event)=>{
+		event.preventDefault()
+		localStorage.removeItem("completed")
+	}
+	render(){
+		return(
+			<Button onClick={this.handleReset}>reset</Button>
+		)
+	}
+}
 
 class Table extends React.Component {
 
@@ -75,13 +88,21 @@ class Table extends React.Component {
 		} 
 
 		return (
-			<div>  				
-          		<div className="flex-row-container"  id="pomodoro-table"> 
+			<div  className="flex-col">  	
+							
+          		<Paper variant="elevation" elevation={3} className="flex-row pomodoro-table"> 
+				  <Card variant="outlined" className="table-header flex-row">
+					  
+					  
+					  	<Button>Refresh</Button>
+						<ResetButton />
+					
+					</Card>
 					{this.makeList().map(i => {
-						return <Cells number={i} key={i} clicked={this.handleCellClick} 
+						return <Cell number={i} key={i} clicked={this.handleCellClick} 
 						active={this.state.active} completed={this.state.completed}/>
 					})}
-				</div>
+				</Paper>
 					{progress}	
         	</div>
 			);

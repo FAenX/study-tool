@@ -1,6 +1,6 @@
 import React from "react";
 
-class Cells extends React.Component {
+class Cell extends React.Component {
 	constructor(props){
 		super(props);
 		this.state = {
@@ -37,7 +37,7 @@ class Cells extends React.Component {
 		}else if (this.state.clicked === false && this.props.active === false){
 			this.setState((prevState, props)=>({
 				clicked: true,
-				color: 'green',
+				color: 'rgb(255, 102, 0)',
 			}));	
 			
 		}
@@ -51,7 +51,7 @@ class Cells extends React.Component {
 	render(){
 		return (
 			<div>
-				<div id={this.props.number} className = 'p-1' onClick={this.handleClick} 
+				<div id={this.props.number} className = 'p-1 flex-col' onClick={this.handleClick} 
 				style={{backgroundColor: this.state.color}}>
 					 {this.props.number} 
 				</div>
@@ -60,4 +60,4 @@ class Cells extends React.Component {
 	};
 };
 
-export default Cells;
+export default Cell;

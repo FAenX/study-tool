@@ -1,5 +1,5 @@
 import React from "react";
-import  { LinearProgress } from "@material-ui/core"
+import  { LinearProgress, Card } from "@material-ui/core"
 
 
 class Progress extends React.Component {
@@ -7,7 +7,7 @@ class Progress extends React.Component {
 	constructor(props){
 		super(props)
 		this.state = {
-			seconds: 0,
+			seconds: 1,
 		}
 	}
 
@@ -34,13 +34,13 @@ class Progress extends React.Component {
 		let progress;
 
 		if(this.state.seconds <= 90){
-			progress = <LinearProgress  variant="determinate"  value={this.state.seconds} color="primary" />
+			progress = <LinearProgress  className="linear-progress" variant="determinate"  value={this.state.seconds} color="primary" />
 		} else {
 			progress = <LinearProgress  variant="determinate"  value={this.state.seconds} color="secondary" />
 		}
 		return(
             
-			<div>{progress}</div>
+			<Card id="progress-bar">{progress}</Card>
 		)
 	}
 };
