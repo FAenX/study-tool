@@ -46,8 +46,7 @@
 .pomodoro-table{
     flex-wrap: wrap;    
     justify-content: flex-start;
-    padding: 1rem;
-   
+    padding: 1rem;   
 }
 
 .table-header{
@@ -70,6 +69,7 @@
     background-color: rgb(255, 255, 255);
     height: .5rem;
 }
+
 #progress-bar .MuiLinearProgress-colorSecondary{
     background-color: rgb(255, 255, 255);
     height: .5rem;
@@ -104,15 +104,13 @@
 }
 
 /* stats table */
-.stats-wrapper{ 
-   
+.stats-wrapper{    
    
     
 }
 
 .stats-item {
     margin: .125rem;
-    height: 30vh;
     padding: .5rem;
 }
 
@@ -123,7 +121,6 @@
 #dashboard{
     width: 100%;
     padding: 1rem;
-    font-size: 1.2rem;
     font-weight: 400;
 }
 
@@ -132,10 +129,52 @@
    
 }
 
+/*HISTORY*/
+
 #history {
     
     
 }
+
+#date{
+   align-items: baseline;
+   margin: 1rem;
+   
+}
+
+#full-date{
+    font-size: .75rem;
+}
+
+#days {
+    align-items: baseline;
+    margin: 1rem;
+    padding: .5rem;
+   
+   
+}
+
+#days-day {
+    width: 100%;
+    justify-content: space-between;
+    
+}
+
+.daily-burnout{
+    
+}
+
+.daily-burnout .p-1{
+   height: .5rem;
+   width: .5rem;
+   margin: 0;
+}
+
+.day {
+
+}
+
+/*dataviz*/
 
 #dataviz{
     
