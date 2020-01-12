@@ -67,7 +67,7 @@ class App extends React.Component {
         </div>
       <div className="main-app-wrapper flex-col"> 
         <div className="pomodoro flex-row">
-          <div className="table-wrapper">
+          <div className="table-wrapper flex-col">
             <CellTable 
               addToCompleted={this.addToCompleted} 
               completed={this.state.completed}
