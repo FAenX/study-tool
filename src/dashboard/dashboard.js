@@ -7,7 +7,7 @@ class History extends React.Component{
         
         return(
             <div>
-                <Card variant="elevation" elevation={2} id="history" className="stats-item">
+                <Card variant="elevation" elevation={1} id="history" className="stats-item">
                 <Card variant="elevation" elevation={5} className="stats-item-header">Study history</Card>
                     {this.props.done} cycles
                 </Card>
@@ -22,7 +22,7 @@ class DataViz extends React.Component{
     render(){
         return(
             <div>
-                <Card variant="elevation" elevation={2} id="dataviz" className="stats-item">
+                <Card variant="elevation" elevation={1} id="dataviz" className="stats-item">
                 <Card variant="elevation" elevation={5} className="stats-item-header">Visualize Your Daily Progress</Card>
 
 
@@ -37,7 +37,7 @@ class TableSettings extends React.Component{
     render(){
         return(
             <div>
-                <Card variant="elevation" elevation={2} id="table-settings" className="stats-item">
+                <Card variant="elevation" elevation={1} id="table-settings" className="stats-item">
                 <Card variant="elevation" elevation={5} className="stats-item-header">Make adjustments to the table</Card>
 
 
