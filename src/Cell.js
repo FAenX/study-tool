@@ -1,4 +1,5 @@
 import React from "react";
+import {Card} from "@material-ui/core"
 
 class Cell extends React.Component {
 	constructor(props){
@@ -51,10 +52,10 @@ class Cell extends React.Component {
 	render(){
 		return (
 			<div>
-				<div id={this.props.number} className = 'p-1 flex-col' onClick={this.handleClick} 
+				<Card variant="elevation" elevation={3} id={this.props.number} className = 'p-1 flex-col' onClick={this.handleClick} 
 				style={{backgroundColor: this.state.color}}>
 					 {this.props.number} 
-				</div>
+				</Card>
 			</div>
 		)	
 	};

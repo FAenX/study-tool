@@ -90,8 +90,8 @@ class Table extends React.Component {
 		return (
 			<div  className="flex-col">  	
 							
-          		<Paper variant="elevation" elevation={3} className="flex-row pomodoro-table"> 
-				  <Card variant="outlined" className="table-header flex-row">
+          		<Paper variant="elevation" elevation={5} className="flex-row pomodoro-table"> 
+				  <Card variant="elevation" elevation={3} className="table-header flex-row">
 					  
 					  
 					  	<Button>Refresh</Button>
