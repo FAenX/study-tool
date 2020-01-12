@@ -46,7 +46,6 @@
 
 .pomodoro-table{
     flex-wrap: wrap;    
-    justify-content: flex-start;
     padding: 1rem;   
 }
 
