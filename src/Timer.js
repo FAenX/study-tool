@@ -2,12 +2,12 @@ import React from "react";
 import  { LinearProgress, Card } from "@material-ui/core"
 
 
-class Progress extends React.Component {
+class Timer extends React.Component {
 
 	constructor(props){
 		super(props)
 		this.state = {
-			seconds: 1,
+			seconds: 99,
 		}
 	}
 
@@ -45,4 +45,4 @@ class Progress extends React.Component {
 	}
 };
 
-export default Progress;
+export default Timer;

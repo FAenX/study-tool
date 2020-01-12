@@ -1,6 +1,6 @@
 import React from 'react';
 import Cell from "./Cell";
-import Progress from "./ProgressBar";
+import Timer from "./Timer";
 import {Paper, Card, Button} from "@material-ui/core"
 
 
@@ -58,7 +58,7 @@ class Table extends React.Component {
 		let progress;
 
 		if (this.state.active === true){
-			progress = <Progress completed={this.handleOnComplete}/>
+			progress = <Timer completed={this.handleOnComplete}/>
 		} 
 
 		return (

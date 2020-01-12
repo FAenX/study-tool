@@ -14,18 +14,6 @@ class Cell extends React.Component {
 
 	componentDidMount=()=>{
 		
-		try{
-			if (this.props.completed.includes(this.props.number)){
-				this.setState({
-					clicked: true,
-					color: "maroon"
-				})
-			}
-			
-		}catch{
-			//
-		}
-		
 		this.setState({
 			activeID: this.props.number,
 		})
@@ -50,12 +38,32 @@ class Cell extends React.Component {
 		
 
 	render(){
+
+		try{
+			if (this.props.completed.includes(this.props.number)){
+				this.setState({
+					clicked: true,
+					color: "maroon"
+				})
+			}
+			
+		}catch{
+			//
+		}
+
 		return (
-			<div>
-				<Card variant="elevation" elevation={5} id={this.props.number} className = 'p-1 flex-col' onClick={this.handleClick} 
-				style={{backgroundColor: this.state.color}}>
-					 {this.props.number} 
+			<div className="flex-col">
+				<Card 
+					variant="elevation" 
+					elevation={5} 
+					id={this.props.number} 
+					className = 'p-1 flex-col' 
+					onClick={this.handleClick} 
+					style={{backgroundColor: this.state.color}}
+				>
+					 
 				</Card>
+				{this.props.number} 
 			</div>
 		)	
 	};

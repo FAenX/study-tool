@@ -9,9 +9,7 @@ class TableSettings extends React.Component{
         return(
             <div>
                 <Card variant="elevation" elevation={1} id="table-settings" className="stats-item">
-                <Card variant="elevation" elevation={5} className="stats-item-header">Make adjustments to the table</Card>
-
-
+                <Card variant="elevation" elevation={5} className="stats-item-header">Settings</Card>
                 </Card>
             </div>
             
@@ -22,12 +20,16 @@ class TableSettings extends React.Component{
 
 
 class DashBoard extends React.Component{
-
     render(){
         return(
             <Paper id="dashboard" variant="outlined" >                
                     <TableSettings />                   
-                    <History />                    
+                    <History 
+                        completed={this.props.completed} 
+                        days={this.props.days} date={this.props.date} 
+                        day={this.props.day} month={this.props.month} 
+                        year={this.props.year}
+                    />                    
                     <DataViz />
             </Paper>
         )

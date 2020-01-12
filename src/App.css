@@ -34,7 +34,9 @@
 
 .main-app-wrapper{
     position: relative;    
-    top: 5rem;
+    top: 3rem;
+    height: 100vh;
+    padding: 1rem;
 }
 
 .table-wrapper{  
@@ -101,6 +103,12 @@
 .p-1-disabled{
     pointer-events: none;
     background-color: rgba(128, 128, 128, 0.425);
+}
+
+/*pomodoro */
+
+.pomodoro {
+    align-items: baseline;
 }
 
 /* stats table */
@@ -181,12 +189,22 @@
     
 }
 
+
+/*kanban */
+#kanban{
+    margin: 1rem ;
+    width: 100vw;
+    height: 30vh;
+    background-color: rgba(255, 102, 0, 0.267);
+    font-size: 3rem;
+}
+
 @media screen and (min-width: 600px)  {
     .table-wrapper{
         max-width: 50vw;
     }
     .main-app-wrapper{
-       align-items: flex-start;
+       
     }
     
     .stats-wrapper{

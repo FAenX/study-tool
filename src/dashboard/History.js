@@ -51,30 +51,13 @@ class Body extends React.Component{
 
 class History extends React.Component{
     render(){ 
-        const months = {
-            0: "January"
-        }
-
-        const days = {
-            0: "Monday",
-            1: "Tuesday",
-            2: "Wednesday",
-            3: "Thursday",
-            4: "Friday",
-            5: "Saturday",
-            6: "Sunday"
-        }
-        const today = new Date()
-        const date = today.getDate()
-        const day = days[today.getDay()]
-        const month= months[today.getMonth()]
-        const year = today.getFullYear()
+        
 
         return(
             <div>
                 <Card variant="elevation" elevation={1} id="history" className="stats-item">
-                    <Header day={day} date={date} month={month} year={year} />  
-                    <Body done={this.props.done} day={day} days={days}/>      
+                    <Header day={this.props.day} date={this.props.date} month={this.props.month} year={this.props.year} />  
+                    <Body done={this.props.done} day={this.props.day} days={this.props.days}/>      
                 </Card>
             </div>
             
