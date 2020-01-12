@@ -17,42 +17,16 @@ class ResetButton extends React.Component{
 }
 
 class Table extends React.Component {
-
 	constructor(props){
 		super(props);
 		this.state = {
 			cells: 20,
 			active: false,
-			activeID: "",
-			completed: [],
+			activeID: "",			
 			
 		}
 		
 	};
-	componentDidMount =()=>{
-		this.setState({
-			completed: JSON.parse(localStorage.getItem("completed"))
-
-		})
-	}
-
-	componentDidUpdate=()=>{
-		localStorage.setItem("completed", JSON.stringify(this.state.completed))
-	}
-
-	//add completed cell to list
-	addToCompleted=(active)=>{	
-		let completed = this.state.completed
-		try{
-			completed[active] = active	
-		}catch{
-			completed = [active]
-		}        
-		this.setState((prevState, props)=>({
-		  completed,
-		}))
-	}
-
 	// make array from this.state.cells
 	makeList = () => {
 		let list = [];
@@ -75,7 +49,7 @@ class Table extends React.Component {
 		this.setState({
 			active: false
 		})
-		this.addToCompleted(this.state.activeID)
+		this.props.addToCompleted(this.state.activeID)
 		alert("Completed")
 	}
 
@@ -100,7 +74,7 @@ class Table extends React.Component {
 					</Card>
 					{this.makeList().map(i => {
 						return <Cell number={i} key={i} clicked={this.handleCellClick} 
-						active={this.state.active} completed={this.state.completed}/>
+						active={this.state.active} completed={this.props.completed}/>
 					})}
 				</Paper>
 					{progress}	

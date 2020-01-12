@@ -112,28 +112,34 @@
 
 .stats-item {
     margin: .125rem;
+    height: 30vh;
+    padding: .5rem;
 }
+
+.stats-item-header{
+    padding: .5rem;
+}
+
 #dashboard{
     width: 100%;
-    padding: .5rem;
-    background-color: rgba(55, 0, 77, 0.151);
+    padding: 1rem;
     font-size: 1.2rem;
     font-weight: 400;
 }
 
 #table-settings{
-    padding: .5rem;
-    min-height: 20vh; 
+    
+   
 }
 
 #history {
-    padding: .5rem;
-    min-height: 20vh;
+    
+    
 }
 
 #dataviz{
-    padding: .5rem;
-    min-height: 20vh;
+    
+    
 }
 
 @media screen and (min-width: 600px)  {

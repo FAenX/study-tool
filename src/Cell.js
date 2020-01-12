@@ -13,9 +13,9 @@ class Cell extends React.Component {
 	};
 
 	componentDidMount=()=>{
-		const completed = JSON.parse(localStorage.getItem("completed"))
+		
 		try{
-			if (completed.includes(this.props.number)){
+			if (this.props.completed.includes(this.props.number)){
 				this.setState({
 					clicked: true,
 					color: "maroon"
@@ -52,7 +52,7 @@ class Cell extends React.Component {
 	render(){
 		return (
 			<div>
-				<Card variant="elevation" elevation={3} id={this.props.number} className = 'p-1 flex-col' onClick={this.handleClick} 
+				<Card variant="elevation" elevation={5} id={this.props.number} className = 'p-1 flex-col' onClick={this.handleClick} 
 				style={{backgroundColor: this.state.color}}>
 					 {this.props.number} 
 				</Card>

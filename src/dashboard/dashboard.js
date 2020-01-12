@@ -1,17 +1,15 @@
 import React from "react"
-import {Paper, ListItem, Card} from "@material-ui/core"
+import {Paper, Card} from "@material-ui/core"
 
 class History extends React.Component{
     render(){
-        const done = JSON.parse(localStorage.getItem("completed")).length
+        
         
         return(
             <div>
-                <div className="stats-item-header">Study history</div>
-                <Card variant="elevation" id="history" className="stats-item">
-                    
-                    {done} cycles
-                
+                <Card variant="elevation" elevation={2} id="history" className="stats-item">
+                <Card variant="elevation" elevation={5} className="stats-item-header">Study history</Card>
+                    {this.props.done} cycles
                 </Card>
             </div>
             
@@ -24,9 +22,10 @@ class DataViz extends React.Component{
     render(){
         return(
             <div>
-                <div className="stats-item-header">Visualize Your Daily Progress</div>
-                <Card variant="elevation" id="dataviz" className="stats-item">
-               
+                <Card variant="elevation" elevation={2} id="dataviz" className="stats-item">
+                <Card variant="elevation" elevation={5} className="stats-item-header">Visualize Your Daily Progress</Card>
+
+
                 </Card>
             </div>
             
@@ -38,9 +37,10 @@ class TableSettings extends React.Component{
     render(){
         return(
             <div>
-                <div className="stats-item-header">Make adjustments to the table</div>
-                <Card variant="elevation" id="table-settings" className="stats-item">
-                
+                <Card variant="elevation" elevation={2} id="table-settings" className="stats-item">
+                <Card variant="elevation" elevation={5} className="stats-item-header">Make adjustments to the table</Card>
+
+
                 </Card>
             </div>
             
@@ -54,16 +54,10 @@ class DashBoard extends React.Component{
 
     render(){
         return(
-            <Paper id="dashboard" variant="elevation" elevation={5}>
-                
-                    <TableSettings />
-                   
-                    <History />
-                    
+            <Paper id="dashboard" variant="outlined" >                
+                    <TableSettings />                   
+                    <History />                    
                     <DataViz />
-                    
-                
-
             </Paper>
         )
     }
