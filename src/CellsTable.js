@@ -3,6 +3,13 @@ import Cell from "./Cell";
 import Timer from "./Timer";
 import {Paper, Card, Button} from "@material-ui/core"
 
+const makeList = (num) => {
+    let list = [];
+    for (let i = 0; i < num; i++){
+        list.push(i);
+    }
+    return list;
+}
 
 class ResetButton extends React.Component{
 	handleReset=(event)=>{
@@ -27,14 +34,6 @@ class Table extends React.Component {
 		}
 		
 	};
-	// make array from this.state.cells
-	makeList = () => {
-		let list = [];
-		for (let i = 0; i < this.state.cells; i++){
-			list.push(i);
-		}
-		return list;
-	}
 
 	//update state from cell click
 	handleCellClick = (data)=> {  
@@ -72,7 +71,7 @@ class Table extends React.Component {
 						<ResetButton />
 					
 					</Card>
-					{this.makeList().map(i => {
+					{makeList(this.state.cells).map(i => {
 						return <Cell number={i} key={i} clicked={this.handleCellClick} 
 						active={this.state.active} completed={this.props.completed}/>
 					})}

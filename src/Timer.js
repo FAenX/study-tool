@@ -7,7 +7,7 @@ class Timer extends React.Component {
 	constructor(props){
 		super(props)
 		this.state = {
-			seconds: 1,
+			seconds: 100,
 		}
 	}
 

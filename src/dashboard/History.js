@@ -1,6 +1,56 @@
 import React from "react"
 import {Card} from "@material-ui/core"
-import Cell from "../Cell";
+
+const makeList = (num) => {
+    let list = [];
+    for (let i = 0; i < num; i++){
+        list.push(i);
+    }
+    return list;
+}
+
+class Cell extends React.Component{
+    constructor(props){
+        super(props)
+        this.state={
+            color:"grey"        
+        }
+    }
+
+    componentDidMount=()=>{
+        const day = this.props.day
+        const history = this.props.history
+        console.log(history)
+        
+    }
+
+    render(){
+        
+
+        try{
+			if ((this.props.id)){
+				
+			}
+			
+		}catch{
+			//
+		}
+        
+        return(
+            <div className="flex-col">
+				<Card 
+					variant="elevation" 
+					elevation={5} 
+					className = 'p-1 flex-col' 
+					style={{backgroundColor: this.state.color}}
+				>
+					 
+				</Card>
+				
+			</div>
+        )
+    }
+}
 
 class Header extends React.Component{
     render(){
@@ -16,31 +66,51 @@ class Header extends React.Component{
     }
 }
 
+class Day extends React.Component{
+    render(){
+        
+        
+        return(
+                <div 
+                    className="flex-row days-day"
+                >
+                <div 
+                    className="day" 
+                >
+                {this.props.day}
+                
+                </div>
+                <div className="daily-burnout flex-row">
+                    {makeList(20).map(i => {
+                        return <Cell 
+                                    id={i}
+                                    history={this.props.history} 
+                                    key={i}
+                                    day={this.props.day}
+                                    
+                                    
+                                    
+                                />
+                    })}
+                </div>
+            </div>    
+        )
+    }
+}
+
 class Body extends React.Component{
+
     render(){  
         
-        const makeList = () => {
-            let list = [];
-            for (let i = 0; i < 20; i++){
-                list.push(i);
-            }
-            return list;
-        }
-        
-
-     
         return(
             <div id="days" className="flex-col">
             {
             Object.keys(this.props.days).map(i=>{
-                return <div key={i} id="days-day" className="flex-row">
-                        <div className="day" id={this.props.days[i]}>{this.props.days[i]}</div>
-                        <div className="daily-burnout flex-row">
-                            {makeList().map(i => {
-                                return <Cell key={i}/>
-                            })}
-                        </div>
-                    </div>                    
+                return <Day key={i}
+                            day={this.props.days[i]}
+                            completed={this.props.completed}
+                            history={this.props.history}
+                        />              
             })}
             
             </div>
@@ -57,7 +127,15 @@ class History extends React.Component{
             <div>
                 <Card variant="elevation" elevation={1} id="history" className="stats-item">
                     <Header day={this.props.day} date={this.props.date} month={this.props.month} year={this.props.year} />  
-                    <Body done={this.props.done} day={this.props.day} days={this.props.days}/>      
+                    <Body 
+                        days={this.props.days}
+                        day={this.props.day} 
+                        date={this.props.date}
+                        month={this.props.month}
+                        year={this.props.year}
+                        completed={this.props.completed}
+                        history={this.props.history}
+                    />      
                 </Card>
             </div>
             

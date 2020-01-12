@@ -4,6 +4,15 @@ import DashBoard from "./dashboard/dashboard"
 
 
 import './App.css';
+import { array } from 'prop-types';
+
+const makeList = (num) => {
+  let list = [];
+  for (let i = 0; i < num; i++){
+      list.push(i);
+  }
+  return list;
+}
 
 class App extends React.Component {
   constructor(props){
@@ -15,17 +24,39 @@ class App extends React.Component {
   }
 
   componentDidMount =()=>{
-		this.setState({
-			completed: JSON.parse(localStorage.getItem("completed"))
+    const day = (string)=>{
+      let str = string.split("_")
+      return(str[1])
+    }
+    
+   
+    const daysKeys = makeList(7).map(i=>
+      `completed_${this.days[i]}_${this.date-i}_${this.month}_${this.year}`
+      )
 
-		})
+    const makeObject =(keys)=>{
+      let obj = {}
+      for (let i=0; i<keys.length; i++){
+        obj[day(keys[i])]=JSON.parse(
+          localStorage.getItem(`completed_${this.days[i]}_${this.date-i}_${this.month}_${this.year}`))
+         
+      }
+      return obj
+    }
+    
+    this.history = makeObject(daysKeys)
+     
 
-	}
+   
+    
+    
+    this.setState({
+			completed: JSON.parse(localStorage.getItem(`completed_${this.day}_${this.date}${this.month}${this.year}`))
 
-	componentDidUpdate=()=>{
-		localStorage.setItem("completed", JSON.stringify(this.state.completed))
-  }
-  
+    })
+}
+
+	
 
 	//add completed cell to list
 	addToCompleted=(cell)=>{	
@@ -41,25 +72,33 @@ class App extends React.Component {
 	}
 
   render(){
-    const months = {
+
+    this.months = {
       0: "January"
     }
 
-    const days = {
-        0: "Monday",
-        1: "Tuesday",
-        2: "Wednesday",
-        3: "Thursday",
-        4: "Friday",
-        5: "Saturday",
-        6: "Sunday"
+    this.days = {
+        0: "Sunday",
+        1: "Monday",
+        2: "Tuesday",
+        3: "Wednesday",
+        4: "Thursday",
+        5: "Friday",
+        6: "Saturday",
+       
     }
-    const today = new Date()
-    const date = today.getDate()
-    const day = days[today.getDay()]
-    const month= months[today.getMonth()]
-    const year = today.getFullYear()
+    this.today = new Date()
+    this.date = this.today.getDate()
+    this.day = this.days[this.today.getDay()]
+    this.month= this.months[this.today.getMonth()]
+    this.year = this.today.getFullYear()
 
+    
+
+    
+
+		
+    
     return (
       <div className="App flex-col">
         <div className="App-header flex-col"> 
@@ -77,7 +116,8 @@ class App extends React.Component {
               <DashBoard 
                 done={this.state.completed} 
                 completed={this.state.completed}
-                days={days} date={date} day={day} month={month} year={year}
+                days={this.days} date={this.date} day={this.day} month={this.month} year={this.year}
+                history={this.history}
               />
             </div>
           </div>           

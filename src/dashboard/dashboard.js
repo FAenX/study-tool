@@ -29,6 +29,7 @@ class DashBoard extends React.Component{
                         days={this.props.days} date={this.props.date} 
                         day={this.props.day} month={this.props.month} 
                         year={this.props.year}
+                        history={this.props.history}
                     />                    
                     <DataViz />
             </Paper>
