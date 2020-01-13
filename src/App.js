@@ -19,39 +19,37 @@ class App extends React.Component {
     super(props);
     this.state = {
       completed: [],
+      history: ""
       
     }
   }
 
   componentDidMount =()=>{
+
     const day = (string)=>{
       let str = string.split("_")
       return(str[1])
     }
-    
-   
-    const daysKeys = makeList(7).map(i=>
-      `completed_${this.days[i]}_${this.date-i}_${this.month}_${this.year}`
-      )
 
     const makeObject =(keys)=>{
       let obj = {}
       for (let i=0; i<keys.length; i++){
         obj[day(keys[i])]=JSON.parse(
-          localStorage.getItem(`completed_${this.days[i]}_${this.date-i}_${this.month}_${this.year}`))
-         
+          localStorage.getItem(keys[i]))         
       }
       return obj
     }
     
-    this.history = makeObject(daysKeys)
-     
-
    
+    const daysKeys = Object.keys(this.days).map(i=>
+      `completed_${this.days[i]}`
+    )    
     
-    
+    const history = makeObject(daysKeys)
+
     this.setState({
-			completed: JSON.parse(localStorage.getItem(`completed_${this.day}_${this.date}${this.month}${this.year}`))
+      history,
+			completed: JSON.parse(localStorage.getItem(`completed_${this.day}`))
 
     })
 }
@@ -68,7 +66,10 @@ class App extends React.Component {
 		}        
 		this.setState((prevState, props)=>({
 		  completed,
-		}))
+    }))
+    
+    localStorage.setItem(
+      `completed_${this.day}`, JSON.stringify(this.state.completed))
 	}
 
   render(){
@@ -93,12 +94,6 @@ class App extends React.Component {
     this.month= this.months[this.today.getMonth()]
     this.year = this.today.getFullYear()
 
-    
-
-    
-
-		
-    
     return (
       <div className="App flex-col">
         <div className="App-header flex-col"> 
@@ -117,7 +112,7 @@ class App extends React.Component {
                 done={this.state.completed} 
                 completed={this.state.completed}
                 days={this.days} date={this.date} day={this.day} month={this.month} year={this.year}
-                history={this.history}
+                history={this.state.history}
               />
             </div>
           </div>           

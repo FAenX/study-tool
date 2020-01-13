@@ -17,19 +17,14 @@ class Cell extends React.Component{
         }
     }
 
-    componentDidMount=()=>{
-        const day = this.props.day
-        const history = this.props.history
-        console.log(history)
-        
-    }
-
     render(){
-        
+        console.log()
 
         try{
-			if ((this.props.id)){
-				
+			if (this.props.history[this.props.day].includes(this.props.id)){
+				this.setState({
+					color: "maroon"
+				})
 			}
 			
 		}catch{
