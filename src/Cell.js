@@ -8,6 +8,7 @@ class Cell extends React.Component {
 			clicked: false,
             color: 'grey',
 			ID: "",
+			active: "false"
 			
 		};
 	};
@@ -19,12 +20,21 @@ class Cell extends React.Component {
 		})
 	}
 
+	componentDidUpdate=()=>{
+		this.checkDone()		
+	}
+
 	checkDone=()=>{
 		try{
 			if (this.props.completed.includes(this.props.number)){
 				this.setState({
 					clicked: true,
-					color: "maroon"
+					color: "maroon",
+					active: false,
+				})
+			}else if (this.state.active === true){
+				this.setState({
+					color: 'rgb(255, 102, 0)',
 				})
 			}else{
 				this.setState({
@@ -44,9 +54,9 @@ class Cell extends React.Component {
 		if (this.state.clicked === true || this.props.tableActive === true){
 			return
 		}else if (this.state.clicked === false && this.props.tableActive === false){
-			this.setState((prevState, props)=>({
-				color: 'rgb(255, 102, 0)',
-			}));	
+			this.setState({
+				active: true,
+			});	
 			
 		}
 
@@ -57,7 +67,7 @@ class Cell extends React.Component {
 		
 
 	render(){
-		this.checkDone()		
+		
 
 		return (
 			<div className="flex-col">
