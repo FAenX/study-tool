@@ -12,13 +12,10 @@ const makeList = (num) => {
 }
 
 class ResetButton extends React.Component{
-	handleReset=(event)=>{
-		event.preventDefault()
-		localStorage.removeItem("completed")
-	}
+	
 	render(){
 		return(
-			<Button onClick={this.handleReset}>reset</Button>
+			<Button onClick={this.props.handleTableReset}>reset</Button>
 		)
 	}
 }
@@ -29,18 +26,18 @@ class Table extends React.Component {
 		this.state = {
 			cells: 20,
 			active: false,
-			activeID: "",			
+			cellID: "",			
 			
 		}
 		
 	};
 
 	//update state from cell click
-	handleCellClick = (data)=> {  
-		this.setState((prevState, props)=>({
-		  activeID: data.activeID,
+	handleCellClick = (ID)=> {  
+		this.setState({
+		  cellID: ID,
 		  active: true,
-		}))		
+		})	
 		
 	} 	
 
@@ -48,7 +45,7 @@ class Table extends React.Component {
 		this.setState({
 			active: false
 		})
-		this.props.addToCompleted(this.state.activeID)
+		this.props.addToCompleted(this.state.cellID)
 		alert("Completed")
 	}
 
@@ -64,16 +61,13 @@ class Table extends React.Component {
 			<div  className="flex-col">  	
 							
           		<Paper variant="elevation" elevation={5} className="flex-row pomodoro-table"> 
-				  <Card variant="elevation" elevation={3} className="table-header flex-row">
-					  
-					  
+				  <Card variant="elevation" elevation={3} className="table-header flex-row">					  
 					  	<Button>Refresh</Button>
-						<ResetButton />
-					
+						<ResetButton handleTableReset={this.props.handleTableReset}/>					
 					</Card>
 					{makeList(this.state.cells).map(i => {
-						return <Cell number={i} key={i} clicked={this.handleCellClick} 
-						active={this.state.active} completed={this.props.completed}/>
+						return <Cell number={i} key={i} clickHandler={this.handleCellClick} 
+						tableActive={this.state.active} completed={this.props.completed}/>
 					})}
 				</Paper>
 					{progress}	

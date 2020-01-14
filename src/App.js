@@ -52,7 +52,15 @@ class App extends React.Component {
 			completed: JSON.parse(localStorage.getItem(`completed_${this.day}`))
 
     })
-}
+    
+  }
+
+  handleTableReset=()=>{
+    localStorage.setItem(`completed_${this.day}`, JSON.stringify([]))
+    this.componentDidMount()
+
+  }
+
 
 	
 
@@ -103,6 +111,7 @@ class App extends React.Component {
         <div className="pomodoro flex-row">
           <div className="table-wrapper flex-col">
             <CellTable 
+              handleTableReset={this.handleTableReset}
               addToCompleted={this.addToCompleted} 
               completed={this.state.completed}
             />
