@@ -11,16 +11,7 @@ const makeList = (num) => {
 }
 
 class Cell extends React.Component{
-    constructor(props){
-        super(props)
-        this.state={
-            color:"grey"        
-        }
-    }
-
-   
-   
-
+    
     render(){  
         const cellColor=()=>{
             if(this.props.id !== this.props.day)

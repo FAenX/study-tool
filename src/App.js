@@ -122,7 +122,7 @@ class App extends React.Component {
             </div>
           </div>           
             
-            <div id="kanban" className="flex-col">kanban</div>
+            
       </div>
       
       </div>
