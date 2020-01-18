@@ -27,7 +27,7 @@ app.use((req, res, next) => {
 
 app.use(express.json())
 
-app.get("/*", (req, res)=> {
+app.get("*", (req, res)=> {
   res.sendFile('index.html', { root: join(__dirname, "/build") });     
 });
 
