@@ -112,7 +112,11 @@ class App extends React.Component {
               <DashBoard 
                 done={this.state.completed} 
                 completed={this.state.completed}
-                days={this.days} date={this.date} day={this.day} month={this.month} year={this.year}
+                days={this.days} 
+                date={this.date} 
+                day={this.day} 
+                month={this.month} 
+                year={this.year}
                 history={this.state.history}
               />
             </div>
