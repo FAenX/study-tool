@@ -4,15 +4,7 @@ import DashBoard from "./dashboard/dashboard"
 
 
 import './App.css';
-import { array } from 'prop-types';
 
-const makeList = (num) => {
-  let list = [];
-  for (let i = 0; i < num; i++){
-      list.push(i);
-  }
-  return list;
-}
 
 class App extends React.Component {
   constructor(props){

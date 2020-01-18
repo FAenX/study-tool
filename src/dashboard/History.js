@@ -1,5 +1,6 @@
 import React from "react"
 import {Card} from "@material-ui/core"
+import { grey, red } from "@material-ui/core/colors";
 
 const makeList = (num) => {
     let list = [];
@@ -17,27 +18,28 @@ class Cell extends React.Component{
         }
     }
 
-    render(){
-        console.log()
+   
+   
 
-        try{
-			if (this.props.history[this.props.day].includes(this.props.id)){
-				this.setState({
-					color: "maroon"
-				})
-			}
-			
-		}catch{
-			//
-		}
+    render(){  
+        const cellColor=()=>{
+            if(this.props.id !== this.props.day)
+            if (this.props.history!==null &&
+                this.props.history !== undefined && 
+                this.props.history.includes(this.props.id)){
+                 return "maroon"
+                }
+                return "grey"
+            }
+    
         
         return(
-            <div className="flex-col">
+            <div className="">
 				<Card 
 					variant="elevation" 
 					elevation={5} 
-					className = 'p-1 flex-col' 
-					style={{backgroundColor: this.state.color}}
+					className = 'p-1 ' 
+					style={{backgroundColor: cellColor()}}
 				>
 					 
 				</Card>
@@ -52,7 +54,7 @@ class Header extends React.Component{
         return(
             <Card variant="elevation" elevation={5} className="stats-item-header">
                 Study/Work history
-                <div id="date" className="flex-col">
+                <div id="date" className="">
                     <div className="day">{this.props.day}</div>
                     <div id="full-date"> {this.props.month} {this.props.date} {this.props.year} </div>
                 </div>
@@ -62,9 +64,16 @@ class Header extends React.Component{
 }
 
 class Day extends React.Component{
+    
     render(){
-        
-        
+
+        const chooseToday=()=>{
+            if (this.props.day === this.props.today){
+                return this.props.completed
+            }
+            return this.props.history
+        }
+       
         return(
                 <div 
                     className="flex-row days-day"
@@ -79,12 +88,9 @@ class Day extends React.Component{
                     {makeList(20).map(i => {
                         return <Cell 
                                     id={i}
-                                    history={this.props.history} 
                                     key={i}
                                     day={this.props.day}
-                                    
-                                    
-                                    
+                                    history={chooseToday()}
                                 />
                     })}
                 </div>
@@ -95,41 +101,43 @@ class Day extends React.Component{
 
 class Body extends React.Component{
 
-    render(){  
-        
+    render(){          
         return(
-            <div id="days" className="flex-col">
+            <div id="days" className="">
             {
             Object.keys(this.props.days).map(i=>{
                 return <Day key={i}
+                            today={this.props.day}
                             day={this.props.days[i]}
                             completed={this.props.completed}
-                            history={this.props.history}
+                            history={this.props.history[this.props.days[i]]}
                         />              
-            })}
-            
+            })}            
             </div>
-           
         )
     }
 }
 
 class History extends React.Component{
-    render(){ 
-        
+    render(){         
 
         return(
             <div>
                 <Card variant="elevation" elevation={1} id="history" className="stats-item">
-                    <Header day={this.props.day} date={this.props.date} month={this.props.month} year={this.props.year} />  
+                    <Header 
+                        day={this.props.day} 
+                        date={this.props.date} 
+                        month={this.props.month} 
+                        year={this.props.year} 
+                    />  
                     <Body 
                         days={this.props.days}
                         day={this.props.day} 
                         date={this.props.date}
                         month={this.props.month}
                         year={this.props.year}
-                        completed={this.props.completed}
                         history={this.props.history}
+                        completed={this.props.completed}
                     />      
                 </Card>
             </div>

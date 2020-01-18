@@ -26,8 +26,10 @@ class DashBoard extends React.Component{
                     <TableSettings />                   
                     <History 
                         completed={this.props.completed} 
-                        days={this.props.days} date={this.props.date} 
-                        day={this.props.day} month={this.props.month} 
+                        days={this.props.days} 
+                        date={this.props.date} 
+                        day={this.props.day} 
+                        month={this.props.month} 
                         year={this.props.year}
                         history={this.props.history}
                     />                    
