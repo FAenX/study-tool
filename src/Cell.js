@@ -33,7 +33,9 @@ class Cell extends React.Component {
 			return false
 		}
 		const normal =()=>{
-			if (this.props.completed!==null && !this.props.completed.includes(this.props.number)){
+			if (this.props.completed==null) {
+				return true
+			}else if (this.props.completed!==null && !this.props.completed.includes(this.props.number)){
 				return true
 			}
 			
