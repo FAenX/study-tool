@@ -14,7 +14,7 @@ class Cell extends React.Component{
     
     render(){  
         const done=()=>{
-            console.log(this.props.history)
+           
 			if (
                 this.props.history!==null && 
                 this.props.history!==undefined &&
@@ -28,7 +28,9 @@ class Cell extends React.Component{
 			return false
         }
         const normal =()=>{
-			if (
+            if (this.props.history==null) {
+				return true
+			}else if (
                 this.props.history!==null && 
                 this.props.history!==undefined &&
                 !this.props.history.includes(this.props.id))

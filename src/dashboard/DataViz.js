@@ -12,7 +12,10 @@ class DataViz extends React.Component{
                         Visualize Your Daily Progress
                 </div>
 
-                <LineChart />
+                <LineChart 
+                    history={this.props.history}
+                    days={this.props.days}
+                />
                 </Card>
             
             
