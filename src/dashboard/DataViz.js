@@ -5,17 +5,16 @@ import LineChart from "./LineChart"
 class DataViz extends React.Component{
     render(){
         return(
-            <div>
-                <Card variant="elevation" elevation={1} id="dataviz" className="stats-item">
-                <Card 
-                    variant="elevation" 
-                    elevation={5} className="stats-item-header">
+           
+                <Card variant="outlined" id="dataviz" className="stats-item">
+                <div
+                    className="stats-item-header">
                         Visualize Your Daily Progress
-                </Card>
+                </div>
 
                 <LineChart />
                 </Card>
-            </div>
+            
             
         )
     }

@@ -1,6 +1,6 @@
 import React from "react"
 import {Card} from "@material-ui/core"
-import { grey, red } from "@material-ui/core/colors";
+import clsx from 'clsx';
 
 const makeList = (num) => {
     let list = [];
@@ -13,24 +13,43 @@ const makeList = (num) => {
 class Cell extends React.Component{
     
     render(){  
-        const cellColor=()=>{
-            if(this.props.id !== this.props.day)
-            if (this.props.history!==null &&
-                this.props.history !== undefined && 
-                this.props.history.includes(this.props.id)){
-                 return "maroon"
-                }
-                return "grey"
-            }
-    
+        const done=()=>{
+            console.log(this.props.history)
+			if (
+                this.props.history!==null && 
+                this.props.history!==undefined &&
+                this.props.history.includes(this.props.id))
+                
+                
+                {
+				return true
+			}
+			
+			return false
+        }
+        const normal =()=>{
+			if (
+                this.props.history!==null && 
+                this.props.history!==undefined &&
+                !this.props.history.includes(this.props.id))
+                {
+				return true
+			}
+			
+			return false
+		}
+		
         
         return(
             <div className="">
 				<Card 
 					variant="elevation" 
 					elevation={5} 
-					className = 'p-1 ' 
-					style={{backgroundColor: cellColor()}}
+					className = {clsx('p-1',{
+                        "done":done(),
+                        "normal": normal()
+					})} 
+					
 				>
 					 
 				</Card>
@@ -43,13 +62,13 @@ class Cell extends React.Component{
 class Header extends React.Component{
     render(){
         return(
-            <Card variant="elevation" elevation={5} className="stats-item-header">
+            <div className="stats-item-header">
                 Study/Work history
                 <div id="date" className="">
                     <div className="day">{this.props.day}</div>
                     <div id="full-date"> {this.props.month} {this.props.date} {this.props.year} </div>
                 </div>
-            </Card>    
+            </div>    
         )
     }
 }
@@ -67,7 +86,7 @@ class Day extends React.Component{
        
         return(
                 <div 
-                    className="flex-row days-day"
+                    className="days-day"
                 >
                 <div 
                     className="day" 
@@ -75,7 +94,7 @@ class Day extends React.Component{
                 {this.props.day}
                 
                 </div>
-                <div className="daily-burnout flex-row">
+                <div className="daily-burn">
                     {makeList(20).map(i => {
                         return <Cell 
                                     id={i}
@@ -94,7 +113,7 @@ class Body extends React.Component{
 
     render(){          
         return(
-            <div id="days" className="">
+            <div id="days">
             {
             Object.keys(this.props.days).map(i=>{
                 return <Day key={i}
@@ -113,8 +132,8 @@ class History extends React.Component{
     render(){         
 
         return(
-            <div>
-                <Card variant="elevation" elevation={1} id="history" className="stats-item">
+            
+                <Card variant="outlined" id="history" className="stats-item">
                     <Header 
                         day={this.props.day} 
                         date={this.props.date} 
@@ -131,7 +150,7 @@ class History extends React.Component{
                         completed={this.props.completed}
                     />      
                 </Card>
-            </div>
+           
             
             
         )

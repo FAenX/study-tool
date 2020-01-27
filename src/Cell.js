@@ -1,86 +1,71 @@
 import React from "react";
 import {Card} from "@material-ui/core"
+import clsx from 'clsx';
 
 class Cell extends React.Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			clicked: false,
-            color: 'grey',
-			ID: "",
-			active: "false"
-			
+			done: false,
 		};
 	};
 
-	componentDidMount=()=>{
-		
-		this.setState({
-			ID: this.props.number,
-		})
-	}
 
-	componentDidUpdate=()=>{
-		this.checkDone()		
-	}
-
-	checkDone=()=>{
-		try{
-			if (this.props.completed.includes(this.props.number)){
-				this.setState({
-					clicked: true,
-					color: "maroon",
-					active: false,
-				})
-			}else if (this.state.active === true){
-				this.setState({
-					color: 'rgb(255, 102, 0)',
-				})
-			}else{
-				this.setState({
-					clicked: false,
-					color: "grey"
-				})
-
-			}
-			
-		}catch{
-			//
-		}
-	}
 
 	handleClick = (event) => {
 		event.preventDefault()
-		if (this.state.clicked === true || this.props.tableActive === true){
+		if (this.state.done === true || this.props.tableActive === true){
 			return
-		}else if (this.state.clicked === false && this.props.tableActive === false){
-			this.setState({
-				active: true,
-			});	
+		}else if (this.state.done === false && this.props.tableActive === false){
+			this.props.clickHandler(this.props.number)	
 			
-		}
-
-		//update table state
-		this.props.clickHandler(this.state.ID)	
+		}		
 		
 	}
 		
 
 	render(){
+		const done=()=>{
+			if (this.props.completed!==null && this.props.completed.includes(this.props.number)){
+				return true
+			}
+			
+			return false
+		}
+		const normal =()=>{
+			if (this.props.completed!==null && !this.props.completed.includes(this.props.number)){
+				return true
+			}
+			
+			return false
+		}
+		const active=()=>{
+			if (this.props.activeCell === this.props.number){
+				return true
+			}
+			return false
+		}
+		
 		
 
 		return (
-			<div className="flex-col">
+			<div className="card">
 				<Card 
 					variant="elevation" 
 					elevation={5} 
 					id={this.props.number} 
-					className = 'p-1 flex-col' 
+					className = {clsx('p-1',{
+						"done":done(),
+						"active": active(),
+						"normal": normal(),
+
+					})} 
 					onClick={this.handleClick} 
-					style={{backgroundColor: this.state.color}}
+					
 				>
 					 
 				</Card>
+				
 				{this.props.number} 
 			</div>
 		)	

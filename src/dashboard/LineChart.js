@@ -12,8 +12,8 @@ class LineChart extends Component {
 				text: "Weekly Progress"
 			},
 			axisY: {
-				title: "Burnout",
-				includeZero: false,
+				title: "Burn",
+				includeZero: true,
 				suffix: "mins"
 			},
 			axisX: {
@@ -23,7 +23,7 @@ class LineChart extends Component {
 			},
 			data: [{
 				type: "line",
-				toolTipContent: "Week {x}: {y}mins",
+				toolTipContent: "Day {x}: {y}mins",
 				dataPoints: [
                     { x: 0, y: 300 },
 					{ x: 1, y: 150 },
@@ -40,8 +40,8 @@ class LineChart extends Component {
 		
 		return (
 		<div className="chart">
-			<CanvasJSChart options = {options} 
-				
+			<CanvasJSChart 
+				options = {options} 				
 			/>
 		
 		</div>

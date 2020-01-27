@@ -1,9 +1,11 @@
 import React from 'react';
 import CellTable from "./CellsTable"
 import DashBoard from "./dashboard/dashboard"
+import {AppBar} from "@material-ui/core"
+import {MenuOpenOutlined} from "@material-ui/icons"
 
 
-import './App.css';
+import './App.scss';
 
 
 class App extends React.Component {
@@ -95,20 +97,13 @@ class App extends React.Component {
     this.year = this.today.getFullYear()
 
     return (
-      <div className="App flex-col">
-        <div className="App-header flex-col"> 
+      <div className="App">
+        <AppBar className="App-header sliding-effect"> 
+        <MenuOpenOutlined />
         Pomodoro Study Tool
-        </div>
-      <div className="main-app-wrapper flex-col"> 
-        <div className="pomodoro flex-row">
-          <div className="table-wrapper flex-col">
-            <CellTable 
-              handleTableReset={this.handleTableReset}
-              addToCompleted={this.addToCompleted} 
-              completed={this.state.completed}
-            />
-          </div>           
-            <div className="stats-wrapper flex-col">
+        </AppBar>
+      <div className="main-app-wrapper"> 
+        
               <DashBoard 
                 done={this.state.completed} 
                 completed={this.state.completed}
@@ -119,12 +114,15 @@ class App extends React.Component {
                 year={this.year}
                 history={this.state.history}
               />
-            </div>
+            <CellTable 
+              handleTableReset={this.handleTableReset}
+              addToCompleted={this.addToCompleted} 
+              completed={this.state.completed}
+            />
           </div>           
-            
-            
-      </div>
-      
+            <div className="stats-wrapper">
+              
+            </div>
       </div>
     );
   };

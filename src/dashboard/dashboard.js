@@ -1,5 +1,5 @@
 import React from "react"
-import {Paper, Card} from "@material-ui/core"
+import {Paper, Card, Toolbar} from "@material-ui/core"
 import History from "./History"
 import DataViz from "./DataViz"
 
@@ -7,11 +7,14 @@ import DataViz from "./DataViz"
 class TableSettings extends React.Component{
     render(){
         return(
-            <div>
-                <Card variant="elevation" elevation={1} id="table-settings" className="stats-item">
-                <Card variant="elevation" elevation={5} className="stats-item-header">Settings</Card>
+                <Card 
+                    variant="outlined" 
+                    elevation={1} 
+                    id="table-settings" 
+                    className="stats-item"
+                >
+                <Toolbar className="stats-item-header">Settings</Toolbar>
                 </Card>
-            </div>
             
         )
     }
@@ -33,7 +36,11 @@ class DashBoard extends React.Component{
                         year={this.props.year}
                         history={this.props.history}
                     />                    
-                    <DataViz />
+                    <DataViz 
+                        completed={this.props.completed} 
+                        days={this.props.days} 
+                        history={this.props.history}
+                    />
             </Paper>
         )
     }
