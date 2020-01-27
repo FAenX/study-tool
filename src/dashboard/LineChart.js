@@ -8,9 +8,13 @@ class LineChart extends Component {
 	render() {
 		console.log(this.props.days)
 		console.log(this.props.history)
+		console.log(this.props.day)
 
 		const mins =(day)=>{
-			const activity = this.props.history[day]
+			let activity = this.props.history[day]
+			if (day===this.props.day){
+				activity = this.props.completed
+			}			
 			if (activity==null){
 				return 0
 			}
