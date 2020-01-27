@@ -15,6 +15,8 @@ class DataViz extends React.Component{
                 <LineChart 
                     history={this.props.history}
                     days={this.props.days}
+                    completed={this.props.completed}
+                    day={this.props.day} 
                 />
                 </Card>
             
