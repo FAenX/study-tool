@@ -9,6 +9,7 @@ class LineChart extends Component {
 		console.log(this.props.days)
 		console.log(this.props.history)
 		console.log(this.props.day)
+		console.log(this.props.completed)
 
 		const mins =(day)=>{
 			let activity = this.props.history[day]
@@ -18,6 +19,8 @@ class LineChart extends Component {
 			if (activity==null){
 				return 0
 			}
+
+			activity = activity.filter(Boolean)
 			return activity.length*30
 		}
 
