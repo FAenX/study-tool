@@ -15,7 +15,7 @@ $done: rgb(225, 0, 255);
 
 @mixin sliding-effect{
     position: relative;
-    animation: righttoleft .5s;
+    animation: righttoleft 1s;
     position: relative; 
   }
   
@@ -72,7 +72,6 @@ $done: rgb(225, 0, 255);
     overflow: hidden;
     .App-header {
         @include flex-row();
-        @include sliding-effect10s();
         justify-content: space-between;
         position: fixed;
         top: 0;
@@ -97,7 +96,8 @@ $done: rgb(225, 0, 255);
             font-weight: 400;
             top: 4em;            
             /*dataviz*/
-            #dataviz{                
+            #dataviz{  
+                @include sliding-effect10s();              
                 width: 100%;
                 margin-bottom: 1em;
                 .stats-item-header{
@@ -110,6 +110,7 @@ $done: rgb(225, 0, 255);
                 
             }
             #table-settings{
+                @include sliding-effect();
                 width: 100%;
                 margin-bottom: 1em;
                 height: 15em;
@@ -119,6 +120,7 @@ $done: rgb(225, 0, 255);
             }
             /*HISTORY*/
             #history {
+                @include sliding-effect10s();
                 width: 100%;   
                 margin-bottom: 1em; 
                 .stats-item-header{
@@ -150,6 +152,7 @@ $done: rgb(225, 0, 255);
             }
         }
         .pomodoro-table{
+            @include sliding-effect();
             @include flex-col();
             margin: 1em;
             justify-content: flex-start;
