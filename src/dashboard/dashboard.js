@@ -23,10 +23,10 @@ class TableSettings extends React.Component{
 
 
 class DashBoard extends React.Component{
+    
     render(){
         return(
-            <Paper id="dashboard" variant="outlined" >                
-                    <TableSettings />                   
+            <Paper id="dashboard" variant="outlined" >                       
                     <History 
                         completed={this.props.completed} 
                         days={this.props.days} 

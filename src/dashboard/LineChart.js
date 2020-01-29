@@ -1,8 +1,14 @@
 import React, { Component } from 'react';
 import CanvasJSReact from '../assets/canvasjs.react';
-var CanvasJSChart = CanvasJSReact.CanvasJSChart;
+import clsx from "clsx"
+
+
+
+const CanvasJSChart = CanvasJSReact.CanvasJSChart;
  
 class LineChart extends Component {
+	
+
 	
 	
 	render() {
@@ -19,8 +25,14 @@ class LineChart extends Component {
 			if (activity==null){
 				return 0
 			}
+			
 
-			activity = activity.filter(Boolean)
+			activity = activity.filter(x=>{
+				if(x!==null){
+					return true
+				}
+				return false
+			})
 			return activity.length*30
 		}
 
@@ -28,10 +40,10 @@ class LineChart extends Component {
 		
 		const options = {
 			animationEnabled: true,
-			exportEnabled: true,
+			//exportEnabled: true,
 			theme: "light2", 
 			title:{
-				text: "Weekly Progress"
+				text: "Weekly Burnout"
 			},
 			axisY: {
 				title: "Burn",
@@ -65,6 +77,12 @@ class LineChart extends Component {
 			<CanvasJSChart 
 				options = {options} 				
 			/>
+			<div className={clsx("refreshed",{
+				"display-none": !this.props.refresh
+			})}
+			>
+				refreshed
+			</div>
 		
 		</div>
 		);

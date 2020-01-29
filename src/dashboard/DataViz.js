@@ -1,8 +1,22 @@
 import React from "react"
-import {Card} from "@material-ui/core"
+import {Card, IconButton} from "@material-ui/core"
 import LineChart from "./LineChart"
+import Refresh from "@material-ui/icons/Refresh"
 
 class DataViz extends React.Component{
+    constructor(props){
+		super(props)
+		this.state={
+			refresh: false
+		}
+    }
+    
+    refresh =()=>{
+        this.setState({refresh: true})
+		setTimeout(()=>{
+			this.setState({refresh: false})
+		}, 1000)
+    }
     render(){
         return(
            
@@ -10,6 +24,11 @@ class DataViz extends React.Component{
                 <div
                     className="stats-item-header">
                         Visualize Your Daily Progress
+                
+                    <IconButton onClick={this.refresh}>
+                        <Refresh />
+                    </IconButton>
+                    
                 </div>
 
                 <LineChart 
@@ -17,6 +36,7 @@ class DataViz extends React.Component{
                     days={this.props.days}
                     completed={this.props.completed}
                     day={this.props.day} 
+                    refresh={this.state.refresh}
                 />
                 </Card>
             
