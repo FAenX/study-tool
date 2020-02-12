@@ -3,9 +3,31 @@ import CellTable from "./CellsTable"
 import DashBoard from "./dashboard/dashboard"
 import {AppBar} from "@material-ui/core"
 import {MenuOpenOutlined} from "@material-ui/icons"
+import moment from "moment"
 
 
 import './App.scss';
+
+const months = {
+  0: "January"
+}
+
+const days = {
+    0: "Sunday",
+    1: "Monday",
+    2: "Tuesday",
+    3: "Wednesday",
+    4: "Thursday",
+    5: "Friday",
+    6: "Saturday",
+   
+}
+const today = new Date()
+const date = today.getDate()
+const day = days[today.getDay()]
+const month= months[today.getMonth()]
+const year = today.getFullYear()
+
 
 
 class App extends React.Component {
@@ -16,9 +38,12 @@ class App extends React.Component {
       history: ""
       
     }
+    this.FetchTableData = this.FetchTableData.bind(this)
   }
 
   componentDidMount =()=>{
+
+    this.FetchTableData()
 
     const day = (string)=>{
       let str = string.split("_")
@@ -35,24 +60,54 @@ class App extends React.Component {
     }
     
    
-    const daysKeys = Object.keys(this.days).map(i=>
-      `completed_${this.days[i]}`
+    const daysKeys = Object.keys(days).map(i=>
+      `completed_${days[i]}`
     )    
     
     const history = makeObject(daysKeys)
 
     this.setState({
       history,
-			completed: JSON.parse(localStorage.getItem(`completed_${this.day}`))
+			completed: JSON.parse(localStorage.getItem(`completed_${day}`))
 
     })
     
   }
 
   handleTableReset=()=>{
-    localStorage.setItem(`completed_${this.day}`, JSON.stringify([]))
+    localStorage.setItem(`completed_${day}`, JSON.stringify([]))
     this.componentDidMount()
 
+  }
+
+  //read from db
+  async FetchTableData(){
+    const GetData= fetch("/api/v1/TableData/", {
+      method: "GET",
+                    
+      }).then(res=>res.json())
+      .catch((err)=>{
+          console.log(err)
+      })    
+      const response = await GetData.then(data=>data).catch(err=>err)
+      console.log(response)
+      return response
+  }
+  
+  //write to db
+  async WriteTableData(data){
+    const PostData = fetch("/api/v1/TableData/", {
+      method: "POST",
+      headers: {"Content-type": "application/json"},
+      body: data
+                    
+      }).then(res=>res.json())
+      .catch((err)=>{
+          console.log(err)
+      })    
+      const response = await PostData.then(data=>data).catch(err=>err)
+      console.log(response)
+      return response
   }
 
 
@@ -69,32 +124,25 @@ class App extends React.Component {
 		this.setState((prevState, props)=>({
 		  completed,
     }))
+
+    const data = {
+                    "TableData":{
+                      "data": this.state.completed,
+                      "day": `completed_${day}`
+                    }
+                  }
     
+    
+                  //write to db
+    this.WriteTableData(JSON.stringify(data))
     localStorage.setItem(
-      `completed_${this.day}`, JSON.stringify(this.state.completed))
+      `completed_${day}`, JSON.stringify(this.state.completed))
 	}
 
   render(){
 
-    this.months = {
-      0: "January"
-    }
-
-    this.days = {
-        0: "Sunday",
-        1: "Monday",
-        2: "Tuesday",
-        3: "Wednesday",
-        4: "Thursday",
-        5: "Friday",
-        6: "Saturday",
-       
-    }
-    this.today = new Date()
-    this.date = this.today.getDate()
-    this.day = this.days[this.today.getDay()]
-    this.month= this.months[this.today.getMonth()]
-    this.year = this.today.getFullYear()
+    
+    console.log(moment(today))
 
     return (
       <div className="App">
@@ -107,11 +155,11 @@ class App extends React.Component {
               <DashBoard 
                 done={this.state.completed} 
                 completed={this.state.completed}
-                days={this.days} 
-                date={this.date} 
-                day={this.day} 
-                month={this.month} 
-                year={this.year}
+                days={days} 
+                date={date} 
+                day={day} 
+                month={month} 
+                year={year}
                 history={this.state.history}
               />
             <CellTable 

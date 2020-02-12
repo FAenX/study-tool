@@ -1,9 +1,14 @@
 import express from 'express';
 import { join } from 'path';
+import proxy from 'express-http-proxy';
 
 import compression from 'compression';
 import helmet from "helmet"
 import cors from "cors"
+
+
+const backendUrl = "http://young-tundra-77987.herokuapp.com/";
+
 
 const app = express();
 
@@ -27,7 +32,10 @@ app.use((req, res, next) => {
 
 app.use(express.json())
 
-app.get("*", (req, res)=> {
+app.get('/api/*',proxy(backendUrl));
+app.post('/api/*',proxy(backendUrl));
+
+app.get("/*", (req, res)=> {
   res.sendFile('index.html', { root: join(__dirname, "/build") });     
 });
 
