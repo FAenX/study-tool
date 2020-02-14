@@ -74,7 +74,7 @@ class LineChart extends Component {
 		
 		return (
 		<div className="chart">
-			<CanvasJSChart 
+			{/* <CanvasJSChart 
 				options = {options} 				
 			/>
 			<div className={clsx("refreshed",{
@@ -82,7 +82,7 @@ class LineChart extends Component {
 			})}
 			>
 				refreshed
-			</div>
+			</div> */}
 		
 		</div>
 		);

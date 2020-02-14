@@ -10,21 +10,16 @@ const makeList = (num) => {
     return list;
 }
 
-class Cell extends React.Component{
-    
+class Cell extends React.Component{    
     render(){  
-        const done=()=>{
-           
+        const done=()=>{           
 			if (
                 this.props.history!==null && 
                 this.props.history!==undefined &&
                 this.props.history.includes(this.props.id))
-                
-                
                 {
 				return true
-			}
-			
+			}			
 			return false
         }
         const normal =()=>{
@@ -39,8 +34,7 @@ class Cell extends React.Component{
 			}
 			
 			return false
-		}
-		
+        }
         
         return(
             <div className="">
@@ -50,8 +44,7 @@ class Cell extends React.Component{
 					className = {clsx('p-1',{
                         "done":done(),
                         "normal": normal()
-					})} 
-					
+					})} 					
 				>
 					 
 				</Card>
@@ -62,13 +55,16 @@ class Cell extends React.Component{
 }
 
 class Header extends React.Component{
+    
     render(){
+        const day = this.props.now.format("dddd")
+        const date = this.props.now.format("DD/MM/YYYY")
         return(
             <div className="stats-item-header">
                 Study/Work history
                 <div id="date" className="">
-                    <div className="day">{this.props.day}</div>
-                    <div id="full-date"> {this.props.month} {this.props.date} {this.props.year} </div>
+                    <div className="day">{day}</div>
+                    <div id="full-date"> {date} </div>
                 </div>
             </div>    
         )
@@ -76,9 +72,7 @@ class Header extends React.Component{
 }
 
 class Day extends React.Component{
-    
     render(){
-
         const chooseToday=()=>{
             if (this.props.day === this.props.today){
                 return this.props.completed
@@ -112,17 +106,34 @@ class Day extends React.Component{
 }
 
 class Body extends React.Component{
+    render(){ 
+        
+        const historyLength = 6;    
+        const now = this.props.now;
+        
+        let historyKeysArray = ()=>{
+            let arr = [];
+            for (let i = historyLength; i > 0; i--){
+                arr.push(now.subtract(i, 'days').format("dddd"))
+            }
+            return arr
+        }; 
 
-    render(){          
+        
+
+       const days =historyKeysArray()
+        
+        
         return(
+            
             <div id="days">
             {
-            Object.keys(this.props.days).map(i=>{
+            historyKeysArray().map(i=>{
                 return <Day key={i}
-                            today={this.props.day}
-                            day={this.props.days[i]}
+                            today={now.format('dddd')}
+                            day={days[i]}
                             completed={this.props.completed}
-                            history={this.props.history[this.props.days[i]]}
+                            history={this.props.history[days[i]]}
                         />              
             })}            
             </div>
@@ -131,27 +142,19 @@ class Body extends React.Component{
 }
 
 class History extends React.Component{
-    render(){         
-
+    render(){  
         return(
             
-                <Card variant="outlined" id="history" className="stats-item">
-                    <Header 
-                        day={this.props.day} 
-                        date={this.props.date} 
-                        month={this.props.month} 
-                        year={this.props.year} 
-                    />  
-                    <Body 
-                        days={this.props.days}
-                        day={this.props.day} 
-                        date={this.props.date}
-                        month={this.props.month}
-                        year={this.props.year}
-                        history={this.props.history}
-                        completed={this.props.completed}
-                    />      
-                </Card>
+            <Card variant="outlined" id="history" className="stats-item">
+                <Header 
+                    now={this.props.now}
+                />  
+                <Body 
+                    now={this.props.now}
+                    history={this.props.history}
+                    completed={this.props.completed}
+                />      
+            </Card>
            
             
             

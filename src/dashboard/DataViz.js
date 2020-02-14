@@ -31,13 +31,11 @@ class DataViz extends React.Component{
                     
                 </div>
 
-                <LineChart 
+                {/* <LineChart 
                     history={this.props.history}
-                    days={this.props.days}
                     completed={this.props.completed}
-                    day={this.props.day} 
                     refresh={this.state.refresh}
-                />
+                /> */}
                 </Card>
             
             

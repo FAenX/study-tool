@@ -34,6 +34,7 @@ app.use(express.json())
 
 app.get('/api/*',proxy(backendUrl));
 app.post('/api/*',proxy(backendUrl));
+app.put('/api/*',proxy(backendUrl));
 
 app.get("/*", (req, res)=> {
   res.sendFile('index.html', { root: join(__dirname, "/build") });     
