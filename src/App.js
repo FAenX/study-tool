@@ -10,7 +10,7 @@ import './App.scss';
 
 const now = moment()
 const today = now.format("YYYYMMMMD")
-// now.subtract(7, 'days').format("YYYYMMMMD")
+console.log(now.format("YYYYMMMMD"))
 
 class App extends React.Component {
   constructor(props){
@@ -23,9 +23,9 @@ class App extends React.Component {
   }
 
   componentDidMount =()=>{
-    const history = this.FetchTableData() 
+    const history = this.FetchTableData()
+    
     this.setState({
-      history,
 			completed: JSON.parse(localStorage.getItem(today))
     })    
   }
@@ -43,7 +43,9 @@ class App extends React.Component {
           console.log(err)
       })    
       const response = await GetData.then(data=>data).catch(err=>err)
-      console.log(response)
+      this.setState({
+        history:response,
+      })    
       return response
   }
   

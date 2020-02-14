@@ -1,6 +1,7 @@
 import React from "react"
 import {Card} from "@material-ui/core"
 import clsx from 'clsx';
+import moment from "moment"
 
 const makeList = (num) => {
     let list = [];
@@ -106,34 +107,45 @@ class Day extends React.Component{
 }
 
 class Body extends React.Component{
+    constructor(props){
+        super(props)
+        this.state={
+            historyLength: 7, 
+            historyObject: {},  
+        }
+    }
+    componentDidMount=()=>{
+         
+    this.setState({
+        historyObject: this.makeHistoryObject(),
+    })
+    }
+
+    makeHistoryObject = ()=>{
+        let historyObject = {};
+        
+        for (let i = this.state.historyLength; i > 0; i--){
+            historyObject[moment().subtract(i, 'days').format("dddd")] 
+            = (moment().subtract(i, 'days').format("YYYYMMMMDD"))
+            console.log(moment().format("YYYY/MMMM/DD"))
+            //console.log(i)
+        }
+        return historyObject
+    }; 
+
+
     render(){ 
-        
-        const historyLength = 6;    
-        const now = this.props.now;
-        
-        let historyKeysArray = ()=>{
-            let arr = [];
-            for (let i = historyLength; i > 0; i--){
-                arr.push(now.subtract(i, 'days').format("dddd"))
-            }
-            return arr
-        }; 
-
-        
-
-       const days =historyKeysArray()
-        
-        
+    
         return(
             
             <div id="days">
             {
-            historyKeysArray().map(i=>{
+            Object.keys(this.state.historyObject).map(i=>{
                 return <Day key={i}
-                            today={now.format('dddd')}
-                            day={days[i]}
+                            today={moment().format('dddd')}
+                            day={i}
                             completed={this.props.completed}
-                            history={this.props.history[days[i]]}
+                            history={this.props.history}
                         />              
             })}            
             </div>
