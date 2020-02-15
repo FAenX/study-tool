@@ -7,7 +7,7 @@ import helmet from "helmet"
 import cors from "cors"
 
 
-const backendUrl = "http://young-tundra-77987.herokuapp.com/";
+const backendUrl = "https://young-tundra-77987.herokuapp.com/";
 
 
 const app = express();
@@ -34,7 +34,7 @@ app.use(express.json())
 
 app.get('/api/*',proxy(backendUrl));
 app.post('/api/*',proxy(backendUrl));
-app.put('/api/*',proxy(backendUrl));
+app.patch('/api/*',proxy(backendUrl));
 
 app.get("/*", (req, res)=> {
   res.sendFile('index.html', { root: join(__dirname, "/build") });     
