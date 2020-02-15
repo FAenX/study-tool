@@ -8,9 +8,8 @@ class Timer extends React.Component {
 	constructor(props){
 		super(props)
 		this.state = {
-			progress: 0,
-			ticks: 0,
-			timedOut: false,
+			progress: false,
+			time: 0,
 		}
 	}
 
@@ -25,46 +24,41 @@ class Timer extends React.Component {
 
 	updateClock=()=>{
 		try{
-			if(moment(this.props.timer).add(30, "minutes") < moment() )
+			if(moment(this.props.timer).add(30, "seconds") < moment() )
 		{
 			this.props.completed();
-			
 			console.log(moment().format("LTS"))
 		}
 		}catch{
 			//
 		}
 
-		if(this.props.timer)
+		if(this.props.timer)			
 		{
+			
+
 			this.setState({
 				progress: 10,
 			})
 		}else{
 			this.setState({
-				progress: 0,
+				progress: false,
 			})
 		}
-		
-		
 		this.setState({
-			ticks: moment().format("LTS")
-
-
+			time: moment().format("LTS")
 		})
 	}
 
 	render(){
-	
-
 		let progress;
-
-		
-
-		if(this.state.progress <= 90){
-			progress = <LinearProgress  className="linear-progress" variant="determinate"  value={this.state.progress} color="primary" />
-		} else {
-			progress = <LinearProgress  variant="determinate"  value={this.state.progress} color="secondary" />
+		if(this.state.progress && this.state.progress <= 90){
+			progress = <LinearProgress  className="linear-progress" variant="indeterminate"  color="primary" />
+		}else if(this.state.progress && this.state.progress > 90){
+			progress = <LinearProgress  variant="indeterminate"  color="secondary" />
+		}		
+		else {
+			progress = <div>===></div>
 		}
 		return(
             
