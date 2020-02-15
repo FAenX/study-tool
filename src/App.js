@@ -8,34 +8,39 @@ import moment from "moment"
 
 import './App.scss';
 
-const now = moment()
-const today = now.format("YYYYMMMMD")
-console.log(now.format("YYYYMMMMD"))
+ 
+
 
 class App extends React.Component {
   constructor(props){
     super(props);
     this.state = {
       completed: [],
-      history: ""      
     }
     this.FetchTableData = this.FetchTableData.bind(this)
+    this.UpdateTableData = this.UpdateTableData.bind(this)
+    this.WriteTableData = this.WriteTableData.bind(this)
   }
 
   componentDidMount =()=>{
-    const history = this.FetchTableData()
+    const TableData = JSON.parse(localStorage.getItem("history"))
+    if(!TableData){
+      this.FetchTableData()
+    }
+   
     
     this.setState({
-			completed: JSON.parse(localStorage.getItem(today))
+			completed: JSON.parse(localStorage.getItem(moment().format("YYYYMMMMD")))
     })    
   }
 
   handleTableReset=()=>{
-    localStorage.setItem(today, JSON.stringify([]))
+    localStorage.setItem(moment().format("YYYYMMMMD"), JSON.stringify([]))
   }
 
   //read from db
   async FetchTableData(){
+    console.log("fetching")
     const GetData= fetch("/api/v1/TableData/", {
       method: "GET",                    
       }).then(res=>res.json())
@@ -43,11 +48,27 @@ class App extends React.Component {
           console.log(err)
       })    
       const response = await GetData.then(data=>data).catch(err=>err)
-      this.setState({
-        history:response,
-      })    
+      console.log(response)
+      localStorage.setItem("history", JSON.stringify(response))
       return response
   }
+
+  //update db
+  async UpdateTableData(data){
+    console.log("updating")
+    const UpdateData= fetch("/api/v1/TableData/", {
+      method: "PATCH", 
+      headers: {"Content-type": "application/json"},
+      body: data                       
+      }).then(res=>res.json())
+      .catch((err)=>{
+          console.log(err)
+      })    
+      const response = await UpdateData.then(data=>data).catch(err=>err)
+      console.log(response)
+      return response
+  }
+  
   
   //write to db
   async WriteTableData(data){
@@ -55,12 +76,23 @@ class App extends React.Component {
       method: "POST",
       headers: {"Content-type": "application/json"},
       body: data                    
-      }).then(res=>res.json())
+      }).then(res=>{
+        return res.json()
+      })
       .catch((err)=>{
           console.log(err)
       })    
       const response = await PostData.then(data=>data).catch(err=>err)
+      
       console.log(response)
+      if (response.status === 400 && response.id)
+      {
+        data=JSON.parse(data)
+        data["id"]=response.id
+        console.log(data)
+        this.UpdateTableData(JSON.stringify(data))
+      }
+      
       return response
   }
 
@@ -76,12 +108,12 @@ class App extends React.Component {
 		  completed,
     }))
 
-    const data = {"data": this.state.completed, "day":today}
-    
+    const data = {"data": this.state.completed, "day":moment().format("YYYYMMMMD")}
+    console.log(data)
     //write to db
     this.WriteTableData(JSON.stringify(data))
     localStorage.setItem(
-      today, JSON.stringify(this.state.completed))
+      moment().format("YYYYMMMMD"), JSON.stringify(this.state.completed))
 	}
 
   render(){
@@ -93,9 +125,7 @@ class App extends React.Component {
         </AppBar>
         <div className="main-app-wrapper">         
             <DashBoard 
-              now={now}
               completed={this.state.completed}
-              history={this.state.history}
             />
             <CellTable 
               handleTableReset={this.handleTableReset}

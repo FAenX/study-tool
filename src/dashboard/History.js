@@ -11,6 +11,23 @@ const makeList = (num) => {
     return list;
 }
 
+class Header extends React.Component{
+    
+    render(){
+        const day = moment().format("dddd")
+        const date = moment().format("DD/MM/YYYY")
+        return(
+            <div className="stats-item-header">
+                Study/Work history
+                <div id="date" className="">
+                    <div className="day">{day}</div>
+                    <div id="full-date"> {date} </div>
+                </div>
+            </div>    
+        )
+    }
+}
+
 class Cell extends React.Component{    
     render(){  
         const done=()=>{           
@@ -55,41 +72,33 @@ class Cell extends React.Component{
     }
 }
 
-class Header extends React.Component{
+class Day extends React.Component{
+    constructor(props){
+        super(props)
+        this.state={
+            history: [],
+        }
+    }
+
+    componentDidMount=()=>{
+        let history = this.props.history;
+        if (this.props.day === this.props.today){
+            history = this.props.completed
+        }
+        
+       this.setState({
+           history,
+       })
+    }
+    
+   
     
     render(){
-        const day = this.props.now.format("dddd")
-        const date = this.props.now.format("DD/MM/YYYY")
+        
         return(
-            <div className="stats-item-header">
-                Study/Work history
-                <div id="date" className="">
-                    <div className="day">{day}</div>
-                    <div id="full-date"> {date} </div>
-                </div>
-            </div>    
-        )
-    }
-}
-
-class Day extends React.Component{
-    render(){
-        const chooseToday=()=>{
-            if (this.props.day === this.props.today){
-                return this.props.completed
-            }
-            return this.props.history
-        }
-       
-        return(
-                <div 
-                    className="days-day"
-                >
-                <div 
-                    className="day" 
-                >
-                {this.props.day}
-                
+                <div className="days-day">
+                <div className="day">
+                    {this.props.day}
                 </div>
                 <div className="daily-burn">
                     {makeList(20).map(i => {
@@ -97,7 +106,7 @@ class Day extends React.Component{
                                     id={i}
                                     key={i}
                                     day={this.props.day}
-                                    history={chooseToday()}
+                                    history={this.state.history}
                                 />
                     })}
                 </div>
@@ -110,34 +119,49 @@ class Body extends React.Component{
     constructor(props){
         super(props)
         this.state={
-            historyLength: 7, 
+            historyLength: 6, 
             historyObject: {},  
         }
     }
-    componentDidMount=()=>{
-         
-    this.setState({
-        historyObject: this.makeHistoryObject(),
-    })
+
+    componentDidMount=()=>{ 
+        
+        this.setState({
+            historyObject: this.makeHistoryObject(),
+        })
     }
 
     makeHistoryObject = ()=>{
         let historyObject = {};
-        
         for (let i = this.state.historyLength; i > 0; i--){
             historyObject[moment().subtract(i, 'days').format("dddd")] 
             = (moment().subtract(i, 'days').format("YYYYMMMMDD"))
-            console.log(moment().format("YYYY/MMMM/DD"))
-            //console.log(i)
         }
+        historyObject[moment().format("dddd")] = moment().format("YYYYMMMMDD")
         return historyObject
     }; 
 
-
-    render(){ 
+    makeHistory =(dayKey)=>{
+        const history = JSON.parse(localStorage.getItem("history"))
+        
+       
+        if (history && Object.keys(this.state.historyObject).length > 0)
+            {
+                console.log(history[0].data)
+                console.log(history[0].day)
+                for (let i=0; i<=this.state.historyLength; i++)
+                {
+                    if (history[i].day === this.state.historyObject[dayKey])
+                    {
+                        console.log(history[i].data)
+                        return history[i].data
+                    }
+                }
+            }
+    }
     
+    render(){ 
         return(
-            
             <div id="days">
             {
             Object.keys(this.state.historyObject).map(i=>{
@@ -145,7 +169,7 @@ class Body extends React.Component{
                             today={moment().format('dddd')}
                             day={i}
                             completed={this.props.completed}
-                            history={this.props.history}
+                            history={this.makeHistory(this.state.historyObject[i])}
                         />              
             })}            
             </div>
@@ -158,12 +182,8 @@ class History extends React.Component{
         return(
             
             <Card variant="outlined" id="history" className="stats-item">
-                <Header 
-                    now={this.props.now}
-                />  
+                <Header />  
                 <Body 
-                    now={this.props.now}
-                    history={this.props.history}
                     completed={this.props.completed}
                 />      
             </Card>

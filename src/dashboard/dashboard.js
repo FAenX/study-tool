@@ -28,13 +28,10 @@ class DashBoard extends React.Component{
         return(
             <Paper id="dashboard" variant="outlined" >                       
                     <History 
-                        now={this.props.now}
                         completed={this.props.completed}
-                        history={this.props.history}
                     />                    
                     <DataViz 
                         completed={this.props.completed} 
-                        history={this.props.history}
                     />
             </Paper>
         )
