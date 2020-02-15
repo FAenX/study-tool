@@ -144,14 +144,13 @@ class Body extends React.Component{
         const history = JSON.parse(localStorage.getItem("history"))
         if (history && Object.keys(this.state.historyObject).length > 0)
             {
-                console.log(history[0].data)
-                console.log(history[0].day)
+                
                 try{
                     for (let i=0; i<=this.state.historyLength; i++)
                     {
                         if (history[i].day === this.state.historyObject[dayKey])
                         {
-                            console.log(history[i].data)
+                            
                             return history[i].data
                         }
                     }
@@ -160,7 +159,7 @@ class Body extends React.Component{
                     {
                         if (history[i].day === this.state.historyObject[dayKey])
                         {
-                            console.log(history[i].data)
+                            
                             return history[i].data
                         }
                     }

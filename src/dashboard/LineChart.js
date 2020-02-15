@@ -13,22 +13,28 @@ class LineChart extends Component {
 	makeData = ()=>{
 		const data = [];
 		const keys = Object.keys(this.props.historyObject)
-		console.log(keys)
 		for(let i=0; i<keys.length; i++)
 		{
 
 			data.push({x: i, y:this.workDoneMins(this.props.historyObject[keys[i]])})
-			console.log(this.workDoneMins(this.props.historyObject[keys[i]]))
 		}
-		console.log(data)
 		return data
 	};
 
 	workDoneMins =(day)=>{
 		const history = JSON.parse(localStorage.getItem("history"))
-		const dayKey = this.props.historyObject[moment().format("dddd")]
-			
-		let activity = history[dayKey]
+				
+		const filterActivity =()=>{
+			for(let i=0; i<history.length; i++){
+				if (history[i].day===day){
+					return history[i].data
+				}
+				return 
+			}
+		}
+		console.log(filterActivity())
+
+		let activity = filterActivity();
 		
 		if (day===moment().format("YYYYMMMMDD")){
 			activity = this.props.completed
@@ -36,9 +42,7 @@ class LineChart extends Component {
 		if (activity==null){
 			return 0
 		}
-		
-
-		//clean activity by removing null values
+		//clean activity data by removing null values
 		activity = activity.filter(x=>{
 			if(x!==null){
 				return true
@@ -48,22 +52,9 @@ class LineChart extends Component {
 		//each cell is thirty mins long
 		return activity.length*30
 	}
-
-	
-	
 	
 	render() {
-		
-		
-		
-
-		
 		const dataPoints=this.makeData()
-
-		
-
-		
-		
 		const options = {
 			animationEnabled: true,
 			//exportEnabled: true,
