@@ -149,14 +149,26 @@ class Body extends React.Component{
             {
                 console.log(history[0].data)
                 console.log(history[0].day)
-                for (let i=0; i<=this.state.historyLength; i++)
-                {
-                    if (history[i].day === this.state.historyObject[dayKey])
+                try{
+                    for (let i=0; i<=this.state.historyLength; i++)
                     {
-                        console.log(history[i].data)
-                        return history[i].data
+                        if (history[i].day === this.state.historyObject[dayKey])
+                        {
+                            console.log(history[i].data)
+                            return history[i].data
+                        }
+                    }
+                }catch{
+                    for (let i=0; i<history.length; i++)
+                    {
+                        if (history[i].day === this.state.historyObject[dayKey])
+                        {
+                            console.log(history[i].data)
+                            return history[i].data
+                        }
                     }
                 }
+                
             }
     }
     
