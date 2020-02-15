@@ -4,11 +4,7 @@ import DashBoard from "./dashboard/dashboard"
 import {AppBar} from "@material-ui/core"
 import {MenuOpenOutlined} from "@material-ui/icons"
 import moment from "moment"
-
-
 import './App.scss';
-
- 
 
 
 class App extends React.Component {
@@ -27,13 +23,10 @@ class App extends React.Component {
     if(!TableData){
       this.FetchTableData()
     }
-   
-    
     this.setState({
 			completed: JSON.parse(localStorage.getItem(moment().format("YYYYMMMMD")))
     })    
   }
-
   handleTableReset=()=>{
     localStorage.setItem(moment().format("YYYYMMMMD"), JSON.stringify([]))
   }

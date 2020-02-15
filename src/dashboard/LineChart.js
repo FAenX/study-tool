@@ -1,40 +1,66 @@
 import React, { Component } from 'react';
 import CanvasJSReact from '../assets/canvasjs.react';
 import clsx from "clsx"
+import moment from "moment"
 
 
 
 const CanvasJSChart = CanvasJSReact.CanvasJSChart;
  
 class LineChart extends Component {
-	
 
+
+	makeData = ()=>{
+		const data = [];
+		const keys = Object.keys(this.props.historyObject)
+		console.log(keys)
+		for(let i=0; i<keys.length; i++)
+		{
+
+			data.push({x: i, y:this.workDoneMins(this.props.historyObject[keys[i]])})
+			console.log(this.workDoneMins(this.props.historyObject[keys[i]]))
+		}
+		console.log(data)
+		return data
+	};
+
+	workDoneMins =(day)=>{
+		const history = JSON.parse(localStorage.getItem("history"))
+		const dayKey = this.props.historyObject[moment().format("dddd")]
+			
+		let activity = history[dayKey]
+		
+		if (day===moment().format("YYYYMMMMDD")){
+			activity = this.props.completed
+		}			
+		if (activity==null){
+			return 0
+		}
+		
+
+		//clean activity by removing null values
+		activity = activity.filter(x=>{
+			if(x!==null){
+				return true
+			}
+			return false
+		})
+		//each cell is thirty mins long
+		return activity.length*30
+	}
+
+	
 	
 	
 	render() {
-		console.log(this.props.days)
-		console.log(this.props.history)
-		console.log(this.props.day)
-		console.log(this.props.completed)
+		
+		
+		
 
-		const mins =(day)=>{
-			let activity = this.props.history[day]
-			if (day===this.props.day){
-				activity = this.props.completed
-			}			
-			if (activity==null){
-				return 0
-			}
-			
+		
+		const dataPoints=this.makeData()
 
-			activity = activity.filter(x=>{
-				if(x!==null){
-					return true
-				}
-				return false
-			})
-			return activity.length*30
-		}
+		
 
 		
 		
@@ -58,23 +84,13 @@ class LineChart extends Component {
 			data: [{
 				type: "line",
 				toolTipContent: "Day {x}: {y}mins",
-				dataPoints: [
-                    { x: 0, y: mins(this.props.days[0])},
-					{ x: 1, y: mins(this.props.days[1])},
-					{ x: 2, y: mins(this.props.days[2])},
-					{ x: 3, y: mins(this.props.days[3])},
-					{ x: 4, y: mins(this.props.days[4])},
-					{ x: 5, y: mins(this.props.days[5])},
-					{ x: 6, y: mins(this.props.days[6])},
-					
-					
-				]
+				dataPoints,
 			}]
 		}
 		
 		return (
 		<div className="chart">
-			{/* <CanvasJSChart 
+			<CanvasJSChart 
 				options = {options} 				
 			/>
 			<div className={clsx("refreshed",{
@@ -82,7 +98,7 @@ class LineChart extends Component {
 			})}
 			>
 				refreshed
-			</div> */}
+			</div>
 		
 		</div>
 		);

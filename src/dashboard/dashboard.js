@@ -24,6 +24,7 @@ class TableSettings extends React.Component{
 
 class DashBoard extends React.Component{
     
+    
     render(){
         return(
             <Paper id="dashboard" variant="outlined" >                       

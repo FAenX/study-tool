@@ -12,7 +12,6 @@ const makeList = (num) => {
 }
 
 class Header extends React.Component{
-    
     render(){
         const day = moment().format("dddd")
         const date = moment().format("DD/MM/YYYY")
@@ -143,8 +142,6 @@ class Body extends React.Component{
 
     makeHistory =(dayKey)=>{
         const history = JSON.parse(localStorage.getItem("history"))
-        
-       
         if (history && Object.keys(this.state.historyObject).length > 0)
             {
                 console.log(history[0].data)
@@ -199,9 +196,6 @@ class History extends React.Component{
                     completed={this.props.completed}
                 />      
             </Card>
-           
-            
-            
         )
     }
 }
