@@ -14,12 +14,7 @@ class Timer extends React.Component {
 		}
 	}
 
-	startCycle=()=>{
-		if (this.props.active)
-		{
-		
-		}
-	}
+	
 
 	componentDidMount =()=>{
 		this.intervalID = setInterval(
@@ -39,10 +34,22 @@ class Timer extends React.Component {
 		}catch{
 			//
 		}
+
+		if(this.props.timer)
+		{
+			this.setState({
+				progress: 10,
+			})
+		}else{
+			this.setState({
+				progress: 0,
+			})
+		}
 		
 		
 		this.setState({
 			ticks: moment().format("LTS")
+
 
 		})
 	}
