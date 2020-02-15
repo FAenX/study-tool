@@ -1,6 +1,7 @@
 import React from "react";
 import {Card} from "@material-ui/core"
 import clsx from 'clsx';
+import moment from "moment"
 
 class Cell extends React.Component {
 	constructor(props){
@@ -17,7 +18,9 @@ class Cell extends React.Component {
 		if (this.state.done === true || this.props.tableActive === true){
 			return
 		}else if (this.state.done === false && this.props.tableActive === false){
-			this.props.clickHandler(this.props.number)	
+			const now = moment()
+			
+			this.props.clickHandler(this.props.number, now)	
 			
 		}		
 		

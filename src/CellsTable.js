@@ -26,50 +26,45 @@ class Table extends React.Component {
 		this.state = {
 			cells: 20,
 			active: false,
-			cellID: "",			
+			cellID: "",	
+			timer: ""		
 			
 		}
 		
 	};
 
 	//update state from cell click
-	handleCellClick = (ID)=> {  
+	handleCellClick = (ID, then)=> {  
 		this.setState({
 		  cellID: ID,
 		  active: true,
-		})	
-		
+		  timer: then
+		})
 	} 	
 
 	handleOnComplete=()=>{
-		
 		this.props.addToCompleted(this.state.cellID)
 		this.setState({
 			active: false,
-			cellID: false
+			cellID: false,
+			timer: false
 		})
+
+		
+
 		alert("Completed")
 	}
 
 
 	render (){
-		let progress;
-		
-		
 
-		if (this.state.active === true){
-			progress = <Timer completed={this.handleOnComplete}/>
-		} 
-
-		return (
-			
-							
+		return (		
 				  <Paper 
 					  variant="elevation" 
 					  elevation={5} 
 					  className="pomodoro-table"
 					> 
-					{progress}	
+					<Timer completed={this.handleOnComplete} active={this.state.active} timer={this.state.timer}/>
 				  	<Toolbar className="table-header">					  
 					  	<Button variant="outlined" color="primary">Refresh</Button>
 						<ResetButton handleTableReset={this.props.handleTableReset}/>					
@@ -85,11 +80,7 @@ class Table extends React.Component {
 								/>
 						})}
 					</div>
-					
-					
 				</Paper>
-					
-        
 			);
 	};
 }
