@@ -9,33 +9,65 @@ const CanvasJSChart = CanvasJSReact.CanvasJSChart;
  
 class LineChart extends Component {
 
+	constructor(props){
+		super(props)
+		this.state={
+            refresh: false,
+            historyLength: 6, 
+            historyObject: {},
+		}
+    }
 
-	makeData = (history)=>{
-		const data = [];
-		const keys = Object.keys(this.props.historyObject)
-		for(let i=0; i<keys.length; i++)
-		{
-			data.push({x: i, y:this.workDoneMins(history, this.props.historyObject[keys[i]])});
-		}		
-		return data;
+	componentDidMount=()=>{ 
+        
+        this.setState({
+            historyObject: this.makeHistoryObject(),
+        })
+    }
+
+
+    makeHistoryObject = ()=>{
+        let historyObject = {};
+        for (let i = this.state.historyLength; i > 0; i--){
+            historyObject[moment().subtract(i, 'days').format("dddd")] 
+            = (moment().subtract(i, 'days').format("YYYYMMMMDD"))
+        }
+		historyObject[moment().format("dddd")] = moment().format("YYYYMMMMDD")
+        return historyObject
+    }; 
+
+
+
+	makeHistory = (dayKey)=>{
+		console.log(dayKey)
+		const history = JSON.parse(localStorage.getItem("history")) 
+        if (history && Object.keys(this.state.historyObject).length > 0)
+            {
+                try{
+                    for (let i=0; i<this.state.historyLength; i++)
+                    {
+                        if (history[i].day === dayKey)
+                        {
+                            return history[i].data
+                        }
+                    }
+                }catch{
+                    for (let i=0; i<history.length; i++)
+                    {
+                        if (history[i].day === dayKey)
+                        {
+                            return history[i].data
+                        }
+                    }
+                }
+                
+            }
 	};
 
-	workDoneMins =(history, day)=>{				
-		const filterActivity =()=>{			
-			for(let i=0; i<history.length; i++){
-				if (history[i].day.trim()===day.trim()){					
-					return history[i].data
-				}
-				return 
-			}
-		}
-		console.log(filterActivity())
-		let activity = filterActivity();
-		console.log(day)		
-		// if (day===moment().format("YYYYMMMMDD")){
-		// 	activity = this.props.completed
-		// }			
-		if (activity==null){
+	workDoneMins =(activity)=>{				
+		
+		
+		if (activity==null || activity === undefined){
 			return 0
 		}
 		//clean activity data by removing null values
@@ -50,8 +82,26 @@ class LineChart extends Component {
 	}
 	
 	render() {
-		const history = JSON.parse(localStorage.getItem("history"))
-		const dataPoints=this.makeData(history)
+		
+		const dataPoints=()=>{
+			const data = [];
+			const dayKeys = Object.keys(this.state.historyObject)
+			
+			for(let i=0; i<=this.state.historyLength; i++){						
+				let activity = this.makeHistory(this.state.historyObject[dayKeys[i]])
+				//use local data for day today
+				if (this.state.historyObject[dayKeys[i]]===moment().format("YYYYMMMMDD")){
+					activity = this.props.completed
+				}	
+				data.push({x: i, y:this.workDoneMins(activity)});
+				
+			}
+			console.log(data)
+			return data;
+		}	
+		
+		console.log(dataPoints())
+
 		const options = {
 			animationEnabled: true,
 			//exportEnabled: true,
@@ -72,7 +122,7 @@ class LineChart extends Component {
 			data: [{
 				type: "line",
 				toolTipContent: "Day {x}: {y}mins",
-				dataPoints,
+				dataPoints: dataPoints()
 			}]
 		}
 		

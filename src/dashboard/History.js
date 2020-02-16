@@ -132,12 +132,7 @@ class Body extends React.Component{
         })
     }
 
-    refresh =()=>{
-        this.setState({refresh: true})
-		setTimeout(()=>{
-			this.setState({refresh: false})
-		}, 1000)
-    }
+    
 
     makeHistoryObject = ()=>{
         let historyObject = {};
@@ -152,28 +147,23 @@ class Body extends React.Component{
 
     makeHistory =(dayKey)=>{
         const history = JSON.parse(localStorage.getItem("history"))
-        console.log(dayKey)
+       
         
         if (history && Object.keys(this.state.historyObject).length > 0)
             {
                 try{
                     for (let i=0; i<=this.state.historyLength; i++)
                     {
-                        console.log(history[i])
-                        console.log(this.state.historyObject[dayKey])
-                        console.log(dayKey)
-                        if (history[i].day === this.state.historyObject[dayKey])
+                        if (history[i].day === dayKey)
                         {
-                            console.log(history[i].data)
                             return history[i].data
                         }
                     }
                 }catch{
                     for (let i=0; i<history.length; i++)
                     {
-                        if (history[i].day === this.state.historyObject[dayKey])
+                        if (history[i].day === dayKey)
                         {
-                            
                             return history[i].data
                         }
                     }
@@ -185,16 +175,8 @@ class Body extends React.Component{
     render(){ 
         return(
             <div id="days">
-                <IconButton onClick={this.refresh}>
-                    <Refresh />
-                </IconButton>
-                <div className={clsx("refreshed",{
-                    "display-none": !this.state.refresh
-                })}
-                >
-                        refreshed
-			    </div>
-		
+                
+               
             {
             Object.keys(this.state.historyObject).map(i=>{
                 return <Day key={i}
@@ -211,16 +193,39 @@ class Body extends React.Component{
 }
 
 class History extends React.Component{
+    constructor(props){
+        super(props)
+        this.state={
+            refresh: false,
+        }
+    }
+    refresh =()=>{
+        this.setState({refresh: true})
+		setTimeout(()=>{
+			this.setState({refresh: false})
+		}, 1000)
+    }
     render(){  
         return(
             
             <Card variant="outlined" id="history" className="stats-item">
-                <Header>  
+                <Header>
+               
                      
                 </Header>
+                <IconButton onClick={this.refresh}>
+                    <Refresh />
+                </IconButton> 
                 <Body 
                     completed={this.props.completed}
-                />      
+                /> 
+                 <div className={clsx("refreshed",{
+                    "display-none": !this.state.refresh
+                })}
+                >
+                        refreshed
+			    </div>
+		     
             </Card>
         )
     }

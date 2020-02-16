@@ -2,36 +2,14 @@ import React from "react"
 import {Card, IconButton} from "@material-ui/core"
 import LineChart from "./LineChart"
 import Refresh from "@material-ui/icons/Refresh"
-import moment from "moment"
 
 class DataViz extends React.Component{
     constructor(props){
 		super(props)
 		this.state={
             refresh: false,
-            historyLength: 6, 
-            historyObject: {},
-		}
-    }
-
-    componentDidMount=()=>{ 
-        
-        this.setState({
-            historyObject: this.makeHistoryObject(),
-        })
-    }
-
-
-    makeHistoryObject = ()=>{
-        let historyObject = {};
-        for (let i = this.state.historyLength; i > 0; i--){
-            historyObject[moment().subtract(i, 'days').format("dddd")] 
-            = (moment().subtract(i, 'days').format("YYYYMMMMDD"))
         }
-        historyObject[moment().format("dddd")] = moment().format("YYYYMMMMDD")
-        return historyObject
-    }; 
-
+    }
     
     refresh =()=>{
         this.setState({refresh: true})
@@ -55,8 +33,6 @@ class DataViz extends React.Component{
                 </div>
 
                 <LineChart 
-                    historyObject={this.state.historyObject}
-                    historyLength={this.state.historyLength}
                     completed={this.props.completed}
                     refresh={this.state.refresh}
                 />

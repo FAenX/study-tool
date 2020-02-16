@@ -24,7 +24,7 @@ class Timer extends React.Component {
 
 	updateClock=()=>{
 		try{
-			if(moment(this.props.timer).add(30, "minutes") < moment() )
+			if(moment(this.props.timer).add(5, "seconds") < moment() )
 		{
 			this.props.completed();
 			console.log(moment().format("LTS"))
