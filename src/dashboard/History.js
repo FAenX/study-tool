@@ -110,6 +110,7 @@ class Day extends React.Component{
                                 />
                     })}
                 </div>
+               
             </div>    
         )
     }
@@ -121,18 +122,13 @@ class Body extends React.Component{
         this.state={
             historyLength: 6, 
             historyObject: {},
-            refresh: false,
         }
     }
-
-    componentDidMount=()=>{ 
-        
+    componentDidMount=()=>{         
         this.setState({
             historyObject: this.makeHistoryObject(),
         })
-    }
-
-    
+    }    
 
     makeHistoryObject = ()=>{
         let historyObject = {};
@@ -175,7 +171,7 @@ class Body extends React.Component{
     render(){ 
         return(
             <div id="days">
-                
+           
                
             {
             Object.keys(this.state.historyObject).map(i=>{
@@ -184,9 +180,16 @@ class Body extends React.Component{
                             day={i}
                             completed={this.props.completed}
                             history={this.makeHistory(this.state.historyObject[i])}
+                            refresh={this.props.refresh}
                         />              
             })}  
 
+            <div className={clsx("refreshed",{
+                    "display-none": !this.props.refresh
+            })}
+            >
+                refreshed
+			</div>
             </div>
         )
     }
@@ -196,7 +199,7 @@ class History extends React.Component{
     constructor(props){
         super(props)
         this.state={
-            refresh: false,
+            refresh: false
         }
     }
     refresh =()=>{
@@ -205,6 +208,7 @@ class History extends React.Component{
 			this.setState({refresh: false})
 		}, 1000)
     }
+    
     render(){  
         return(
             
@@ -214,17 +218,14 @@ class History extends React.Component{
                      
                 </Header>
                 <IconButton onClick={this.refresh}>
-                    <Refresh />
-                </IconButton> 
+                <Refresh />
+                </IconButton>  
+                
                 <Body 
+                    refresh={this.state.refresh}
                     completed={this.props.completed}
                 /> 
-                 <div className={clsx("refreshed",{
-                    "display-none": !this.state.refresh
-                })}
-                >
-                        refreshed
-			    </div>
+                 
 		     
             </Card>
         )

@@ -39,7 +39,7 @@ class LineChart extends Component {
 
 
 	makeHistory = (dayKey)=>{
-		console.log(dayKey)
+		
 		const history = JSON.parse(localStorage.getItem("history")) 
         if (history && Object.keys(this.state.historyObject).length > 0)
             {

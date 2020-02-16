@@ -10,6 +10,7 @@ class Timer extends React.Component {
 		this.state = {
 			progress: null,
 			time: 0,
+			countDown: 0
 		}
 	}
 
@@ -24,7 +25,7 @@ class Timer extends React.Component {
 
 	updateClock=()=>{
 		try{
-			if(moment(this.props.timer).add(5, "seconds") < moment() )
+			if(moment(this.props.timer).add(30, "minutes") < moment() )
 		{
 			this.props.completed();
 			console.log(moment().format("LTS"))
@@ -37,9 +38,11 @@ class Timer extends React.Component {
 		{
 			
 			const remTime = moment(this.props.timer).add(30, "minutes") - moment()
-			console.log((remTime * 100)/ this.state.progress)
+			const countDown = moment(remTime).format("mm.ss")
+		
 				this.setState({
-					progress: 10
+					progress: 10,
+					countDown,
 				});
 
 			//progress percentage report	!!!!!!!!!!		
@@ -66,8 +69,12 @@ class Timer extends React.Component {
 		}		
 		
 		return(
+			<div id="progress-bar">
+				{this.state.countDown} minutes remaining
+				<Card >{progress}</Card>
+			</div>
             
-			<Card id="progress-bar">{progress}</Card>
+			
 		)
 	}
 };
