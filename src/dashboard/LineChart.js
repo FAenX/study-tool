@@ -10,35 +10,31 @@ const CanvasJSChart = CanvasJSReact.CanvasJSChart;
 class LineChart extends Component {
 
 
-	makeData = ()=>{
+	makeData = (history)=>{
 		const data = [];
 		const keys = Object.keys(this.props.historyObject)
 		for(let i=0; i<keys.length; i++)
 		{
-
-			data.push({x: i, y:this.workDoneMins(this.props.historyObject[keys[i]])})
-		}
-		return data
+			data.push({x: i, y:this.workDoneMins(history, this.props.historyObject[keys[i]])});
+		}		
+		return data;
 	};
 
-	workDoneMins =(day)=>{
-		const history = JSON.parse(localStorage.getItem("history"))
-				
-		const filterActivity =()=>{
+	workDoneMins =(history, day)=>{				
+		const filterActivity =()=>{			
 			for(let i=0; i<history.length; i++){
-				if (history[i].day===day){
+				if (history[i].day.trim()===day.trim()){					
 					return history[i].data
 				}
 				return 
 			}
 		}
 		console.log(filterActivity())
-
 		let activity = filterActivity();
-		
-		if (day===moment().format("YYYYMMMMDD")){
-			activity = this.props.completed
-		}			
+		console.log(day)		
+		// if (day===moment().format("YYYYMMMMDD")){
+		// 	activity = this.props.completed
+		// }			
 		if (activity==null){
 			return 0
 		}
@@ -54,7 +50,8 @@ class LineChart extends Component {
 	}
 	
 	render() {
-		const dataPoints=this.makeData()
+		const history = JSON.parse(localStorage.getItem("history"))
+		const dataPoints=this.makeData(history)
 		const options = {
 			animationEnabled: true,
 			//exportEnabled: true,
