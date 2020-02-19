@@ -19,10 +19,16 @@ class App extends React.Component {
   }
 
   componentDidMount =()=>{
-    const TableData = JSON.parse(localStorage.getItem("history"))
-    if(!TableData){
-      this.FetchTableData()
+    try{
+      const TableData = JSON.parse(localStorage.getItem("history"))
+
+      if(TableData==null || TableData===undefined ){
+        this.FetchTableData()
+      }
+    }catch{
+
     }
+   
     this.setState({
 			completed: JSON.parse(localStorage.getItem(moment().format("YYYYMMMMD")))
     })    
@@ -42,6 +48,13 @@ class App extends React.Component {
       })    
       const response = await GetData.then(data=>data).catch(err=>err)
       console.log(response)
+      try
+      {
+        localStorage.removeItem("history")
+      }
+      catch{
+        //
+      }
       localStorage.setItem("history", JSON.stringify(response))
       return response
   }
