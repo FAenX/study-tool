@@ -1,0 +1,11 @@
+@import "../base";
+/*dataviz*/
+#dataviz{  
+    @include sliding-effect10s();              
+    width: 100%;
+    margin-bottom: 1em;
+    .chart{
+        width:100%;
+    }
+    
+}

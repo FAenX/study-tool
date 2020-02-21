@@ -2,7 +2,7 @@ import React from "react";
 import {Card} from "@material-ui/core"
 import clsx from 'clsx';
 import moment from "moment"
-import "./Cells.scss"
+import "./Cell.scss"
 
 class Cell extends React.Component {
 	constructor(props){

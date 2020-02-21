@@ -3,6 +3,7 @@ import {Card, IconButton, Toolbar} from "@material-ui/core"
 import {Refresh} from "@material-ui/icons"
 import clsx from 'clsx';
 import moment from "moment"
+import "./History.scss"
 
 const makeList = (num) => {
     let list = [];
@@ -13,15 +14,38 @@ const makeList = (num) => {
 }
 
 class Header extends React.Component{
+    constructor(props){
+        super(props)
+        this.state={
+           
+        }
+    }
+    componentDidMount=()=>{
+        this.setState({
+            dateTime: moment().format("DD MMMM YYYY")
+        })
+        this.intervalID = setInterval(
+			()=> this.updateClock(), 1000
+		);
+    }
+    updateClock=()=>{
+        this.setState({
+            date: moment().format("DD MMMM YYYY"),
+            time: moment().format("LT")
+        })
+    }
+
     render(){
         const day = moment().format("dddd")
-        const date = moment().format("DD/MM/YYYY")
+        
+        
         return(
             <Toolbar>
                 Study/Work history
                 <div id="date" className="">
-                    <div className="day">{day}</div>
-                    <div id="full-date"> {date} </div>
+                    <div id="time"> {this.state.time}</div>
+                    <div id="day">{day}</div>
+                    <div id="full-date"> {this.state.date}</div>
                 </div>
             </Toolbar>    
         )
@@ -213,14 +237,7 @@ class History extends React.Component{
         return(
             
             <Card variant="outlined" id="history" className="stats-item">
-                <Header>
-               
-                     
-                </Header>
-                <IconButton onClick={this.refresh}>
-                <Refresh />
-                </IconButton>  
-                
+                <Header/>
                 <Body 
                     refresh={this.state.refresh}
                     completed={this.props.completed}

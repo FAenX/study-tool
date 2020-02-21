@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import CanvasJSReact from '../assets/canvasjs.react';
 import clsx from "clsx"
 import moment from "moment"
+import "./LineChart.scss"
+import {XYPlot, XAxis, YAxis, HorizontalGridLines, LineSeries} from 'react-vis';
 
 
 
-const CanvasJSChart = CanvasJSReact.CanvasJSChart;
  
 class LineChart extends Component {
 
@@ -14,26 +14,32 @@ class LineChart extends Component {
 		this.state={
             refresh: false,
             historyLength: 6, 
-            historyObject: {},
+			historyObject: {},
+			days: []
 		}
     }
 
 	componentDidMount=()=>{ 
         
-        this.setState({
-            historyObject: this.makeHistoryObject(),
-        })
+       this.makeHistoryObject()
+     
     }
 
 
     makeHistoryObject = ()=>{
+		let days = []
         let historyObject = {};
         for (let i = this.state.historyLength; i > 0; i--){
             historyObject[moment().subtract(i, 'days').format("dddd")] 
-            = (moment().subtract(i, 'days').format("YYYYMMMMDD"))
+			= moment().subtract(i, 'days').format("YYYYMMMMDD");
+			days.push(moment().subtract(i, 'days').format("dddd"))
         }
 		historyObject[moment().format("dddd")] = moment().format("YYYYMMMMDD")
-        return historyObject
+	   
+		this.setState({
+			historyObject,
+			days,
+		})
     }; 
 
 
@@ -44,6 +50,7 @@ class LineChart extends Component {
         if (history && Object.keys(this.state.historyObject).length > 0)
             {
                 try{
+					
                     for (let i=0; i<this.state.historyLength; i++)
                     {
                         if (history[i].day === dayKey)
@@ -83,6 +90,7 @@ class LineChart extends Component {
 	
 	render() {
 		
+		
 		const dataPoints=()=>{
 			const data = [];
 			const dayKeys = Object.keys(this.state.historyObject)
@@ -95,42 +103,55 @@ class LineChart extends Component {
 				}	
 				data.push({x: i, y:this.workDoneMins(activity)});
 				
+				
 			}
-			console.log(data)
+			
 			return data;
 		}	
 		
 		console.log(dataPoints())
+		console.log(this.state.historyObject[0])
 
-		const options = {
-			animationEnabled: true,
-			//exportEnabled: true,
-			theme: "light2", 
-			title:{
-				text: "Weekly Burnout"
-			},
-			axisY: {
-				title: "Burn",
-				includeZero: true,
-				suffix: "mins"
-			},
-			axisX: {
-				title: "Day of week",
-				prefix: "Day",
-				interval: 1
-			},
-			data: [{
-				type: "line",
-				toolTipContent: "Day {x}: {y}mins",
-				dataPoints: dataPoints()
-			}]
-		}
+		
 		
 		return (
-		<div className="chart">
-			<CanvasJSChart 
-				options = {options} 				
-			/>
+		<div className="chart">			
+				
+				<div className="plot">
+					<XYPlot 
+						height={300} 
+						width={450}
+						
+						
+					>
+						<HorizontalGridLines />
+						
+						<LineSeries 
+							color="maroon"
+							data={dataPoints()} 
+						/>
+						<XAxis 
+							tickTotal={this.state.historyLength} 
+							tickFormat={v => this.state.days[v]}
+							tickLabelAngle={-45}
+							style={{
+								line: {stroke: '#ADDDE1'},
+								ticks: {stroke: '#ADDDE1'},
+								text: {stroke: 'none', fill: '#6b6b76', fontWeight: 600}}}
+							tickSize= {0}
+							
+						/>
+						<YAxis 
+							style={{
+								line: {stroke: '#ADDDE1'},
+								ticks: {stroke: '#ADDDE1'},
+								text: {stroke: 'none', fill: '#6b6b76', fontWeight: 600}}}
+							tickSize= {0}
+						/>
+					
+					</XYPlot>
+				</div>
+			
 			<div className={clsx("refreshed",{
 				"display-none": !this.props.refresh
 			})}

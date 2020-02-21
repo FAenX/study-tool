@@ -1,6 +1,7 @@
 import React from "react";
 import  { LinearProgress, Card } from "@material-ui/core"
 import moment from "moment"
+import "./Timer.scss"
 
 
 class Timer extends React.Component {
@@ -37,12 +38,14 @@ class Timer extends React.Component {
 		if(this.props.timer)			
 		{
 			
-			const remTime = moment(this.props.timer).add(30, "minutes") - moment()
-			const countDown = moment(remTime).format("mm.ss")
+			const remTime = moment(this.props.timer).add(0.5, "hours") - moment()
+			const countDown = moment(remTime).format("mm")
+			 const endTime = moment().add(remTime).format("LT")
 		
 				this.setState({
 					progress: 10,
 					countDown,
+					endTime,
 				});
 
 			//progress percentage report	!!!!!!!!!!		
@@ -70,7 +73,7 @@ class Timer extends React.Component {
 		
 		return(
 			<div id="progress-bar">
-				{this.state.countDown} minutes remaining
+				{this.state.endTime} minutes remaining
 				<div>{progress}</div>
 			</div>
             

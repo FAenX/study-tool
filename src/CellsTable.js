@@ -61,12 +61,11 @@ class Table extends React.Component {
 
 		return (		
 				  <Paper 
-					  variant="outlined" 
-					  
+					  variant="outlined" 					  
 					  className="pomodoro-table"
 					> 
-					<Timer completed={this.handleOnComplete} active={this.state.active} timer={this.state.timer}/>
-				  	<Toolbar className="table-header">					  
+					
+				  	<Toolbar>					  
 					  	<Button variant="outlined" color="primary">Refresh</Button>
 						<ResetButton handleTableReset={this.props.handleTableReset}/>					
 					</Toolbar>
@@ -81,6 +80,8 @@ class Table extends React.Component {
 								/>
 						})}
 					</div>
+					<Timer completed={this.handleOnComplete} active={this.state.active} timer={this.state.timer}/>
+
 				</Paper>
 			);
 	};

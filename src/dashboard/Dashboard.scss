@@ -2,55 +2,15 @@
 
 #dashboard{
     @include flex-col();             
-    padding: 1rem;
+    
     font-weight: 400;
     top: 4em;            
-    /*dataviz*/
-    #dataviz{  
-        @include sliding-effect10s();              
-        width: 100%;
-        margin-bottom: 1em;
-       
-        .chart{
-            margin: 1em;
-            @include flex-col();
-        }
-        
-    }
+    
     #table-settings{
         @include sliding-effect();
         width: 100%;
         margin-bottom: 1em;
        
     }
-    /*HISTORY*/
-    #history {
-        @include sliding-effect10s();
-        width: 100%;   
-        margin-bottom: 1em; 
-       
-        #days {
-            @include flex-col();
-            align-items: baseline;
-            margin: 1rem;
-            padding: .5rem;
-            .days-day {
-                @include flex-row();
-                width: 100%;
-                justify-content: space-between;
-                .day {
-        
-                }
-                .daily-burn{
-                    @include flex-row();
-                    .p-1{
-                        height: .5rem;
-                        width: .5rem;
-                        margin: 0;
-                     }
-                }
-            }
-        }            
-        
-    }
+   
 }
