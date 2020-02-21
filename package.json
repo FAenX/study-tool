@@ -20,6 +20,7 @@
     "react-dom": "^16.10.2",
     "react-scripts": "3.2.0"
   },
+  "proxy": "http://young-tundra-77987.herokuapp.com/",
   "scripts": {
     "start": "react-scripts start",
     "dev": "yarn build && nodemon --exec babel-node server.js",
@@ -42,4 +43,5 @@
       "last 1 safari version"
     ]
   }
+  
 }

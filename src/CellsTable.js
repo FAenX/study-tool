@@ -2,6 +2,7 @@ import React from 'react';
 import Cell from "./Cell";
 import Timer from "./Timer";
 import {Paper, Button, Toolbar} from "@material-ui/core"
+import "./CellsTable.scss"
 
 const makeList = (num) => {
     let list = [];
@@ -60,8 +61,8 @@ class Table extends React.Component {
 
 		return (		
 				  <Paper 
-					  variant="elevation" 
-					  elevation={5} 
+					  variant="outlined" 
+					  
 					  className="pomodoro-table"
 					> 
 					<Timer completed={this.handleOnComplete} active={this.state.active} timer={this.state.timer}/>

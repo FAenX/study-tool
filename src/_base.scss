@@ -1,0 +1,35 @@
+$color_1: #002329;
+$color_2: rgb(225, 0, 255);
+$done: rgb(225, 0, 255);
+
+@keyframes righttoleft{
+    0%   {left:5em; top:0em;}
+    100% {left:0em; top:0em;}
+  }
+
+@mixin sliding-effect{
+    position: relative;
+    animation: righttoleft 1s;
+    position: relative; 
+  }
+  
+@mixin sliding-effect10s{
+    position: relative;
+    animation: righttoleft 6s;
+    position: relative; 
+  }
+
+
+@mixin flex-col{
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+@mixin flex-row{
+    display: flex;
+    flex-flow: row;
+    justify-content: center;
+    align-items: center;
+  }

@@ -2,6 +2,7 @@ import React from "react"
 import {Paper} from "@material-ui/core"
 import History from "./History"
 import DataViz from "./DataViz"
+import "./Dashboard.scss"
 
 
 // class TableSettings extends React.Component{

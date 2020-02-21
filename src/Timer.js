@@ -71,7 +71,7 @@ class Timer extends React.Component {
 		return(
 			<div id="progress-bar">
 				{this.state.countDown} minutes remaining
-				<Card >{progress}</Card>
+				<div>{progress}</div>
 			</div>
             
 			
