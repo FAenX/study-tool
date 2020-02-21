@@ -1,5 +1,5 @@
 import React from "react"
-import {Card, IconButton} from "@material-ui/core"
+import {Card, IconButton, Toolbar} from "@material-ui/core"
 import {Refresh} from "@material-ui/icons"
 import clsx from 'clsx';
 import moment from "moment"
@@ -17,13 +17,13 @@ class Header extends React.Component{
         const day = moment().format("dddd")
         const date = moment().format("DD/MM/YYYY")
         return(
-            <div className="stats-item-header">
+            <Toolbar>
                 Study/Work history
                 <div id="date" className="">
                     <div className="day">{day}</div>
                     <div id="full-date"> {date} </div>
                 </div>
-            </div>    
+            </Toolbar>    
         )
     }
 }

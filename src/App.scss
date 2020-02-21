@@ -1,51 +1,17 @@
-$color_1: #002329;
-$color_2: rgb(225, 0, 255);
-$done: rgb(225, 0, 255);
-
-@keyframes righttoleft{
-    0%   {left:5em; top:0em;}
-    100% {left:0em; top:0em;}
-  }
-
-@mixin toolbar{
-    background-color: $color_1;
-    color: $color_2;
-    width: 100%;
-}
-
-@mixin sliding-effect{
-    position: relative;
-    animation: righttoleft 1s;
-    position: relative; 
-  }
-  
-@mixin sliding-effect10s{
-    position: relative;
-    animation: righttoleft 6s;
-    position: relative; 
-  }
-
-
-@mixin flex-col{
-    display: flex;
-    flex-flow: column;
-    justify-content: center;
-    align-items: center;
-  }
-  
-@mixin flex-row{
-    display: flex;
-    flex-flow: row;
-    justify-content: center;
-    align-items: center;
-  }
+@import "./base";
 
 .display-none{
     display: none;
 }
 
-.stats-item-header{
-    padding: 1em;
+
+
+.MuiToolbar-regular{
+    background-color: $color_1;
+    width: 90%;
+    @include flex-row;
+    justify-content: space-between;
+    color: $color_2;
     .MuiIconButton-root{
         color: $color_2;
     }
@@ -96,105 +62,8 @@ $done: rgb(225, 0, 255);
         width: 100vw;
         margin-top: 5rem;
         padding: 1rem;        
-        #dashboard{
-            @include flex-col();             
-            padding: 1rem;
-            font-weight: 400;
-            top: 4em;            
-            /*dataviz*/
-            #dataviz{  
-                @include sliding-effect10s();              
-                width: 100%;
-                margin-bottom: 1em;
-                .stats-item-header{
-                    @include toolbar();
-                }
-                .chart{
-                    margin: 1em;
-                    @include flex-col();
-                }
-                
-            }
-            #table-settings{
-                @include sliding-effect();
-                width: 100%;
-                margin-bottom: 1em;
-                .stats-item-header{
-                    //@include toolbar();
-                }
-            }
-            /*HISTORY*/
-            #history {
-                @include sliding-effect10s();
-                width: 100%;   
-                margin-bottom: 1em; 
-                .stats-item-header{
-                    @include toolbar();
-                }
-                #days {
-                    @include flex-col();
-                    align-items: baseline;
-                    margin: 1rem;
-                    padding: .5rem;
-                    .days-day {
-                        @include flex-row();
-                        width: 100%;
-                        justify-content: space-between;
-                        .day {
-                
-                        }
-                        .daily-burn{
-                            @include flex-row();
-                            .p-1{
-                                height: .5rem;
-                                width: .5rem;
-                                margin: 0;
-                             }
-                        }
-                    }
-                }            
-                
-            }
-        }
-        .pomodoro-table{
-            @include sliding-effect();
-            @include flex-col();
-            margin: 1em;
-            justify-content: flex-start;
-            .table-header{
-                @include toolbar();
-                // @include flex-row();
-                // width: 100%;
-                // margin: 1em;                
-                // padding: 1em;
-                // justify-content: space-between;
-            }
-            .cells{
-                @include flex-row();
-                flex-wrap: wrap; 
-                margin: 1em;
-                /* cell */
-                .p-1{
-                    width: 70px;
-                    height: 70px;
-                    margin: .5rem;
-                    
-                }
-
-                .p-1:hover {
-                    cursor: pointer;
-                }
-
-                .p-1 p{
-                    display: inline-block;
-                }
-
-                .p-1-disabled{
-                    pointer-events: none;
-                    background-color: rgba(128, 128, 128, 0.425);
-                }
-            }
-        }
+  
+     
     }
 }
 
@@ -246,7 +115,7 @@ $done: rgb(225, 0, 255);
         width: 40vw;
     }
     .pomodoro-table{
-        width: 50vw;
+        width: 40vw;
     }
 }
   

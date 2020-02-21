@@ -1,5 +1,5 @@
 import React from "react"
-import {Card, IconButton} from "@material-ui/core"
+import {Card, IconButton, Toolbar} from "@material-ui/core"
 import LineChart from "./LineChart"
 import Refresh from "@material-ui/icons/Refresh"
 
@@ -22,15 +22,14 @@ class DataViz extends React.Component{
         return(
            
                 <Card variant="outlined" id="dataviz" className="stats-item">
-                <div
-                    className="stats-item-header">
+                <Toolbar>
                         Visualize Your Daily Progress
                 
                     <IconButton onClick={this.refresh}>
                         <Refresh />
                     </IconButton>
                     
-                </div>
+                </Toolbar>
 
                 <LineChart 
                     completed={this.props.completed}

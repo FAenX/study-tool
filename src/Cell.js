@@ -2,6 +2,7 @@ import React from "react";
 import {Card} from "@material-ui/core"
 import clsx from 'clsx';
 import moment from "moment"
+import "./Cells.scss"
 
 class Cell extends React.Component {
 	constructor(props){
@@ -71,7 +72,7 @@ class Cell extends React.Component {
 					 
 				</Card>
 				
-				{this.props.number} 
+				{/* {this.props.number}  */}
 			</div>
 		)	
 	};

@@ -1,0 +1,12 @@
+@import "./base";
+
+.pomodoro-table{
+    @include sliding-effect();
+    @include flex-col();
+    margin: 1em;
+    justify-content: flex-start;
+    .table-header{
+       
+    }
+    
+}
