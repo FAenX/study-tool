@@ -13,30 +13,30 @@ class LineChart extends Component {
 		super(props)
 		this.state={
             refresh: false,
-            historyLength: 6, 
-			historyObject: {},
+            historyLength: 7, 
+			historyKeysArr: {},
 			days: []
 		}
     }
 
 	componentDidMount=()=>{ 
         
-       this.makeHistoryObject()
+       this.makeHistoryKeysArr()
      
     }
 
 
-    makeHistoryObject = ()=>{
+    makeHistoryKeysArr = ()=>{
 		let days = []
-        let historyObject = {};
+        let historyKeysArr = [];
         for (let i = this.state.historyLength; i >= 0; i--){
-            historyObject[moment().subtract(i, 'days').format("dddd")] = moment().subtract(i, 'days').format("YYYYMMMMDD");
+            historyKeysArr.push(moment().subtract(i, 'days').format("YYYYMMMMDD"));
 			days.push(moment().subtract(i, 'days').format("dddd"))
         }
 		
 	   
 		this.setState({
-			historyObject,
+			historyKeysArr,
 			days,
 		})
     }; 
@@ -46,7 +46,7 @@ class LineChart extends Component {
 	makeHistory = (dayKey)=>{
 		
 		const history = JSON.parse(localStorage.getItem("history")) 
-        if (history && Object.keys(this.state.historyObject).length > 0)
+        if (history && this.state.historyKeysArr.length > 0)
             {
                 try{
 					
@@ -95,9 +95,9 @@ class LineChart extends Component {
 			
 			
 			for(let i=0; i<=this.state.historyLength; i++){						
-				let activity = this.makeHistory(this.state.historyObject[this.state.days[i]])
+				let activity = this.makeHistory(this.state.historyKeysArr[i])
 				//use local data for day today
-				if (this.state.historyObject[this.state.days[i]]===moment().format("YYYYMMMMDD")){
+				if (this.state.historyKeysArr[i]===moment().format("YYYYMMMMDD")){
 					activity = this.props.completed
 				}	
 				data.push({x: i, y:this.workDoneMins(activity)});
@@ -110,6 +110,7 @@ class LineChart extends Component {
 		
 		console.log(dataPoints())
 		console.log(this.state.days)
+		console.log(this.state.historyKeysArr)
 		
 		
 		return (

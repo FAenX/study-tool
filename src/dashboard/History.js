@@ -153,32 +153,35 @@ class Body extends React.Component{
     constructor(props){
         super(props)
         this.state={
-            historyLength: 6, 
-            historyObject: {},
+            historyLength: 7, 
+            historyKeysArr: [],
+            days: []
+            
         }
     }
     componentDidMount=()=>{         
-        this.setState({
-            historyObject: this.makeHistoryObject(),
-        })
+        this.makeHistoryKeysArr()
     }    
 
-    makeHistoryObject = ()=>{
-        let historyObject = {};
-        for (let i =0; i <= this.state.historyLength;  i++){
-            historyObject[moment().subtract(i, 'days').format("dddd")] 
-            = (moment().subtract(i, 'days').format("YYYYMMMMDD"))
+    makeHistoryKeysArr = ()=>{
+		let days = []
+        let historyKeysArr = [];
+        for (let i = 0; i <= this.state.historyLength; i++){
+            historyKeysArr.push(moment().subtract(i, 'days').format("YYYYMMMMDD"));
+			days.push(moment().subtract(i, 'days').format("dddd"))
         }
-        historyObject[moment().format("dddd")] = moment().format("YYYYMMMMDD")
-        
-        return historyObject
+		
+	   
+		this.setState({
+			historyKeysArr,
+			days,
+		})
     }; 
 
     makeHistory =(dayKey)=>{
         const history = JSON.parse(localStorage.getItem("history"))
-              
         
-        if (history && Object.keys(this.state.historyObject).length > 0)
+        if (history && this.state.historyKeysArr.length > 0)
             {
                 try{
                     for (let i=0; i<=this.state.historyLength; i++)
@@ -207,12 +210,12 @@ class Body extends React.Component{
            
                
             {
-            Object.keys(this.state.historyObject).map(i=>{
+            this.state.historyKeysArr.map(i=>{
                 return <Day key={i}
                             today={moment().format('dddd')}
-                            day={i}
-                            completed={this.props.completed}
-                            history={this.makeHistory(this.state.historyObject[i])}
+                            day={this.state.days[this.state.historyKeysArr.indexOf(i)]}
+                            completed={i}
+                            history={this.makeHistory(i)}
                             refresh={this.props.refresh}
                         />              
             })}  
