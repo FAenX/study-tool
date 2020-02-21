@@ -29,12 +29,11 @@ class LineChart extends Component {
     makeHistoryObject = ()=>{
 		let days = []
         let historyObject = {};
-        for (let i = this.state.historyLength; i > 0; i--){
-            historyObject[moment().subtract(i, 'days').format("dddd")] 
-			= moment().subtract(i, 'days').format("YYYYMMMMDD");
+        for (let i = this.state.historyLength; i >= 0; i--){
+            historyObject[moment().subtract(i, 'days').format("dddd")] = moment().subtract(i, 'days').format("YYYYMMMMDD");
 			days.push(moment().subtract(i, 'days').format("dddd"))
         }
-		historyObject[moment().format("dddd")] = moment().format("YYYYMMMMDD")
+		
 	   
 		this.setState({
 			historyObject,
@@ -93,12 +92,12 @@ class LineChart extends Component {
 		
 		const dataPoints=()=>{
 			const data = [];
-			const dayKeys = Object.keys(this.state.historyObject)
+			
 			
 			for(let i=0; i<=this.state.historyLength; i++){						
-				let activity = this.makeHistory(this.state.historyObject[dayKeys[i]])
+				let activity = this.makeHistory(this.state.historyObject[this.state.days[i]])
 				//use local data for day today
-				if (this.state.historyObject[dayKeys[i]]===moment().format("YYYYMMMMDD")){
+				if (this.state.historyObject[this.state.days[i]]===moment().format("YYYYMMMMDD")){
 					activity = this.props.completed
 				}	
 				data.push({x: i, y:this.workDoneMins(activity)});
@@ -110,8 +109,7 @@ class LineChart extends Component {
 		}	
 		
 		console.log(dataPoints())
-		console.log(this.state.historyObject[0])
-
+		console.log(this.state.days)
 		
 		
 		return (
@@ -131,7 +129,7 @@ class LineChart extends Component {
 							data={dataPoints()} 
 						/>
 						<XAxis 
-							tickTotal={this.state.historyLength} 
+							
 							tickFormat={v => this.state.days[v]}
 							tickLabelAngle={-45}
 							style={{

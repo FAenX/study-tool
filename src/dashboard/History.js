@@ -106,9 +106,18 @@ class Day extends React.Component{
 
     componentDidMount=()=>{
         let history = this.props.history;
-        if (this.props.day === this.props.today){
-            history = this.props.completed
+        let completed = this.props.completed
+        try{
+            if (this.props.day === this.props.today && 
+                history.length < completed.length)
+            
+            {
+                history = completed
+            }
+        }catch{
+            //
         }
+        
         
        this.setState({
            history,
@@ -167,7 +176,7 @@ class Body extends React.Component{
 
     makeHistory =(dayKey)=>{
         const history = JSON.parse(localStorage.getItem("history"))
-       
+              
         
         if (history && Object.keys(this.state.historyObject).length > 0)
             {
