@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import clsx from "clsx"
 import moment from "moment"
 import "./LineChart.scss"
-import {XYPlot, XAxis, YAxis, HorizontalGridLines, LineSeries} from 'react-vis';
+import {XYPlot, XAxis, YAxis, HorizontalGridLines,  LineMarkSeries} from 'react-vis';
+import {AvarageAtPoint} from "../DataFunctions"
 
 
 
@@ -33,8 +34,6 @@ class LineChart extends Component {
             historyKeysArr.push(moment().subtract(i, 'days').format("YYYYMMMMDD"));
 			days.push(moment().subtract(i, 'days').format("dddd"))
         }
-		
-	   
 		this.setState({
 			historyKeysArr,
 			days,
@@ -111,6 +110,15 @@ class LineChart extends Component {
 		console.log(dataPoints())
 		console.log(this.state.days)
 		console.log(this.state.historyKeysArr)
+		const data =  [
+			{"data":[0],"_id":"5e504dfdea4f5b0017b3aff7","day":"2020February22","__v":0},
+			{"data":[0,1,2,3,4,5],"_id":"5e4ff579cad738001712deae","day":"2020February21","__v":0},
+			{"data":[0,1,2,3,4,5,6,7,8,9,10,11],"_id":"5e4d3253718e8c00176c60d9","day":"2020February19","__v":0},
+			{"data":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17],"_id":"5e49aef527d2a20017d223ea","day":"2020February17","__v":0},
+			{"data":[0,1,2,3,4,5],"_id":"5e485e0af0fd2300177b9aea","day":"2020February16","__v":0},
+			{"data":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17],"_id":"5e482bf5bcef97193b523d3f","day":"2020February15","__v":0}
+		]
+		console.log(AvarageAtPoint(data, 0))
 		
 		
 		return (
@@ -124,27 +132,31 @@ class LineChart extends Component {
 						
 					>
 						<HorizontalGridLines />
-						
-						<LineSeries 
-							color="maroon"
+										
+						<LineMarkSeries  
+							color="green"
 							data={dataPoints()} 
+						/> 
+						<LineMarkSeries 
+							color="purple"
+							data={dataPoints()} 
+							
 						/>
 						<XAxis 
 							
 							tickFormat={v => this.state.days[v]}
 							tickLabelAngle={-45}
+							
 							style={{
-								line: {stroke: '#ADDDE1'},
-								ticks: {stroke: '#ADDDE1'},
-								text: {stroke: 'none', fill: '#6b6b76', fontWeight: 600}}}
+								line: {fill: '#002329'},
+								text: {stroke: 'none', fill: '#002329', fontWeight: 400}}}
 							tickSize= {0}
 							
 						/>
 						<YAxis 
 							style={{
-								line: {stroke: '#ADDDE1'},
-								ticks: {stroke: '#ADDDE1'},
-								text: {stroke: 'none', fill: '#6b6b76', fontWeight: 600}}}
+								line: {fill: '#002329'},
+								text: {stroke: 'none', fill: '#002329', fontWeight: 400}}}
 							tickSize= {0}
 						/>
 					
