@@ -120,7 +120,15 @@ class LineChart extends Component {
 		]
 		console.log(AvarageAtPoint(data, 0))
 		
-		
+		const movingAvarages = [{x: 0, y: 340},
+								{x: 1, y: 180},
+								{x: 2, y: 340},
+								{x: 3, y: 200},
+								{x: 4, y: 260},
+								{x: 5, y: 200},
+								{x: 6, y: 280},
+								{x: 7, y: 200},
+						]
 		return (
 		<div className="chart">			
 				
@@ -139,7 +147,7 @@ class LineChart extends Component {
 						/> 
 						<LineMarkSeries 
 							color="purple"
-							data={dataPoints()} 
+							data={movingAvarages} 
 							
 						/>
 						<XAxis 
