@@ -5,11 +5,8 @@ import "./LineChart.scss"
 import {XYPlot, XAxis, YAxis, HorizontalGridLines,  LineMarkSeries} from 'react-vis';
 import {AvarageAtPoint} from "../DataFunctions"
 
-
-
  
 class LineChart extends Component {
-
 	constructor(props){
 		super(props)
 		this.state={
@@ -21,15 +18,13 @@ class LineChart extends Component {
     }
 
 	componentDidMount=()=>{ 
-        
        this.makeHistoryKeysArr()
-     
-    }
-
-
+	}
+	
     makeHistoryKeysArr = ()=>{
 		let days = []
-        let historyKeysArr = [];
+		let historyKeysArr = [];
+		
         for (let i = this.state.historyLength; i >= 0; i--){
             historyKeysArr.push(moment().subtract(i, 'days').format("YYYYMMMMDD"));
 			days.push(moment().subtract(i, 'days').format("dddd"))
@@ -39,76 +34,81 @@ class LineChart extends Component {
 			days,
 		})
     }; 
-
-
-
-	makeHistory = (dayKey)=>{
-		
+	filterHistory = (key)=>{
 		const history = JSON.parse(localStorage.getItem("history")) 
-        if (history && this.state.historyKeysArr.length > 0)
-            {
-                try{
+		const data = history.filter(i=>{
+					let data;
+					if (i.day === key )
+					{
+						data = i.data
+					}
 					
-                    for (let i=0; i<this.state.historyLength; i++)
-                    {
-                        if (history[i].day === dayKey)
-                        {
-                            return history[i].data
-                        }
-                    }
-                }catch{
-                    for (let i=0; i<history.length; i++)
-                    {
-                        if (history[i].day === dayKey)
-                        {
-                            return history[i].data
-                        }
-                    }
-                }
-                
-            }
+					return data
+				})
+		
+		return data[0]
 	};
 
-	workDoneMins =(activity)=>{				
+	dataPoints=()=>{
+		let data = [];
+		try{
+			// console.log(this.filterHistory("2020February16"))	
+			const dataOfdays = this.state.historyKeysArr.map(i=>{
+				// use local data for day today
+				
+				let datum = this.filterHistory(i)
+				if (datum===undefined){
+					datum={data: []}
+				}
+
+				if (i === moment().format("YYYYMMMMDD")){
+					
+					if(this.props.completed==null ||this.props.completed === undefined){
+						datum = {data: []}
+						
+					}else{
+						console.log(this.props.completed)
+						datum = {data: this.props.completed}
+					}
+					
+					
+				}
+				
+				return datum.data.length*30
+			})
+			const createDataPoints = Object.keys(this.state.historyKeysArr).map(i=>{
+				
+				return {x: i, y: dataOfdays[i]}
+					
+				
+				
+			})
+
+			data = createDataPoints
+
+			
+			
+				
+				
+			
+		}catch{
+			//
+		}	
+			
 		
 		
-		if (activity==null || activity === undefined){
-			return 0
-		}
-		//clean activity data by removing null values
-		activity = activity.filter(x=>{
-			if(x!==null){
-				return true
-			}
-			return false
-		})
-		//each cell is thirty mins long
-		return activity.length*30
-	}
+		return data;
+	}	
+
+	
 	
 	render() {
 		
 		
-		const dataPoints=()=>{
-			const data = [];
-			
-			
-			for(let i=0; i<=this.state.historyLength; i++){						
-				let activity = this.makeHistory(this.state.historyKeysArr[i])
-				//use local data for day today
-				if (this.state.historyKeysArr[i]===moment().format("YYYYMMMMDD")){
-					activity = this.props.completed
-				}	
-				data.push({x: i, y:this.workDoneMins(activity)});
-				
-				
-			}
-			
-			return data;
-		}	
 		
-		console.log(dataPoints())
-		console.log(this.state.days)
+		
+		console.log(this.dataPoints())
+		
 		console.log(this.state.historyKeysArr)
 		const data =  [
 			{"data":[0],"_id":"5e504dfdea4f5b0017b3aff7","day":"2020February22","__v":0},
@@ -143,7 +143,7 @@ class LineChart extends Component {
 										
 						<LineMarkSeries  
 							color="green"
-							data={dataPoints()} 
+							data={this.dataPoints()} 
 						/> 
 						<LineMarkSeries 
 							color="purple"
