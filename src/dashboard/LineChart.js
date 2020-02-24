@@ -144,10 +144,12 @@ class LineChart extends Component {
 						<LineMarkSeries  
 							color="green"
 							data={this.dataPoints()} 
+							curve={'curveMonotoneX'}
 						/> 
 						<LineMarkSeries 
 							color="purple"
 							data={movingAvarages} 
+							curve={'curveMonotoneX'}
 							
 						/>
 						<XAxis 
