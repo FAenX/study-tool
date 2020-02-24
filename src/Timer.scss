@@ -3,25 +3,30 @@
 /*progress */
 
 #progress-bar{
+    @include flex-col;
+    align-items: baseline;
+    justify-content: space-between;
+    height: 6em;
     margin: 1rem;
-    width: 90%;    
+    width: 90%; 
+     
 }
 
-#progress-bar .MuiLinearProgress-colorPrimary{
+#progress-bar .MuiCircularProgress-colorPrimary{
     background-color: rgb(255, 255, 255);
     height: .5rem;
 }
 
-#progress-bar .MuiLinearProgress-colorSecondary{
+#progress-bar .MuiCircularProgress-colorSecondary{
     background-color: rgb(255, 255, 255);
     height: .5rem;
 }
 
-#progress-bar .MuiLinearProgress-barColorPrimary {
-    background-color: #f60;
+#progress-bar .MuiCircularProgress-colorPrimary {
+    background-color: rgb(255, 255, 255);
 }
 
-#progress-bar .MuiLinearProgress-barColorSecondary {
+#progress-bar .MuiCircularProgress-colorSecondary {
     background-color: maroon;
 }
 

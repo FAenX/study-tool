@@ -6,7 +6,7 @@ export function AvarageAtPoint(data, index){
     const cumulativeAvarages = cleanedData.map(i=>{
         let cumu=[]
        
-        if(cleanedData.indexOf(i) == 0){
+        if(cleanedData.indexOf(i) === 0){
            
             cumu.push(i)
         }else{

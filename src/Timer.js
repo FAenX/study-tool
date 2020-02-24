@@ -1,5 +1,5 @@
 import React from "react";
-import  { LinearProgress, Card } from "@material-ui/core"
+import  { CircularProgress  } from "@material-ui/core"
 import moment from "moment"
 import "./Timer.scss"
 
@@ -64,17 +64,19 @@ class Timer extends React.Component {
 		let progress;
 		
 		if(this.state.progress && this.state.progress <= 90){
-			progress = <LinearProgress  className="linear-progress" variant="indeterminate"  color="primary" />
+			progress = <CircularProgress  className="circular-progress" variant="indeterminate"  color="primary" />
 		}else if(this.state.progress && this.state.progress > 90){
-			progress = <LinearProgress  variant="indeterminate"  color="secondary" />
+			progress = <CircularProgress  className="circular-progress" variant="indeterminate"  color="secondary" />
 		}else {
 			progress = <div>===></div>
 		}		
 		
 		return(
 			<div id="progress-bar">
-				{this.state.endTime} minutes remaining
+				<div>{this.state.endTime} </div>
+				<div>00:00:{this.state.countDown} Mins remaining</div>
 				<div>{progress}</div>
+				
 			</div>
             
 			
