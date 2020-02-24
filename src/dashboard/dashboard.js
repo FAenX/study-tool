@@ -1,6 +1,4 @@
 import React from "react"
-import {Paper} from "@material-ui/core"
-import History from "./History"
 import DataViz from "./DataViz"
 import "./Dashboard.scss"
 
@@ -29,9 +27,7 @@ class DashBoard extends React.Component{
     render(){
         return(
             <div id="dashboard">                       
-                    <History 
-                        completed={this.props.completed}
-                    />                    
+                                     
                     <DataViz 
                         completed={this.props.completed} 
                     />
