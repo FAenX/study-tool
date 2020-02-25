@@ -1,24 +1,29 @@
 
 
 
-export function AvarageAtPoint(data, index){
-    const cleanedData = Object.keys(data).map(i=>data[i].data.length*30).reverse()
-    const cumulativeAvarages = cleanedData.map(i=>{
-        let cumu=[]
-       
-        if(cleanedData.indexOf(i) === 0){
-           
-            cumu.push(i)
-        }else{
+export function AvarageAtPoint(data){
+    
+    data = data.reverse()
 
-            let prevIndex = cleanedData.indexOf(i)-1
-            cumu.slice(i+cleanedData[prevIndex], cleanedData.indexOf(i))
+    const addArr=(arr)=>{
+        let total=arr[0]
+        for(let i=1; i<arr.length; i++){
+            total = total+arr[i]
         }
-        return cumu;
-    })
-   
-   
-    return {cumulativeAvarages, cleanedData}
+        return total/arr.length
+    }
+
+    const movingAvarages = ()=>{
+        let ret=[];
+        for (let i = 0; i<data.length; i++){
+            
+            ret.push(addArr(data.slice(i)))
+        }
+       
+        return ret;
+    }
+    const mv = movingAvarages() 
+    return {mv}
 
     
 }

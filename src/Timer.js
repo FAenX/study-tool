@@ -1,5 +1,5 @@
 import React from "react";
-import  { CircularProgress  } from "@material-ui/core"
+import  { LinearProgress  } from "@material-ui/core"
 import moment from "moment"
 import "./Timer.scss"
 
@@ -9,7 +9,7 @@ class Timer extends React.Component {
 	constructor(props){
 		super(props)
 		this.state = {
-			progress: null,
+			progress: 0,
 			time: 0,
 			countDown: 0
 		}
@@ -29,32 +29,40 @@ class Timer extends React.Component {
 			if(moment(this.props.timer).add(30, "minutes") < moment() )
 		{
 			this.props.completed();
-			console.log(moment().format("LTS"))
 		}
 		}catch{
 			//
 		}
 
+		
+
 		if(this.props.timer)			
 		{
 			
 			const remTime = moment(this.props.timer).add(0.5, "hours") - moment()
-			const countDown = moment(remTime).format("mm")
-			 const endTime = moment().add(remTime).format("LT")
+			const countDown = moment(remTime).format("mm:ss")
+			const endTime = moment().add(remTime).format("LT")
+
+			//progress percentage report	!!!!!!!!!!	
+			let progress = 100-(moment(remTime).format("mm") * 100)/30
 		
 				this.setState({
-					progress: 10,
+					progress,
 					countDown,
 					endTime,
 				});
 
-			//progress percentage report	!!!!!!!!!!		
+			
+			
+			
 			
 		}else{
 			this.setState({
-				progress: false,
+				progress: 0,
 			})
 		}
+		
+		// if(moment(this.state.countDown))
 		this.setState({
 			time: moment().format("LTS")
 		})
@@ -64,18 +72,35 @@ class Timer extends React.Component {
 		let progress;
 		
 		if(this.state.progress && this.state.progress <= 90){
-			progress = <CircularProgress  className="circular-progress" variant="indeterminate"  color="primary" />
+			progress = <LinearProgress  
+							className="linear-progress" 
+							variant="determinate"  
+							color="primary"
+							value={this.state.progress} 
+						/>
 		}else if(this.state.progress && this.state.progress > 90){
-			progress = <CircularProgress  className="circular-progress" variant="indeterminate"  color="secondary" />
+			progress = <LinearProgress
+							className="linear-progress" 
+							variant="determinate"  
+							color="secondary" 
+							value={this.state.progress} 
+						/>
 		}else {
-			progress = <div>===></div>
+			progress = <LinearProgress
+							className="linear-progress" 
+							variant="determinate"  
+							value={100} 
+							color="primary" 
+						/>
 		}		
 		
 		return(
 			<div id="progress-bar">
-				<div>{this.state.endTime} </div>
-				<div>00:00:{this.state.countDown} Mins remaining</div>
-				<div>{progress}</div>
+				<div>00:{this.state.countDown} Mins remaining</div>
+				{/* <div className="circular-progress" > */}
+					{/* <div className="circular-progress1"></div> */}
+				{/* </div> */}
+				{progress}
 				
 			</div>
             

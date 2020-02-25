@@ -1,11 +1,12 @@
 @import "../base";
 /*dataviz*/
-#dataviz{  
-    @include sliding-effect10s();              
-    width: 100%;
-    margin-bottom: 1em;
+#dataviz{ 
     .chart{
         width:100%;
     }
+}
+
+@media screen and (min-width: 600px)  {
+    
     
 }

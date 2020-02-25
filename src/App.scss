@@ -10,7 +10,7 @@
     background-color: $color_1;
    
     @include flex-row;
-    justify-content: space-between;
+    justify-content: space-around;
     color: $color_2;
     font-weight: 600;
 
@@ -20,30 +20,19 @@
 }
 
 
-.MuiPaper-root{
-    .done{
-    background-color: #580000;
-    }  
-    .normal{
-       background-color: gray; 
-    }  
-    .active{
-        background-color: green;
-    }
-}
 
-.active{
-    background-color: $color_2;
-}
+    
+
+
 
 .App {
-    .MuiButton-outlinedPrimary{
-        color: $color_2;
-    }
+    
     @include flex-row();
     flex-wrap: wrap;
     width: 100vw;
-    overflow: hidden;
+    .MuiButton-outlinedPrimary{
+        color: $color_2;
+    }
     .App-header {
         @include flex-row();
         justify-content: space-between;
@@ -61,6 +50,7 @@
         @include flex-row(); 
         flex-wrap: wrap; 
         align-items: baseline;
+        justify-content: space-around;
         width: 100vw;
         margin-top: 5rem;
         padding: 1rem;        
@@ -75,12 +65,8 @@
 
 @media screen and (min-width: 600px)  {
     
-    #dashboard{
-        width: 40vw;
-    }
-    .pomodoro-table{
-        width: 40vw;
-    }
+    
+    
 }
   
   

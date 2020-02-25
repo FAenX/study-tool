@@ -2,23 +2,31 @@
 
 .cells{
     @include flex-row();
-    justify-content: flex-start;
+    border: 1px solid $color_2;
+    border-radius: 10px;
     flex-wrap: wrap; 
     margin: 1em;
+    padding: 1em;
+    width: 70%;
     /* cell */
     .p-1{
-        width: 50px;
-        height: 50px;
-        margin: .5rem;
+        width: 40px;
+        height: 40px;
+        margin: .25em;
         
+    }
+    .done{
+        background-color: #580000;
+        }  
+    .normal{
+        background-color: gray; 
+    }  
+    .active{
+        background-color: rgb(2, 197, 2);
     }
 
     .p-1:hover {
         cursor: pointer;
-    }
-
-    .p-1 p{
-        display: inline-block;
     }
 
     .p-1-disabled{

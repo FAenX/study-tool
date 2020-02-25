@@ -60,11 +60,10 @@ class Table extends React.Component {
 	render (){
 
 		return (		
-				  <Paper 
+				  <Paper
 					  variant="outlined" 					  
 					  className="pomodoro-table"
 					> 
-					
 				  	<Toolbar>					  
 					  	<Button variant="outlined" color="primary">Refresh</Button>
 						<ResetButton handleTableReset={this.props.handleTableReset}/>					

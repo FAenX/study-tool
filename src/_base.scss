@@ -3,20 +3,16 @@ $color_2: rgb(225, 0, 255);
 $done: rgb(225, 0, 255);
 
 @keyframes righttoleft{
-    0%   {left:5em; top:0em;}
-    100% {left:0em; top:0em;}
+    0%   {width:0; height: 0;}
+    100% {width: 100%; height: 100%;}
   }
 
 @mixin sliding-effect{
-    position: relative;
     animation: righttoleft 1s;
-    position: relative; 
   }
   
 @mixin sliding-effect10s{
-    position: relative;
     animation: righttoleft 6s;
-    position: relative; 
   }
 
 

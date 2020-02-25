@@ -4,30 +4,20 @@
 
 #progress-bar{
     @include flex-col;
-    align-items: baseline;
-    justify-content: space-between;
+    color: $color_2;
     height: 6em;
-    margin: 1rem;
-    width: 90%; 
-     
-}
-
-#progress-bar .MuiCircularProgress-colorPrimary{
-    background-color: rgb(255, 255, 255);
-    height: .5rem;
-}
-
-#progress-bar .MuiCircularProgress-colorSecondary{
-    background-color: rgb(255, 255, 255);
-    height: .5rem;
-}
-
-#progress-bar .MuiCircularProgress-colorPrimary {
-    background-color: rgb(255, 255, 255);
-}
-
-#progress-bar .MuiCircularProgress-colorSecondary {
-    background-color: maroon;
+    margin: 1em;
+    .MuiLinearProgress-root{
+        height: 5px;
+        width: 100%;
+        margin: 1em;
+    }
+    .MuiLinearProgress-colorPrimary{
+    background-color: black;
+    }
+    .MuiLinearProgress-barColorPrimary{
+        background-color: $color_2;
+    }
 }
 
 

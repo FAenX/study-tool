@@ -2,15 +2,5 @@
 
 #dashboard{
     @include flex-col();             
-    
-    font-weight: 400;
-    top: 4em;            
-    
-    #table-settings{
-        @include sliding-effect();
-        width: 100%;
-        margin-bottom: 1em;
-       
-    }
    
 }

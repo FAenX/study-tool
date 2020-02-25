@@ -1,12 +1,22 @@
 @import "./base";
 
 .pomodoro-table{
-    @include sliding-effect();
     @include flex-col();
-    margin: 1em;
-    justify-content: flex-start;
-    .table-header{
-       
-    }
+    width: 40vw;
+    overflow: hidden;
     
+    
+    
+    .MuiToolbar-regular{
+       width: 100%;
+    }
+   
+    
+}
+
+@media screen and (max-width: 600px)  {
+    
+    .pomodoro-table{
+     
+    }
 }
