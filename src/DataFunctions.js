@@ -4,6 +4,7 @@
 export function AvarageAtPoint(data){
     
     data = data.reverse()
+    console.log(data)
 
     const addArr=(arr)=>{
         let total=arr[0]

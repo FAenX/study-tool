@@ -40,16 +40,20 @@ class LineChart extends Component {
 
 	makeAvarageHistoryKeysArr = ()=>{
 		const history = JSON.parse(localStorage.getItem("history")) 
-		//console.log(history.pop().day)
-		// console.log(moment(history.pop().day))
-		let avarageHistoryKeysArr = [];
+		const earliestData = history.pop().day
 		
-        for (let i = history.length; i >= 0; i--){
-            avarageHistoryKeysArr.push(moment().subtract(i, 'days').format("YYYYMMMMDD"));
+		let avarageHistoryKeysArr = [];
+		const duration = moment.duration(moment().diff(moment(earliestData))).asDays()
+		
+		
+		
+        for (let i = 0; i <= duration; i++){
+            avarageHistoryKeysArr.push(moment(earliestData).add(i, 'days').format("YYYYMMMMDD"));
         }
 		this.setState({
 			avarageHistoryKeysArr,
 		})
+		console.log(avarageHistoryKeysArr)
 	};
 
 	// filter history by key, return arr 
@@ -96,7 +100,7 @@ class LineChart extends Component {
 			const createDataPoints = Object.keys(this.state.historyKeysArr).map(i=>{
 				return {x: i, y: dataOfdays[i]}
 			})
-			console.log(data)
+			
 			data = createDataPoints
 		}catch{
 			//
@@ -114,6 +118,7 @@ class LineChart extends Component {
 				
 				// if data is undefined
 				let datum = this.filterHistory(i)
+				
 				if (datum===undefined){
 					datum={data: []}
 				}
@@ -125,7 +130,7 @@ class LineChart extends Component {
 						datum = {data: this.props.completed}
 					}
 				}
-				
+				console.log(datum.data.length*30)
 				return datum.data.length*30
 			})
 
