@@ -90,7 +90,6 @@ class LineChart extends Component {
 					if(this.props.completed==null ||this.props.completed === undefined){
 						datum = {data: []}
 					}else{
-						console.log(this.props.completed)
 						datum = {data: this.props.completed}
 					}
 				}
@@ -130,19 +129,23 @@ class LineChart extends Component {
 						datum = {data: this.props.completed}
 					}
 				}
-				console.log(datum.data.length*30)
+				
 				return datum.data.length*30
 			})
 
-			const avarage = AvarageAtPoint(dataOfdays).mv.reverse().slice(1)
+			const avarageHistoryLength = this.state.avarageHistoryKeysArr.length-this.state.historyLength
+
+			const avarage = AvarageAtPoint(dataOfdays).dataSet.reverse().slice(avarageHistoryLength)
+			console.log(AvarageAtPoint(dataOfdays).dataSet)
 			console.log(avarage)
-			console.log(this.state.avarageHistoryKeysArr)
+			
 
 			const createDataPoints = Object.keys(this.state.historyKeysArr).map(i=>{
 				return {x: i, y: avarage[i]}
 			})
-			console.log(data)
+			
 			data = createDataPoints
+			console.log(this.state.avarageHistoryKeysArr.length)
 		
 		}catch{
 			//
