@@ -29,6 +29,7 @@ class DataViz extends React.Component{
 
 
     render(){
+        const history = JSON.parse(localStorage.getItem("history")) 
         
         return(
            
@@ -53,6 +54,7 @@ class DataViz extends React.Component{
                     historyLength={this.state.historyLength} 
                     completed={this.props.completed}
                     refresh={this.state.refresh}
+                    history={history}
                 />
                 </Card>
             

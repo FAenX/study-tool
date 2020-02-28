@@ -12,33 +12,28 @@ class LineChart extends Component {
 		this.state={
             refresh: false,
 			len: 0,
-			historyKeysArr: [],
-			avarageHistoryKeysArr:[],
-			days: []
+			days: [],
+			
 		}
     }
 
-	componentDidMount=()=>{ 
-		
-	}
-	
     makeHistoryKeysArr =()=>{
-		let days = []
 		let historyKeysArr = [];
-		
 		for (let i = 0; i < this.props.historyLength;  i++){
 			historyKeysArr.push(moment().subtract(i, 'days').format("YYYYMMMMDD"));
+		}
+		historyKeysArr = historyKeysArr.reverse()
+		return historyKeysArr
+	};
+
+	makeDaysArr=()=>{
+		let days = []
+		for (let i = 0; i < this.props.historyLength;  i++){
 			days.push(moment().subtract(i, 'days').format("dd"))
 		}
-
 		days = days.reverse()
-		historyKeysArr = historyKeysArr.reverse()
-
-		this.setState({
-			historyKeysArr,
-			days,
-		})
-	};
+		return days
+	}
 
 	// create an array of dataPoint keys 
 	makeAvarageHistoryKeysArr =(history)=>{
@@ -53,9 +48,7 @@ class LineChart extends Component {
 			avarageHistoryKeysArr.push(moment(earliestData).add(i, 'days').format("YYYYMMMMDD"));
 		}
 		
-		this.setState({
-			avarageHistoryKeysArr,
-		})
+		return avarageHistoryKeysArr
 	};
 	
 	
@@ -63,80 +56,70 @@ class LineChart extends Component {
 
 	//progress line graph datapoints
 	dataPoints=(history)=>{
+		
 		let data = [];
-		try{
-			// map history to historyKeysArr	
-			const dataOfdays = this.state.historyKeysArr.map(i=>{
-				
-				// if data is undefined
-				let datum = filterHistory(history, i)
-				
-				if (datum===undefined){
-					datum={data: []}
-				}
-				// use local data for day today
-				if (i === moment().format("YYYYMMMMDD")){
-					if(this.props.completed==null ||this.props.completed === undefined){
-						datum = {data: []}
-					}else{
-						datum = {data: this.props.completed}
-					}
-				}
-				
-				return datum.data.length*30
-			})
-			const createDataPoints = Object.keys(this.state.historyKeysArr).map(i=>{
-				return {x: i, y: dataOfdays[i]}
-			})
+		// map history to historyKeysArr	
+		const dataOfdays = this.makeHistoryKeysArr().map(i=>{
+			// if data is undefined
+			let datum = filterHistory(history, i)
 			
-			data = createDataPoints
-		}catch{
-			//
-		}
-		console.log(data)
-		return data;
+			if (datum===undefined){
+				datum={data: []}
+			}
+			// use local data for day today
+			if (i === moment().format("YYYYMMMMDD")){
+				if(this.props.completed==null ||this.props.completed === undefined){
+					datum = {data: []}
+				}else{
+					datum = {data: this.props.completed}
+				}
+			}
+			return datum.data.length*30
+		})
+		const createDataPoints = Object.keys(this.makeHistoryKeysArr()).map(i=>{
+			return {x: i, y: dataOfdays[i]}
+		})
+		data = createDataPoints
+		
+		return data
+		
 	}
 	
 	// moving avarage data points
 	movingAvarages =(history)=>{
 		let data = [];
-		try{
-			// map history to historyKeysArr	
-			const dataOfdays = this.state.avarageHistoryKeysArr.map(i=>{
-				
-				// if data is undefined
-				let datum = filterHistory(history, i)
-				
-				if (datum===undefined){
-					datum={data: []}
-				}
-				// use local data for day today
-				if (i === moment().format("YYYYMMMMDD")){
-					if(this.props.completed==null ||this.props.completed === undefined){
-						datum = {data: []}
-					}else{
-						datum = {data: this.props.completed}
-					}
-				}
-
-				
-				return datum.data.length*30
-			})
-
-			const avarageHistoryLength = this.state.avarageHistoryKeysArr.length-this.props.historyLength
+	
+		// map history to historyKeysArr	
+		const dataOfdays = this.makeAvarageHistoryKeysArr(this.props.history).map(i=>{
 			
-			const avarage = AvarageAtPoint(dataOfdays).reverse().slice(avarageHistoryLength)
-			console.log(avarage)
-			const createDataPoints = Object.keys(this.state.historyKeysArr).map(i=>{
-				return {x: i, y: avarage[i]}
-			})
-			data = createDataPoints
+			// if data is undefined
+			let datum = filterHistory(history, i)
+			
+			if (datum===undefined){
+				datum={data: []}
+			}
+			// use local data for day today
+			if (i === moment().format("YYYYMMMMDD")){
+				if(this.props.completed==null ||this.props.completed === undefined){
+					datum = {data: []}
+				}else{
+					datum = {data: this.props.completed}
+				}
+			}
+
+			
+			return datum.data.length*30
+		})
+
+		const avarageHistoryLength = this.makeAvarageHistoryKeysArr(this.props.history).length-this.props.historyLength
 		
-		}catch{
-			//
-		}	
-		
-		return data;
+		const avarage = AvarageAtPoint(dataOfdays).reverse().slice(avarageHistoryLength)
+		const createDataPoints = Object.keys(this.makeHistoryKeysArr()).map(i=>{
+			return {x: i, y: avarage[i]}
+		})
+		data = createDataPoints
+	
+		return data
 		
 	}
 
@@ -144,13 +127,8 @@ class LineChart extends Component {
 	
 	render() {
 
-		const history = JSON.parse(localStorage.getItem("history")) 
-		try{
-			this.makeHistoryKeysArr()
-			this.makeAvarageHistoryKeysArr(history)
-		}catch{
-
-		}
+		const avaragePoints = this.movingAvarages(this.props.history)
+		const dataPoints = this.dataPoints(this.props.history)
 	  
 
 
@@ -168,18 +146,18 @@ class LineChart extends Component {
 										
 						<LineMarkSeries  
 							color="green"
-							data={this.dataPoints(history)} 
+							data={dataPoints} 
 							curve={'curveMonotoneX'}
 						/> 
 						<LineMarkSeries 
 							color="purple"
-							data={this.movingAvarages(history)} 
+							data={avaragePoints} 
 							curve={'curveMonotoneX'}
 							
 						/>
 						<XAxis 
 							
-							tickFormat={v => this.state.days[v]}
+							tickFormat={v => this.makeDaysArr()[v]}
 							tickLabelAngle={-30}
 							
 							style={{
