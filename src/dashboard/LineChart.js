@@ -13,7 +13,6 @@ class LineChart extends Component {
             refresh: false,
 			len: 0,
 			days: [],
-			
 		}
     }
 
@@ -38,8 +37,7 @@ class LineChart extends Component {
 	// create an array of dataPoint keys 
 	makeAvarageHistoryKeysArr =(history)=>{
 		// the last data in array was the first to be recorded
-		const earliestData = history.pop().day
-		
+		const earliestData = history[history.length-1].day		
 		let avarageHistoryKeysArr = [];
 		// the whole duration recorded
 		const duration = moment.duration(moment().diff(moment(earliestData))).asDays()
@@ -47,17 +45,11 @@ class LineChart extends Component {
 		for (let i = 0; i < duration; i++){
 			avarageHistoryKeysArr.push(moment(earliestData).add(i, 'days').format("YYYYMMMMDD"));
 		}
-		
 		return avarageHistoryKeysArr
 	};
-	
-	
-
 
 	//progress line graph datapoints
 	dataPoints=(history)=>{
-		
-		let data = [];
 		// map history to historyKeysArr	
 		const dataOfdays = this.makeHistoryKeysArr().map(i=>{
 			// if data is undefined
@@ -79,22 +71,15 @@ class LineChart extends Component {
 		const createDataPoints = Object.keys(this.makeHistoryKeysArr()).map(i=>{
 			return {x: i, y: dataOfdays[i]}
 		})
-		data = createDataPoints
-		
-		return data
-		
+		return createDataPoints
 	}
 	
 	// moving avarage data points
 	movingAvarages =(history)=>{
-		let data = [];
-	
 		// map history to historyKeysArr	
 		const dataOfdays = this.makeAvarageHistoryKeysArr(this.props.history).map(i=>{
-			
 			// if data is undefined
 			let datum = filterHistory(history, i)
-			
 			if (datum===undefined){
 				datum={data: []}
 			}
@@ -106,31 +91,21 @@ class LineChart extends Component {
 					datum = {data: this.props.completed}
 				}
 			}
-
-			
 			return datum.data.length*30
 		})
-
 		const avarageHistoryLength = this.makeAvarageHistoryKeysArr(this.props.history).length-this.props.historyLength
-		
 		const avarage = AvarageAtPoint(dataOfdays).reverse().slice(avarageHistoryLength)
 		const createDataPoints = Object.keys(this.makeHistoryKeysArr()).map(i=>{
 			return {x: i, y: avarage[i]}
 		})
-		data = createDataPoints
-	
-		return data
-		
+		return createDataPoints
 	}
 
-	
-	
 	render() {
-
 		const avaragePoints = this.movingAvarages(this.props.history)
+		
 		const dataPoints = this.dataPoints(this.props.history)
-	  
-
+	
 
 		return (
 		<div className="chart">			
