@@ -124,9 +124,9 @@ class LineChart extends Component {
 			})
 
 			const avarageHistoryLength = this.state.avarageHistoryKeysArr.length-this.props.historyLength
-			console.log(AvarageAtPoint(dataOfdays))
-			const avarage = AvarageAtPoint(dataOfdays).reverse().slice(avarageHistoryLength)
 			
+			const avarage = AvarageAtPoint(dataOfdays).reverse().slice(avarageHistoryLength)
+			console.log(avarage)
 			const createDataPoints = Object.keys(this.state.historyKeysArr).map(i=>{
 				return {x: i, y: avarage[i]}
 			})

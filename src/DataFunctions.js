@@ -28,9 +28,30 @@ export function filterHistory (history, key){
 
 
 // return avarages array
+// export function AvarageAtPoint(data){
+//     data = data.reverse()
+//     const addArr=(arr)=>arr.reduce((a,b) => a + b, 0)/arr.length
+//     const movingAvarages = ()=>{
+//         let ret=[];
+//         for (let i = 0; i<data.length; i++){
+            
+//             ret.push(addArr(data.slice(i)))
+//         }
+//         return ret;
+//     }
+//     const dataSet = movingAvarages() 
+//     return dataSet
+// }
+
 export function AvarageAtPoint(data){
+    
     data = data.reverse()
-    const addArr=(arr)=>arr.reduce((a,b) => a + b, 0)/arr.length
+
+    const addArr=(arr)=>{
+        let total = arr.reduce((a,b) => a + b, 0)
+        return total/arr.length
+    }
+
     const movingAvarages = ()=>{
         let ret=[];
         for (let i = 0; i<data.length; i++){
@@ -41,7 +62,10 @@ export function AvarageAtPoint(data){
     }
     const dataSet = movingAvarages() 
     return dataSet
+
+    
 }
+
 
 
 
