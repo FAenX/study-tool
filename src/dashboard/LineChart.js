@@ -11,7 +11,7 @@ class LineChart extends Component {
 		super(props)
 		this.state={
             refresh: false,
-			historyLength: 14, 
+			historyLength: 7, 
 			len: 0,
 			historyKeysArr: [],
 			avarageHistoryKeysArr:[],
@@ -96,7 +96,7 @@ class LineChart extends Component {
 		}catch{
 			//
 		}
-		
+		console.log(data)
 		return data;
 	}
 	
