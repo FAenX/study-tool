@@ -11,7 +11,6 @@ class LineChart extends Component {
 		super(props)
 		this.state={
             refresh: false,
-			historyLength: 7, 
 			len: 0,
 			historyKeysArr: [],
 			avarageHistoryKeysArr:[],
@@ -20,16 +19,14 @@ class LineChart extends Component {
     }
 
 	componentDidMount=()=>{ 
-		this.history = JSON.parse(localStorage.getItem("history")) 
-	   	this.makeHistoryKeysArr()
-	   	this.makeAvarageHistoryKeysArr(this.history)
+		
 	}
 	
     makeHistoryKeysArr =()=>{
 		let days = []
 		let historyKeysArr = [];
 		
-		for (let i = 0; i < this.state.historyLength;  i++){
+		for (let i = 0; i < this.props.historyLength;  i++){
 			historyKeysArr.push(moment().subtract(i, 'days').format("YYYYMMMMDD"));
 			days.push(moment().subtract(i, 'days').format("dd"))
 		}
@@ -126,7 +123,7 @@ class LineChart extends Component {
 				return datum.data.length*30
 			})
 
-			const avarageHistoryLength = this.state.avarageHistoryKeysArr.length-this.state.historyLength
+			const avarageHistoryLength = this.state.avarageHistoryKeysArr.length-this.props.historyLength
 			console.log(AvarageAtPoint(dataOfdays))
 			const avarage = AvarageAtPoint(dataOfdays).reverse().slice(avarageHistoryLength)
 			
@@ -147,7 +144,14 @@ class LineChart extends Component {
 	
 	render() {
 
-		
+		const history = JSON.parse(localStorage.getItem("history")) 
+		try{
+			this.makeHistoryKeysArr()
+			this.makeAvarageHistoryKeysArr(history)
+		}catch{
+
+		}
+	  
 
 
 		return (
@@ -164,12 +168,12 @@ class LineChart extends Component {
 										
 						<LineMarkSeries  
 							color="green"
-							data={this.dataPoints(this.history)} 
+							data={this.dataPoints(history)} 
 							curve={'curveMonotoneX'}
 						/> 
 						<LineMarkSeries 
 							color="purple"
-							data={this.movingAvarages(this.history)} 
+							data={this.movingAvarages(history)} 
 							curve={'curveMonotoneX'}
 							
 						/>

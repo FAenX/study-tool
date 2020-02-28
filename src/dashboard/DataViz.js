@@ -1,7 +1,7 @@
 import React from "react"
 import {Card, IconButton, Toolbar} from "@material-ui/core"
 import LineChart from "./LineChart"
-import Refresh from "@material-ui/icons/Refresh"
+import {Refresh, Add, Remove} from "@material-ui/icons"
 import "./DataViz.scss"
 
 class DataViz extends React.Component{
@@ -9,6 +9,7 @@ class DataViz extends React.Component{
 		super(props)
 		this.state={
             refresh: false,
+            historyLength: 7,
         }
     }
     
@@ -18,21 +19,38 @@ class DataViz extends React.Component{
 			this.setState({refresh: false})
 		}, 1000)
     }
+    
+    moreLineChartHistory=()=>{
+        this.setState({historyLength: this.state.historyLength+1}) 
+    }
+    lessLineChartHistory=()=>{
+        this.setState({historyLength: this.state.historyLength-1}) 
+    }
+
+
     render(){
         
         return(
            
                 <Card variant="outlined" id="dataviz" className="stats-item">
                 <Toolbar>
-                        Visualize Your Daily Progress
+                    <div> Line Chart</div>
+                       
                 
                     <IconButton onClick={this.refresh}>
                         <Refresh />
                     </IconButton>
+                    <IconButton onClick={this.moreLineChartHistory}>
+                        <Add />
+                    </IconButton>
+                    <IconButton onClick={this.lessLineChartHistory}>
+                        <Remove />
+                    </IconButton>
                     
                 </Toolbar>
 
-                <LineChart 
+                <LineChart
+                    historyLength={this.state.historyLength} 
                     completed={this.props.completed}
                     refresh={this.state.refresh}
                 />
