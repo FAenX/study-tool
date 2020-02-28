@@ -3,7 +3,7 @@ import clsx from "clsx"
 import moment from "moment"
 import "./LineChart.scss"
 import {XYPlot, XAxis, YAxis, HorizontalGridLines,  LineMarkSeries} from 'react-vis';
-import {AvarageAtPoint} from "../DataFunctions"
+import {AvarageAtPoint, filterHistory} from "../DataFunctions"
 
  
 class LineChart extends Component {
@@ -11,7 +11,7 @@ class LineChart extends Component {
 		super(props)
 		this.state={
             refresh: false,
-			historyLength: 7, 
+			historyLength: 14, 
 			len: 0,
 			historyKeysArr: [],
 			avarageHistoryKeysArr:[],
@@ -20,68 +20,60 @@ class LineChart extends Component {
     }
 
 	componentDidMount=()=>{ 
-	   this.makeHistoryKeysArr()
-	   this.makeAvarageHistoryKeysArr()
+		this.history = JSON.parse(localStorage.getItem("history")) 
+	   	this.makeHistoryKeysArr()
+	   	this.makeAvarageHistoryKeysArr(this.history)
 	}
 	
-    makeHistoryKeysArr = ()=>{
+    makeHistoryKeysArr =()=>{
 		let days = []
 		let historyKeysArr = [];
 		
-        for (let i = this.state.historyLength; i >= 0; i--){
-            historyKeysArr.push(moment().subtract(i, 'days').format("YYYYMMMMDD"));
+		for (let i = 0; i < this.state.historyLength;  i++){
+			historyKeysArr.push(moment().subtract(i, 'days').format("YYYYMMMMDD"));
 			days.push(moment().subtract(i, 'days').format("dd"))
-        }
+		}
+
+		days = days.reverse()
+		historyKeysArr = historyKeysArr.reverse()
+
 		this.setState({
 			historyKeysArr,
 			days,
 		})
 	};
 
-	makeAvarageHistoryKeysArr = ()=>{
-		const history = JSON.parse(localStorage.getItem("history")) 
+	// create an array of dataPoint keys 
+	makeAvarageHistoryKeysArr =(history)=>{
+		// the last data in array was the first to be recorded
 		const earliestData = history.pop().day
 		
 		let avarageHistoryKeysArr = [];
+		// the whole duration recorded
 		const duration = moment.duration(moment().diff(moment(earliestData))).asDays()
+		// create list of keys == datapoints
+		for (let i = 0; i < duration; i++){
+			avarageHistoryKeysArr.push(moment(earliestData).add(i, 'days').format("YYYYMMMMDD"));
+		}
 		
-		
-		
-        for (let i = 0; i <= duration; i++){
-            avarageHistoryKeysArr.push(moment(earliestData).add(i, 'days').format("YYYYMMMMDD"));
-        }
 		this.setState({
 			avarageHistoryKeysArr,
 		})
-		console.log(avarageHistoryKeysArr)
 	};
+	
+	
 
-	// filter history by key, return arr 
-	filterHistory = (key)=>{
-		const history = JSON.parse(localStorage.getItem("history")) 
-		
-		const data = history.filter(i=>{
-					let data;
-					if (i.day === key )
-					{
-						data = i.data
-					}
-					
-					return data
-				})
-		
-		return data[0]
-	};
 
 	//progress line graph datapoints
-	dataPoints=()=>{
+	dataPoints=(history)=>{
 		let data = [];
 		try{
 			// map history to historyKeysArr	
 			const dataOfdays = this.state.historyKeysArr.map(i=>{
 				
 				// if data is undefined
-				let datum = this.filterHistory(i)
+				let datum = filterHistory(history, i)
+				
 				if (datum===undefined){
 					datum={data: []}
 				}
@@ -109,14 +101,14 @@ class LineChart extends Component {
 	}
 	
 	// moving avarage data points
-	movingAvarages =()=>{
+	movingAvarages =(history)=>{
 		let data = [];
 		try{
 			// map history to historyKeysArr	
 			const dataOfdays = this.state.avarageHistoryKeysArr.map(i=>{
 				
 				// if data is undefined
-				let datum = this.filterHistory(i)
+				let datum = filterHistory(history, i)
 				
 				if (datum===undefined){
 					datum={data: []}
@@ -129,23 +121,19 @@ class LineChart extends Component {
 						datum = {data: this.props.completed}
 					}
 				}
+
 				
 				return datum.data.length*30
 			})
 
 			const avarageHistoryLength = this.state.avarageHistoryKeysArr.length-this.state.historyLength
-
-			const avarage = AvarageAtPoint(dataOfdays).dataSet.reverse().slice(avarageHistoryLength)
-			console.log(AvarageAtPoint(dataOfdays).dataSet)
-			console.log(avarage)
+			console.log(AvarageAtPoint(dataOfdays))
+			const avarage = AvarageAtPoint(dataOfdays).reverse().slice(avarageHistoryLength)
 			
-
 			const createDataPoints = Object.keys(this.state.historyKeysArr).map(i=>{
 				return {x: i, y: avarage[i]}
 			})
-			
 			data = createDataPoints
-			console.log(this.state.avarageHistoryKeysArr.length)
 		
 		}catch{
 			//
@@ -158,7 +146,10 @@ class LineChart extends Component {
 	
 	
 	render() {
+
 		
+
+
 		return (
 		<div className="chart">			
 				
@@ -173,12 +164,12 @@ class LineChart extends Component {
 										
 						<LineMarkSeries  
 							color="green"
-							data={this.dataPoints()} 
+							data={this.dataPoints(this.history)} 
 							curve={'curveMonotoneX'}
 						/> 
 						<LineMarkSeries 
 							color="purple"
-							data={this.movingAvarages()} 
+							data={this.movingAvarages(this.history)} 
 							curve={'curveMonotoneX'}
 							
 						/>
