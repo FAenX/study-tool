@@ -5,6 +5,7 @@ import {AppBar} from "@material-ui/core"
 import {MenuOpenOutlined} from "@material-ui/icons"
 import moment from "moment"
 import './App.scss';
+import KanBan from "./components/KanBan"
 
 
 class App extends React.Component {
@@ -19,17 +20,6 @@ class App extends React.Component {
   }
 
   componentDidMount =()=>{
-    this.FetchTableData()
-    // try{
-    //   const TableData = JSON.parse(localStorage.getItem("history"))
-
-    //   if(TableData==null || TableData===undefined ){
-    //     this.FetchTableData()
-    //   }
-    // }catch{
-
-    // }
-   
     this.setState({
 			completed: JSON.parse(localStorage.getItem(moment().format("YYYYMMMMD")))
     })    
@@ -139,17 +129,26 @@ class App extends React.Component {
             <MenuOpenOutlined />
             Pomodoro Study Tool
         </AppBar>
-        <div className="main-app-wrapper">         
-            <DashBoard 
-              completed={this.state.completed}
-            />
-            <CellTable 
-              handleTableReset={this.handleTableReset}
-              addToCompleted={this.addToCompleted} 
-              completed={this.state.completed}
-            />
+        
+        <div className="main-app-wrapper">  
+            <div className="table-min-data-display">
+              <DashBoard 
+                completed={this.state.completed}
+              />
+              <CellTable 
+                handleTableReset={this.handleTableReset}
+                addToCompleted={this.addToCompleted} 
+                completed={this.state.completed}
+              />  
+            </div> 
+               
+            
+            {/* <KanBan />  
+            <KanBan />   
+            <KanBan />     */}
+            
         </div>           
-            <div className="stats-wrapper"></div>
+         
       </div>
     );
   };

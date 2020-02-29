@@ -47,13 +47,19 @@
         z-index: 1;
     }  
     .main-app-wrapper{
-        @include flex-row(); 
-        flex-wrap: wrap; 
-        align-items: baseline;
+        @include flex-col(); 
         justify-content: space-around;
         width: 100vw;
         margin-top: 5rem;
-        padding: 1rem;        
+        padding: 1rem;  
+        .table-min-data-display{
+            @include flex-row();
+            flex-wrap: wrap;
+            width: 90vw;
+            padding: 1em;
+            border-radius: 20px;
+            border: 1px solid $color_2;
+        }      
   
      
     }

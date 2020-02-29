@@ -1,6 +1,9 @@
 @import "../base";
 
 #dashboard{
-    @include flex-col();             
+    @include flex-col(); 
+    height: 400px;
+    width: 400px;    
+    margin: .25em;        
    
 }
