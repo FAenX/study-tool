@@ -54,7 +54,6 @@ class LineChart extends Component {
 		const dataOfdays = this.makeHistoryKeysArr().map(i=>{
 			// if data is undefined
 			let datum = filterHistory(history, i)
-			
 			if (datum===undefined){
 				datum={data: []}
 			}
@@ -103,62 +102,57 @@ class LineChart extends Component {
 
 	render() {
 		const avaragePoints = this.movingAvarages(this.props.history)
-		
 		const dataPoints = this.dataPoints(this.props.history)
-	
 
 		return (
-		<div className="chart">			
+			<div className="chart">	
+					<div className="plot">
+						<XYPlot 
+							height={300} 
+							width={500}
+						>
+							<HorizontalGridLines />
+							<LineMarkSeries  
+								color="green"
+								data={dataPoints} 
+								curve={'curveMonotoneX'}
+								
+							/> 
+							<LineMarkSeries 
+								color="purple"
+								data={avaragePoints} 
+								curve={'curveMonotoneX'}
+								
+							/>
+							<XAxis 
+								
+								tickFormat={v => this.makeDaysArr()[v]}
+								tickLabelAngle={-30}
+								
+								style={{
+									line: {fill: '#002329'},
+									text: {stroke: 'none', fill: '#002329', fontWeight: 400}}}
+								tickSize= {0}
+								
+							/>
+							<YAxis 
+								style={{
+									line: {fill: '#002329'},
+									text: {stroke: 'none', fill: '#002329', fontWeight: 400}}}
+								tickSize= {0}
+							/>
+						
+						</XYPlot>
+					</div>
 				
-				<div className="plot">
-					<XYPlot 
-						height={300} 
-						width={500}
-						
-						
-					>
-						<HorizontalGridLines />
-										
-						<LineMarkSeries  
-							color="green"
-							data={dataPoints} 
-							curve={'curveMonotoneX'}
-						/> 
-						<LineMarkSeries 
-							color="purple"
-							data={avaragePoints} 
-							curve={'curveMonotoneX'}
-							
-						/>
-						<XAxis 
-							
-							tickFormat={v => this.makeDaysArr()[v]}
-							tickLabelAngle={-30}
-							
-							style={{
-								line: {fill: '#002329'},
-								text: {stroke: 'none', fill: '#002329', fontWeight: 400}}}
-							tickSize= {0}
-							
-						/>
-						<YAxis 
-							style={{
-								line: {fill: '#002329'},
-								text: {stroke: 'none', fill: '#002329', fontWeight: 400}}}
-							tickSize= {0}
-						/>
-					
-					</XYPlot>
+				<div className={clsx("refreshed",{
+					"display-none": !this.props.refresh
+				})}
+				>
+					refreshed
 				</div>
 			
-			<div className={clsx("refreshed",{
-				"display-none": !this.props.refresh
-			})}
-			>
-				refreshed
 			</div>
-		
-		</div>
 		);
 	}
 }

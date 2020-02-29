@@ -19,15 +19,16 @@ class App extends React.Component {
   }
 
   componentDidMount =()=>{
-    try{
-      const TableData = JSON.parse(localStorage.getItem("history"))
+    this.FetchTableData()
+    // try{
+    //   const TableData = JSON.parse(localStorage.getItem("history"))
 
-      if(TableData==null || TableData===undefined ){
-        this.FetchTableData()
-      }
-    }catch{
+    //   if(TableData==null || TableData===undefined ){
+    //     this.FetchTableData()
+    //   }
+    // }catch{
 
-    }
+    // }
    
     this.setState({
 			completed: JSON.parse(localStorage.getItem(moment().format("YYYYMMMMD")))
@@ -47,7 +48,6 @@ class App extends React.Component {
           console.log(err)
       })    
       const response = await GetData.then(data=>data).catch(err=>err)
-      console.log(response)
       try
       {
         localStorage.removeItem("history")
@@ -55,6 +55,7 @@ class App extends React.Component {
       catch{
         //
       }
+      console.log(response)
       localStorage.setItem("history", JSON.stringify(response))
       return response
   }
@@ -123,6 +124,15 @@ class App extends React.Component {
 	}
 
   render(){
+    try{
+      const TableData = JSON.parse(localStorage.getItem("history"))
+
+      if(TableData==null || TableData===undefined ){
+        this.FetchTableData()
+      }
+    }catch{
+
+    }
     return (
       <div className="App">
         <AppBar className="App-header sliding-effect"> 
