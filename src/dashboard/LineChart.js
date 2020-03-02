@@ -13,8 +13,10 @@ class LineChart extends Component {
             refresh: false,
 			len: 0,
 			days: [],
+			
 		}
-    }
+	}
+	
 
     makeHistoryKeysArr =()=>{
 		let historyKeysArr = [];
@@ -37,13 +39,13 @@ class LineChart extends Component {
 	// create an array of dataPoint keys 
 	makeAvarageHistoryKeysArr =(history)=>{
 		// the last data in array was the first to be recorded
-		const earliestData = history[history.length-1].day		
+		const [earliestData] = history.reverse()	
 		let avarageHistoryKeysArr = [];
 		// the whole duration recorded
-		const duration = moment.duration(moment().diff(moment(earliestData))).asDays()
+		const duration = moment.duration(moment().diff(moment(earliestData.day))).asDays()
 		// create list of keys == datapoints
-		for (let i = 0; i < duration; i++){
-			avarageHistoryKeysArr.push(moment(earliestData).add(i, 'days').format("YYYYMMMMDD"));
+		for (let i = 0; i <= duration; i++){
+			avarageHistoryKeysArr.push(moment(earliestData.day).add(i, 'days').format("YYYYMMMMDD"));
 		}
 		return avarageHistoryKeysArr
 	};
@@ -92,10 +94,11 @@ class LineChart extends Component {
 			}
 			return datum.data.length*30
 		})
-		const avarageHistoryLength = this.makeAvarageHistoryKeysArr(this.props.history).length-this.props.historyLength
-		const avarage = AvarageAtPoint(dataOfdays).reverse().slice(avarageHistoryLength)
+
+		const avarage = AvarageAtPoint(dataOfdays).reverse()
+		const [...avarageTofit] = avarage.splice(avarage.length-this.props.historyLength)
 		const createDataPoints = Object.keys(this.makeHistoryKeysArr()).map(i=>{
-			return {x: i, y: avarage[i]}
+			return {x: i, y: avarageTofit[i]}
 		})
 		return createDataPoints
 	}
@@ -108,18 +111,21 @@ class LineChart extends Component {
 			<div className="chart">	
 					<div className="plot">
 						<XYPlot 
-							height={200} 
-							width={300}
+							height={250} 
+							width={500}
 						>
-							<HorizontalGridLines />
+							<HorizontalGridLines 
+								style={{stroke: "grey"}}
+								
+							/>
 							<LineMarkSeries  
-								color="green"
+								color="purple"
 								data={dataPoints} 
 								curve={'curveMonotoneX'}
 								
 							/> 
 							<LineMarkSeries 
-								color="purple"
+								color="green"
 								data={avaragePoints} 
 								curve={'curveMonotoneX'}
 								
@@ -130,15 +136,15 @@ class LineChart extends Component {
 								tickLabelAngle={-30}
 								
 								style={{
-									line: {fill: '#002329'},
-									text: {stroke: 'none', fill: '#002329', fontWeight: 400}}}
+									line: {stroke: 'grey'},
+									text: {stroke: 'grey', fontWeight: 300}}}
 								tickSize= {0}
 								
 							/>
 							<YAxis 
 								style={{
-									line: {fill: '#002329'},
-									text: {stroke: 'none', fill: '#002329', fontWeight: 400}}}
+									line: {stroke: 'grey'},
+									text: {stroke: 'grey', fontWeight: 300}}}
 								tickSize= {0}
 							/>
 						

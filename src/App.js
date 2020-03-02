@@ -14,9 +14,7 @@ class App extends React.Component {
     this.state = {
       completed: [],
     }
-    this.FetchTableData = this.FetchTableData.bind(this)
-    this.UpdateTableData = this.UpdateTableData.bind(this)
-    this.WriteTableData = this.WriteTableData.bind(this)
+    
   }
 
   componentDidMount =()=>{
@@ -29,15 +27,12 @@ class App extends React.Component {
   }
 
   //read from db
-  async FetchTableData(){
-    console.log("fetching")
-    const GetData= fetch("/api/v1/TableData/", {
+  FetchTableData = async ()=>{
+    console.info("fetching")
+    const fetchData =  await fetch("/api/v1/TableData/", {
       method: "GET",                    
-      }).then(res=>res.json())
-      .catch((err)=>{
-          console.log(err)
-      })    
-      const response = await GetData.then(data=>data).catch(err=>err)
+      })
+      const response = await fetchData.json()
       try
       {
         localStorage.removeItem("history")
@@ -45,48 +40,36 @@ class App extends React.Component {
       catch{
         //
       }
-      console.log(response)
       localStorage.setItem("history", JSON.stringify(response))
       return response
   }
 
   //update db
-  async UpdateTableData(data){
-    console.log("updating")
-    const UpdateData= fetch("/api/v1/TableData/", {
+  UpdateTableData = async (data)=>{
+    console.info("updating")
+    const updateRequest= await fetch("/api/v1/TableData/", {
       method: "PATCH", 
       headers: {"Content-type": "application/json"},
       body: data                       
-      }).then(res=>res.json())
-      .catch((err)=>{
-          console.log(err)
       })    
-      const response = await UpdateData.then(data=>data).catch(err=>err)
-      console.log(response)
+      const response = await updateRequest.json()
       return response
   }
   
   
   //write to db
-  async WriteTableData(data){
-    const PostData = fetch("/api/v1/TableData/", {
+  WriteTableData=async (data)=>{
+    const writeRequest = await fetch("/api/v1/TableData/", {
       method: "POST",
       headers: {"Content-type": "application/json"},
       body: data                    
-      }).then(res=>{
-        return res.json()
-      })
-      .catch((err)=>{
-          console.log(err)
       })    
-      const response = await PostData.then(data=>data).catch(err=>err)
+      const response = await writeRequest.json()
       
-      console.log(response)
       if (response.status === 400 && response.id)
       {
         data=JSON.parse(data)
         data["id"]=response.id
-        console.log(data)
         this.UpdateTableData(JSON.stringify(data))
       }
       
@@ -143,8 +126,8 @@ class App extends React.Component {
             </div> 
                
             
-            {/* <KanBan />  
-            <KanBan />   
+            <KanBan />  
+            {/* <KanBan />   
             <KanBan />     */}
             
         </div>           

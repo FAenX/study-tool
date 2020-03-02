@@ -1,6 +1,8 @@
 import React from "react"
 import "./KanBan.scss"
 import clsx from "clsx"
+import {Fab} from "@material-ui/core"
+
 
 class KanBan extends React.Component{
     constructor(props){
@@ -21,6 +23,8 @@ class KanBan extends React.Component{
         const scrolled = (winScroll / winHeight) * 100;
 
         console.log(scrolled)
+        console.log(document.documentElement.scrollTop)
+        console.log(document.documentElement.clientHeight)
 
         if (winHeight > 0) {
           this.setState({scrolled,})

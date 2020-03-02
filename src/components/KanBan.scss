@@ -2,12 +2,14 @@
 
 .kan-ban{
     @include flex-col();
-    height: 30vh;
-    background-color: rgb(4, 109, 109);
+    height: 10px;
+    background-color: #9dff00;
     width: 100vw;
-    transition: height 1s;
+    margin: 1em;
+    transition: height 2s;
+    overflow: hidden;
 }
 
 .stretch-in{
-    height: 70vw;
+    // height: 70vw;
 }
