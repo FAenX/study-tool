@@ -53,17 +53,32 @@ class LineChart extends Component {
 	//progress line graph datapoints
 	dataPoints=(history)=>{
 		// map history to historyKeysArr	
+		
 		const dataOfdays = this.makeHistoryKeysArr().map(i=>{
 			// if data is undefined
+			
 			let datum = filterHistory(history, i)
+			
 			if (datum===undefined){
 				datum={data: []}
 			}
 			// use local data for day today
 			if (i === moment().format("YYYYMMMMDD")){
-				if(this.props.completed==null ||this.props.completed === undefined){
-					datum = {data: []}
-				}else{
+				
+				if(this.props.completed==null ||
+					this.props.completed === undefined
+					
+					)
+				{
+					if (datum.data.length >= 1){
+						localStorage.setItem(moment().format("YYYYMMMMDD"), JSON.stringify(datum.data))
+					}else{
+						datum = {data: []}
+					}
+					
+				}
+				else
+				{
 					datum = {data: this.props.completed}
 				}
 			}

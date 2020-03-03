@@ -19,11 +19,11 @@ class App extends React.Component {
 
   componentDidMount =()=>{
     this.setState({
-			completed: JSON.parse(localStorage.getItem(moment().format("YYYYMMMMD")))
+			completed: JSON.parse(localStorage.getItem(moment().format("YYYYMMMMDD")))
     })    
   }
   handleTableReset=()=>{
-    localStorage.setItem(moment().format("YYYYMMMMD"), JSON.stringify([]))
+    localStorage.setItem(moment().format("YYYYMMMMDD"), JSON.stringify([]))
   }
 
   //read from db
@@ -88,12 +88,12 @@ class App extends React.Component {
 		  completed,
     }))
 
-    const data = {"data": this.state.completed, "day":moment().format("YYYYMMMMD")}
+    const data = {"data": this.state.completed, "day":moment().format("YYYYMMMMDD")}
     console.log(data)
     //write to db
     this.WriteTableData(JSON.stringify(data))
     localStorage.setItem(
-      moment().format("YYYYMMMMD"), JSON.stringify(this.state.completed))
+      moment().format("YYYYMMMMDD"), JSON.stringify(this.state.completed))
 	}
 
   render(){
@@ -122,14 +122,12 @@ class App extends React.Component {
                 handleTableReset={this.handleTableReset}
                 addToCompleted={this.addToCompleted} 
                 completed={this.state.completed}
+                cells={21}
               />  
             </div> 
                
             
-            <KanBan />  
-            {/* <KanBan />   
-            <KanBan />     */}
-            
+          
         </div>           
          
       </div>

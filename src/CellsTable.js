@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Cell from "./Cell";
 import Timer from "./Timer";
 import {Paper, Button, Toolbar} from "@material-ui/core"
 import "./CellsTable.scss"
+import AlertOnComplete from "./components/AlertOnComplete"
+import PropTypes from "prop-types"
 
 const makeList = (num) => {
     let list = [];
@@ -12,78 +14,77 @@ const makeList = (num) => {
     return list;
 }
 
-class ResetButton extends React.Component{
-	
-	render(){
-		return(
-			<Button variant="outlined" color="primary" onClick={this.props.handleTableReset}>reset</Button>
-		)
-	}
-}
+const ResetButton =props=>(
+	<Button 
+		variant="outlined" 
+		color="primary" 
+		onClick={props.handleTableReset}>
+			reset
+	</Button>
 
-class Table extends React.Component {
-	constructor(props){
-		super(props);
-		this.state = {
-			cells: 20,
-			active: false,
-			cellID: "",	
-			timer: ""		
-			
-		}
-		
-	};
+)
 
+
+const Table =props=> {
+	const [active, setActive] = useState(false)
+	const [cellID, setCellID] = useState("")
+	const [timer, setTimer] = useState("")
+	const [alert, setAlert] = useState(false)
 	//update state from cell click
-	handleCellClick = (ID, then)=> {  
-		this.setState({
-		  cellID: ID,
-		  active: true,
-		  timer: then
-		})
+	const handleCellClick = (ID, then)=> {  
+		setCellID(ID)
+		setActive(true)
+		setTimer(then)
 	} 	
 
-	handleOnComplete=()=>{
-		this.props.addToCompleted(this.state.cellID)
-		this.setState({
-			active: false,
-			cellID: false,
-			timer: false
-		})
-
-		
-
-		alert("Completed")
+	const handleOnComplete=()=>{
+		props.addToCompleted(cellID)
+		setActive(false)
+		setCellID(false)
+		setTimer(false)
+		//
+		setAlert(true)
 	}
+	return (		
+			<Paper
+				variant="outlined" 					  
+				className="pomodoro-table"
+			> 
+			<Toolbar>					  
+				<Button variant="outlined" color="primary">Refresh</Button>
+				<ResetButton handleTableReset={props.handleTableReset}/>					
+			</Toolbar>
+			<div className="cells">
+				{makeList(props.cells).map(i => {
+					return <Cell number={i} 
+							activeCell={cellID}
+							key={i} 
+							clickHandler={handleCellClick} 
+							tableActive={active} 
+							completed={props.completed}
+						/>
+				})}
+			</div>
+			<Timer 
+				handleOnComplete={handleOnComplete} 
+				active={active} 
+				timer={timer}
+			/>
+			<AlertOnComplete 
+				open={alert} 
+				handleClose={()=>setAlert(false)}
+				
+			/>
+		</Paper>
+		);
 
+}
 
-	render (){
+Table.propTypes={
+	completed: PropTypes.array.isRequired,
+	handleTableReset: PropTypes.func.isRequired,
+	cells: PropTypes.number.isRequired
 
-		return (		
-				  <Paper
-					  variant="outlined" 					  
-					  className="pomodoro-table"
-					> 
-				  	<Toolbar>					  
-					  	<Button variant="outlined" color="primary">Refresh</Button>
-						<ResetButton handleTableReset={this.props.handleTableReset}/>					
-					</Toolbar>
-					<div className="cells">
-						{makeList(this.state.cells).map(i => {
-							return <Cell number={i} 
-									activeCell={this.state.cellID}
-									key={i} 
-									clickHandler={this.handleCellClick} 
-									tableActive={this.state.active} 
-									completed={this.props.completed}
-								/>
-						})}
-					</div>
-					<Timer completed={this.handleOnComplete} active={this.state.active} timer={this.state.timer}/>
-
-				</Paper>
-			);
-	};
 }
 
 export default Table;
