@@ -54,7 +54,7 @@ class Timer extends React.Component {
 		
 		if(moment(this.props.timer).add(30, "minutes") < moment() )
 		{
-			this.props.completed();
+			this.props.handleOnComplete();
 			this.setState({
 				progress: 0,
 				countDown: 0,

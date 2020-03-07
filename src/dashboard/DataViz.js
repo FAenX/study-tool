@@ -1,66 +1,59 @@
-import React from "react"
+import React, {useEffect, useState} from "react"
 import {Card, IconButton, Toolbar} from "@material-ui/core"
 import LineChart from "./LineChart"
 import {Refresh, Add, Remove} from "@material-ui/icons"
 import "./DataViz.scss"
 
-class DataViz extends React.Component{
-    constructor(props){
-		super(props)
-		this.state={
-            refresh: false,
-            historyLength: 7,
-        }
-    }
+export function DataViz(props) {
+    const [refresh, setRefresh]=useState(false)
+   const [historyLength, setHistoryLength] = useState(7)
+	
     
-    refresh =()=>{
-        this.setState({refresh: true})
+    const handleRefresh =()=>{
+        setRefresh(true)
 		setTimeout(()=>{
-			this.setState({refresh: false})
+			setRefresh(false)
 		}, 1000)
     }
-    
-    moreLineChartHistory=()=>{
-        this.setState({historyLength: this.state.historyLength+1}) 
+    const moreButton=()=>{
+        setHistoryLength(historyLength+1)
     }
-    lessLineChartHistory=()=>{
-        this.setState({historyLength: this.state.historyLength-1}) 
+
+    const lessButton=()=>{
+        setHistoryLength(historyLength-1)
     }
 
 
-    render(){
-        const history = JSON.parse(localStorage.getItem("history")) 
         
-        return(
-           
-                <Card variant="outlined" id="dataviz" className="stats-item">
-                <Toolbar>
-                    <div> Line Chart</div>
-                       
+    return(
+        
+            <Card variant="outlined" id="dataviz" className="stats-item">
+            <Toolbar>
+                <div> Line Chart</div>                       
+            
+                <IconButton onClick={handleRefresh}>
+                    <Refresh />
+                </IconButton>
+                <IconButton onClick={moreButton}>
+                    <Add />
+                </IconButton>
+                <IconButton onClick={lessButton}>
+                    <Remove />
+                </IconButton>
                 
-                    <IconButton onClick={this.refresh}>
-                        <Refresh />
-                    </IconButton>
-                    <IconButton onClick={this.moreLineChartHistory}>
-                        <Add />
-                    </IconButton>
-                    <IconButton onClick={this.lessLineChartHistory}>
-                        <Remove />
-                    </IconButton>
-                    
-                </Toolbar>
+            </Toolbar>
 
-                <LineChart
-                    historyLength={this.state.historyLength} 
-                    completed={this.props.completed}
-                    refresh={this.state.refresh}
-                    history={history}
-                />
-                </Card>
-            
-            
-        )
-    }
+            <LineChart
+                historyLength={historyLength} 
+                completed={props.completed}
+                refresh={refresh}
+                history={props.history}
+            />
+            </Card>
+        
+        
+    )
 }
+
 
 export default DataViz;

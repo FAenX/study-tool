@@ -1,138 +1,122 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import CellTable from "./CellsTable"
 import DashBoard from "./dashboard/dashboard"
-import {AppBar} from "@material-ui/core"
+import {AppBar, Backdrop, CircularProgress} from "@material-ui/core"
 import {MenuOpenOutlined} from "@material-ui/icons"
 import moment from "moment"
 import './App.scss';
 import KanBan from "./components/KanBan"
+import {UpdateTableData, FetchTableData, WriteTableData} from "./requests"
+import {AllData} from "./DataFunctions"
 
+const Main=props=>{
+  return( <div className="main-app-wrapper">  
+                  <div className="table-min-data-display">
+                    <DashBoard 
+                      completed={props.completed}
+                      history={props.history}
+                    />
+                    <CellTable 
+                      handleTableReset={props.handleTableReset}
+                      addToCompleted={props.addToCompleted} 
+                      completed={props.completed}
+                      cells={props.cells}
+                      addCells={props.addCells}
+                    />  
+                  </div> 
+            </div>  
+        )
+}
 
-class App extends React.Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      completed: [],
+export default function App (props) {
+ 
+  const [completed, setCompleted]=useState([])
+  const [loading, setLoading]=useState(false)
+  const [cells, setCells]=useState(20)
+  const [history, setHistory]=useState([])
+
+ useEffect(()=>{
+    const history = JSON.parse(localStorage.getItem("history")) 
+    const checkHistory=()=>{
+      if (history == null || history === undefined){
+        setLoading(true)
+        //read from db
+        FetchTableData()
+      }else{
+        return
+      }
+      
     }
-    
-  }
 
-  componentDidMount =()=>{
-    this.setState({
-			completed: JSON.parse(localStorage.getItem(moment().format("YYYYMMMMDD")))
-    })    
-  }
-  handleTableReset=()=>{
+    checkHistory()
+    
+    const historyToday = AllData.filterHistory(history, moment().format("YYYYMMMMDD"))
+    const historyOnstorage =  JSON.parse(localStorage.getItem(moment().format("YYYYMMMMDD")))
+    if (historyOnstorage == null && historyToday !== null && historyToday !== undefined){
+      setCompleted(historyToday.data) 
+    }else {
+      setCompleted([])
+    }
+    setHistory(history)
+    
+  },[loading])
+  
+ const handleTableReset=()=>{
     localStorage.setItem(moment().format("YYYYMMMMDD"), JSON.stringify([]))
   }
 
-  //read from db
-  FetchTableData = async ()=>{
-    console.info("fetching")
-    const fetchData =  await fetch("/api/v1/TableData/", {
-      method: "GET",                    
-      })
-      const response = await fetchData.json()
-      try
-      {
-        localStorage.removeItem("history")
-      }
-      catch{
-        //
-      }
-      localStorage.setItem("history", JSON.stringify(response))
-      return response
-  }
-
-  //update db
-  UpdateTableData = async (data)=>{
-    console.info("updating")
-    const updateRequest= await fetch("/api/v1/TableData/", {
-      method: "PATCH", 
-      headers: {"Content-type": "application/json"},
-      body: data                       
-      })    
-      const response = await updateRequest.json()
-      return response
-  }
-  
-  
-  //write to db
-  WriteTableData=async (data)=>{
-    const writeRequest = await fetch("/api/v1/TableData/", {
-      method: "POST",
-      headers: {"Content-type": "application/json"},
-      body: data                    
-      })    
-      const response = await writeRequest.json()
-      
-      if (response.status === 400 && response.id)
-      {
-        data=JSON.parse(data)
-        data["id"]=response.id
-        this.UpdateTableData(JSON.stringify(data))
-      }
-      
-      return response
+  const addCells=()=>{
+    setCells((state, props) => ({
+      cells: state.cells + 1
+    }))
   }
 
 	//add completed cell to list
-	addToCompleted=(cell)=>{	
-		let completed = this.state.completed
+	const addToCompleted=(cell)=>{	
+		let prevCompleted = completed
 		try{
-			completed[cell] = cell
+			prevCompleted[cell] = cell
 		}catch{
-			completed = [cell]
+			prevCompleted = [cell]
 		}        
-		this.setState((prevState, props)=>({
-		  completed,
+		setCompleted((prevState, props)=>({
+		  prevCompleted,
     }))
 
-    const data = {"data": this.state.completed, "day":moment().format("YYYYMMMMDD")}
-    console.log(data)
+    const data = {"data": completed, "day":moment().format("YYYYMMMMDD")}
     //write to db
-    this.WriteTableData(JSON.stringify(data))
+    WriteTableData(JSON.stringify(data))
     localStorage.setItem(
-      moment().format("YYYYMMMMDD"), JSON.stringify(this.state.completed))
+      moment().format("YYYYMMMMDD"), JSON.stringify(completed))
 	}
 
-  render(){
-    try{
-      const TableData = JSON.parse(localStorage.getItem("history"))
-
-      if(TableData==null || TableData===undefined ){
-        this.FetchTableData()
+    const toShow=()=>{
+      
+      if (!loading){
+        return(<Main handleTableReset={handleTableReset}
+                      addToCompleted={addToCompleted} 
+                      completed={completed}
+                      cells={cells}
+                      addCells={addCells}
+                      history={history}
+                  />)
+      }else{
+        return (<Backdrop 
+                open={this.state.loading}
+              ><CircularProgress color="inherit" /></Backdrop>
+        )
       }
-    }catch{
-
-    }
+    };
+   
+    
+   
     return (
       <div className="App">
         <AppBar className="App-header sliding-effect"> 
             <MenuOpenOutlined />
             Pomodoro Study Tool
         </AppBar>
-        
-        <div className="main-app-wrapper">  
-            <div className="table-min-data-display">
-              <DashBoard 
-                completed={this.state.completed}
-              />
-              <CellTable 
-                handleTableReset={this.handleTableReset}
-                addToCompleted={this.addToCompleted} 
-                completed={this.state.completed}
-                cells={21}
-              />  
-            </div> 
-               
-            
-          
-        </div>           
-         
+         {toShow()}
       </div>
     );
   };
-};
-
-export default App;

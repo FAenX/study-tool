@@ -1,181 +1,136 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import clsx from "clsx"
-import moment from "moment"
 import "./LineChart.scss"
-import {XYPlot, XAxis, YAxis, HorizontalGridLines,  LineMarkSeries} from 'react-vis';
-import {AvarageAtPoint, filterHistory} from "../DataFunctions"
+import {XYPlot, XAxis, YAxis, HorizontalGridLines, LineMarkSeries} from 'react-vis';
+import {movingAverages, dataPoints, makeDaysArr} from "./dataPoints"
+import {Button,} from '@material-ui/core';
+import math from "math"
 
- 
-class LineChart extends Component {
-	constructor(props){
-		super(props)
-		this.state={
-            refresh: false,
-			len: 0,
-			days: [],
-			
-		}
+
+const DataButton =props=>{
+	const text = {
+		fontSize: ".7em",
+		fontWeight: "600",
+		textTransform: "capitalize"
 	}
+
+	return(
+			<Button style={text}>{props.title}: {props.value} mins</Button>
+	)
+}
+
+const DayButton =props=>{
+	const text = {
+		fontSize: ".7em",
+		fontWeight: "600",
+		textTransform: "capitalize"
+	}
+
+	return(
+			<Button style={text}>{props.day}</Button>
+	)
+}
+
+const ToolTipsWrapper =props=>{
+	const tooltips = {
+		height: "100px", 
+		width: "450px",
+		// border: "1px solid #002329",
+		backgroundColor: "#0023298a",
+	}
+
+	return(
+		<div className="tooltips" style={tooltips}>
+			<DataButton value={props.dayValue} title="time"/>
+			<DataButton value={props.dayAverage} title="Average"/>
+			<DayButton day={props.day}/>
+		</div>
 	
+	)
+}
 
-    makeHistoryKeysArr =()=>{
-		let historyKeysArr = [];
-		for (let i = 0; i < this.props.historyLength;  i++){
-			historyKeysArr.push(moment().subtract(i, 'days').format("YYYYMMMMDD"));
-		}
-		historyKeysArr = historyKeysArr.reverse()
-		return historyKeysArr
-	};
+const LineChart=props=> {
+	const [averages, setAverages] = useState([])
+	const [data, setData] = useState([])
+	const [dayValue, setDayValue] = useState(0)
+	const [dayAverage, setDayAverage] = useState(0)
+    
+	useEffect(()=>{
+		const history = JSON.parse(localStorage.getItem("history")) 
+		const data = dataPoints(history, props.completed, props.historyLength)
+		const averages= movingAverages(history, props.completed, props.historyLength)
 
-	makeDaysArr=()=>{
-		let days = []
-		for (let i = 0; i < this.props.historyLength;  i++){
-			days.push(moment().subtract(i, 'days').format("dd"))
-		}
-		days = days.reverse()
-		return days
-	}
-
-	// create an array of dataPoint keys 
-	makeAvarageHistoryKeysArr =(history)=>{
-		// the last data in array was the first to be recorded
-		const [earliestData] = history.reverse()	
-		let avarageHistoryKeysArr = [];
-		// the whole duration recorded
-		const duration = moment.duration(moment().diff(moment(earliestData.day))).asDays()
-		// create list of keys == datapoints
-		for (let i = 0; i <= duration; i++){
-			avarageHistoryKeysArr.push(moment(earliestData.day).add(i, 'days').format("YYYYMMMMDD"));
-		}
-		return avarageHistoryKeysArr
-	};
-
-	//progress line graph datapoints
-	dataPoints=(history)=>{
-		// map history to historyKeysArr	
+		setAverages(averages)
+		setData(data)
+	}, [props.completed, props.historyLength])
 		
-		const dataOfdays = this.makeHistoryKeysArr().map(i=>{
-			// if data is undefined
-			
-			let datum = filterHistory(history, i)
-			
-			if (datum===undefined){
-				datum={data: []}
-			}
-			// use local data for day today
-			if (i === moment().format("YYYYMMMMDD")){
-				
-				if(this.props.completed==null ||
-					this.props.completed === undefined
-					
-					)
-				{
-					if (datum.data.length >= 1){
-						localStorage.setItem(moment().format("YYYYMMMMDD"), JSON.stringify(datum.data))
-					}else{
-						datum = {data: []}
-					}
-					
-				}
-				else
-				{
-					datum = {data: this.props.completed}
-				}
-			}
-			return datum.data.length*30
-		})
-		const createDataPoints = Object.keys(this.makeHistoryKeysArr()).map(i=>{
-			return {x: i, y: dataOfdays[i]}
-		})
-		return createDataPoints
-	}
 	
-	// moving avarage data points
-	movingAvarages =(history)=>{
-		// map history to historyKeysArr	
-		const dataOfdays = this.makeAvarageHistoryKeysArr(this.props.history).map(i=>{
-			// if data is undefined
-			let datum = filterHistory(history, i)
-			if (datum===undefined){
-				datum={data: []}
-			}
-			// use local data for day today
-			if (i === moment().format("YYYYMMMMDD")){
-				if(this.props.completed==null ||this.props.completed === undefined){
-					datum = {data: []}
-				}else{
-					datum = {data: this.props.completed}
-				}
-			}
-			return datum.data.length*30
-		})
-
-		const avarage = AvarageAtPoint(dataOfdays).reverse()
-		const [...avarageTofit] = avarage.splice(avarage.length-this.props.historyLength)
-		const createDataPoints = Object.keys(this.makeHistoryKeysArr()).map(i=>{
-			return {x: i, y: avarageTofit[i]}
-		})
-		return createDataPoints
-	}
-
-	render() {
-		const avaragePoints = this.movingAvarages(this.props.history)
-		const dataPoints = this.dataPoints(this.props.history)
-
-		return (
-			<div className="chart">	
-					<div className="plot">
-						<XYPlot 
-							height={250} 
-							width={500}
-						>
-							<HorizontalGridLines 
-								style={{stroke: "grey"}}
-								
-							/>
-							<LineMarkSeries  
-								color="purple"
-								data={dataPoints} 
-								curve={'curveMonotoneX'}
-								
-							/> 
-							<LineMarkSeries 
-								color="green"
-								data={avaragePoints} 
-								curve={'curveMonotoneX'}
-								
-							/>
-							<XAxis 
-								
-								tickFormat={v => this.makeDaysArr()[v]}
-								tickLabelAngle={-30}
-								
-								style={{
-									line: {stroke: 'grey'},
-									text: {stroke: 'grey', fontWeight: 300}}}
-								tickSize= {0}
-								
-							/>
-							<YAxis 
-								style={{
-									line: {stroke: 'grey'},
-									text: {stroke: 'grey', fontWeight: 300}}}
-								tickSize= {0}
-							/>
+	return (
+		<div className="chart">	
+			<ToolTipsWrapper 
+				dayValue={dayValue} 
+				dayAverage={dayAverage}
+				day="Should display day"
+			/>
+				<div className="plot">
+					<XYPlot 
+						height={250} 
+						width={450}
+					>
+						<HorizontalGridLines 
+							style={{stroke: "grey"}}
+							
+						/>
 						
-						</XYPlot>
-					</div>
-				
-				<div className={clsx("refreshed",{
-					"display-none": !this.props.refresh
-				})}
-				>
-					refreshed
+						<LineMarkSeries  
+							color="purple"
+							data={data} 
+							curve={'curveMonotoneX'}
+							onNearestX={(value, info)=>{
+								setDayValue(value.y)
+							}}
+							
+						/> 
+						<LineMarkSeries 
+							color="green"
+							data={averages} 
+							curve={'curveMonotoneX'}
+							style={{strokeLinejoin: "round"}}
+							onNearestX={(value, info)=>{
+								setDayAverage(math.round(value.y))
+							}}
+							
+							
+						/>
+						<XAxis 
+							tickFormat={v => makeDaysArr(props.history, props.historyLength)[v]}
+							tickLabelAngle={-30}
+							
+							style={{
+								line: {stroke: 'grey'},
+								text: {stroke: 'grey', fontWeight: 300}}}
+							tickSize= {0}
+							
+						/>
+						<YAxis 
+							style={{
+								line: {stroke: 'grey'},
+								text: {stroke: 'grey', fontWeight: 300}}}
+							tickSize= {0}
+						/>
+					
+					</XYPlot>
 				</div>
 			
+			<div className={clsx("refreshed",{
+				"display-none": !props.refresh
+			})}
+			>
+				refreshed
 			</div>
-		);
-	}
+		
+		</div>
+	);
 }
 
 export default LineChart;                           

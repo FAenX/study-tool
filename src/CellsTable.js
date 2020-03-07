@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Cell from "./Cell";
 import Timer from "./Timer";
 import {Paper, Button, Toolbar} from "@material-ui/core"
 import "./CellsTable.scss"
 import AlertOnComplete from "./components/AlertOnComplete"
 import PropTypes from "prop-types"
+import {Add} from "@material-ui/icons"
 
 const makeList = (num) => {
     let list = [];
@@ -24,8 +25,49 @@ const ResetButton =props=>(
 
 )
 
+const AddButton =(props)=>(
+	<Button 
+		variant="outlined" 
+		color="primary" 
+		onClick={props.addCells}>
+			<Add/>
+	</Button>
+)
+
 
 const Table =props=> {
+	useEffect(()=>{
+		// request permission on page load
+		document.addEventListener('DOMContentLoaded', function () {
+			if (!Notification) {
+			alert('Desktop notifications not available in your browser. Try Chromium.'); 
+			return;
+			}
+		
+			if (Notification.permission !== "granted")
+			Notification.requestPermission();
+		});
+
+	
+	})
+
+	const notifyMe=()=> {
+		if (Notification.permission !== "granted")
+		  Notification.requestPermission();
+		else {
+		  new Notification('Study tool', {
+			icon: 'http://cdn.sstatic.net/stackexchange/img/logos/so/so-icon.png',
+			body: "Congrats! Another circle done!!!",
+		  });
+	  
+		//   notification.onclick = function () {
+		// 	window.open("http://stackoverflow.com/a/13328397/1269037");      
+		//   };
+	  
+		}
+	  
+	  }
+
 	const [active, setActive] = useState(false)
 	const [cellID, setCellID] = useState("")
 	const [timer, setTimer] = useState("")
@@ -43,7 +85,9 @@ const Table =props=> {
 		setCellID(false)
 		setTimer(false)
 		//
+		notifyMe()
 		setAlert(true)
+		
 	}
 	return (		
 			<Paper
@@ -51,7 +95,7 @@ const Table =props=> {
 				className="pomodoro-table"
 			> 
 			<Toolbar>					  
-				<Button variant="outlined" color="primary">Refresh</Button>
+				<AddButton addCells={props.addCells}/>
 				<ResetButton handleTableReset={props.handleTableReset}/>					
 			</Toolbar>
 			<div className="cells">
@@ -72,9 +116,9 @@ const Table =props=> {
 			/>
 			<AlertOnComplete 
 				open={alert} 
-				handleClose={()=>setAlert(false)}
-				
+				handleClose={()=>setAlert(false)}				
 			/>
+			<button onClick={notifyMe}>Notify me!</button>
 		</Paper>
 		);
 
@@ -83,8 +127,13 @@ const Table =props=> {
 Table.propTypes={
 	completed: PropTypes.array.isRequired,
 	handleTableReset: PropTypes.func.isRequired,
-	cells: PropTypes.number.isRequired
+	cells: PropTypes.number.isRequired,
+	addCells: PropTypes.func.isRequired
 
 }
 
 export default Table;
+
+
+
+

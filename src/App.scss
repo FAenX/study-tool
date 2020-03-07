@@ -17,6 +17,9 @@
     .MuiIconButton-root{
         color: $color_2;
     }
+    .MuiButton-root{
+        
+    }
 }
 
 
@@ -54,6 +57,7 @@
         padding: 1rem;  
         .table-min-data-display{
             @include flex-row();
+            justify-content: space-around;
             flex-wrap: wrap;
             width: 90vw;
             // height: 80vh;

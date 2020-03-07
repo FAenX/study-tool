@@ -1,8 +1,12 @@
 @import "../../node_modules/react-vis/dist/styles/plot.scss";
 @import "../base";
 
-.plot{
-    
+.chart{
+    @include flex-col();
     padding: 1em;
+    .tooltips{
+        @include flex-col();
+        align-items: baseline;
+    }
     
 }

@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useEffect, useState} from "react"
 import DataViz from "./DataViz"
 import "./Dashboard.scss"
 
@@ -21,19 +21,15 @@ import "./Dashboard.scss"
 
 
 
-class DashBoard extends React.Component{
-    
-    
-    render(){
-        return(
-            <div id="dashboard">                       
-                                     
-                    <DataViz 
-                        completed={this.props.completed} 
-                    />
-            </div>
-        )
-    }
+const DashBoard =props=>{   
+    return(
+        <div id="dashboard">      
+                <DataViz 
+                    completed={props.completed} 
+                />
+        </div>
+    )
+
 }
 
 export default DashBoard;
