@@ -8,17 +8,32 @@ import math from "math"
 
 
 const DataButton =props=>{
+
+	const selectColor=()=>{
+		if(props.value >= 300){
+			return "green"
+		}
+		return "red"
+	}
+
 	const text = {
 		fontSize: ".7em",
 		fontWeight: "600",
 		textTransform: "capitalize"
 	}
+	const value ={
+		marginLeft: ".5em",
+		marginRight: ".5em",
+		textTransform: "lowercase",
+		color: selectColor(),
+	}
 
 	return(
-			<Button style={text}>{props.title}: {props.value} mins</Button>
+		<Button style={text}>{props.title}: <span style={value}>{props.value} mins</span></Button>
 	)
 }
 
+//should display day
 const DayButton =props=>{
 	const text = {
 		fontSize: ".7em",
@@ -27,14 +42,14 @@ const DayButton =props=>{
 	}
 
 	return(
-			<Button style={text}>{props.day}</Button>
+		<Button style={text}>{props.day}</Button>
 	)
 }
 
 const ToolTipsWrapper =props=>{
 	const tooltips = {
 		height: "100px", 
-		width: "450px",
+		width: "100%",
 		// border: "1px solid #002329",
 		backgroundColor: "#0023298a",
 	}
@@ -45,7 +60,7 @@ const ToolTipsWrapper =props=>{
 			<DataButton value={props.dayAverage} title="Average"/>
 			<DayButton day={props.day}/>
 		</div>
-	
+
 	)
 }
 
@@ -78,8 +93,7 @@ const LineChart=props=> {
 						width={450}
 					>
 						<HorizontalGridLines 
-							style={{stroke: "grey"}}
-							
+							style={{stroke: '#00232960'}}
 						/>
 						
 						<LineMarkSeries  
@@ -108,14 +122,14 @@ const LineChart=props=> {
 							
 							style={{
 								line: {stroke: 'grey'},
-								text: {stroke: 'grey', fontWeight: 300}}}
+								text: {fill: '#e100ff', stroke: "#e100ff", fontWeight: 300}}}
 							tickSize= {0}
 							
 						/>
 						<YAxis 
 							style={{
 								line: {stroke: 'grey'},
-								text: {stroke: 'grey', fontWeight: 300}}}
+								text: {fill: '#e100ff', stroke: "#e100ff", fontWeight: 300}}}
 							tickSize= {0}
 						/>
 					
@@ -132,5 +146,7 @@ const LineChart=props=> {
 		</div>
 	);
 }
+
+
 
 export default LineChart;                           

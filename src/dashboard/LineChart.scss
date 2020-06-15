@@ -4,9 +4,14 @@
 .chart{
     @include flex-col();
     padding: 1em;
+    justify-content: space-around;
     .tooltips{
         @include flex-col();
         align-items: baseline;
+        margin: 1em;
+    }
+    .chart{
+       //
     }
     
 }

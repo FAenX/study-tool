@@ -1,11 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import Cell from "./Cell";
 import Timer from "./Timer";
-import {Paper, Button, Toolbar} from "@material-ui/core"
+import {Paper, Button, Toolbar, Card} from "@material-ui/core"
 import "./CellsTable.scss"
-import AlertOnComplete from "./components/AlertOnComplete"
+import AlertOnComplete from "../components/AlertOnComplete"
 import PropTypes from "prop-types"
 import {Add} from "@material-ui/icons"
+
+const ProgressBlip =props=>{
+	const progress = {
+		backgroundColor: "#002329", 
+		width: "20px",
+		height: "20px",		
+		borderRadius: "50%",
+	}
+	
+	return (
+		<Card 
+			variant="elevation" 
+			elevation={5}
+			style={progress}
+			className="progress"
+		>
+			
+		</Card>
+	)
+}
 
 const makeList = (num) => {
     let list = [];
@@ -58,12 +78,7 @@ const Table =props=> {
 		  new Notification('Study tool', {
 			icon: 'http://cdn.sstatic.net/stackexchange/img/logos/so/so-icon.png',
 			body: "Congrats! Another circle done!!!",
-		  });
-	  
-		//   notification.onclick = function () {
-		// 	window.open("http://stackoverflow.com/a/13328397/1269037");      
-		//   };
-	  
+		  });	  
 		}
 	  
 	  }
@@ -96,7 +111,8 @@ const Table =props=> {
 			> 
 			<Toolbar>					  
 				<AddButton addCells={props.addCells}/>
-				<ResetButton handleTableReset={props.handleTableReset}/>					
+				<ResetButton handleTableReset={props.handleTableReset}/>
+				<ProgressBlip />					
 			</Toolbar>
 			<div className="cells">
 				{makeList(props.cells).map(i => {

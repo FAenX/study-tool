@@ -6,14 +6,14 @@ import "./DataViz.scss"
 
 export function DataViz(props) {
     const [refresh, setRefresh]=useState(false)
-   const [historyLength, setHistoryLength] = useState(7)
+    const [historyLength, setHistoryLength] = useState(7)
 	
     
     const handleRefresh =()=>{
         setRefresh(true)
-		setTimeout(()=>{
-			setRefresh(false)
-		}, 1000)
+        setTimeout(()=>{
+            setRefresh(false)
+        }, 1000)
     }
     const moreButton=()=>{
         setHistoryLength(historyLength+1)
@@ -21,13 +21,9 @@ export function DataViz(props) {
 
     const lessButton=()=>{
         setHistoryLength(historyLength-1)
-    }
-
-
-        
-    return(
-        
-            <Card variant="outlined" id="dataviz" className="stats-item">
+    }  
+    return(        
+        <Card variant="outlined" className="dataviz">
             <Toolbar>
                 <div> Line Chart</div>                       
             
@@ -49,9 +45,7 @@ export function DataViz(props) {
                 refresh={refresh}
                 history={props.history}
             />
-            </Card>
-        
-        
+        </Card>
     )
 }
 

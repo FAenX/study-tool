@@ -1,0 +1,33 @@
+@import "../base";
+
+.pomodoro-table{
+    @include flex-col();
+    width: 40%;
+    overflow: hidden;
+    
+    
+    
+    .MuiToolbar-regular{
+       width: 100%;
+    
+       .progress{
+        @include flex-row;
+        }
+    
+        .progress::after{
+            content: "";        
+            animation: heightTop 1s infinite;
+            transition: height 1s;
+            border-radius: 50%;
+        }
+    }
+   
+    
+}
+
+@media screen and (max-width: 600px)  {
+    
+    .pomodoro-table{
+     
+    }
+}

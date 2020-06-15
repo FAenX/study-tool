@@ -1,0 +1,16 @@
+@import "../base";
+
+.kan-ban{
+    @include flex-row();
+    min-height: 10vh;
+    padding: 1em;
+    width: 100vw;
+    margin: 1em;
+    transition: height 2s;
+    border: 1px solid black;
+    &:hover{
+        height: 30vh;
+        cursor: pointer;
+    }
+}
+

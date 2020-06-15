@@ -1,0 +1,9 @@
+@import "../../base";
+
+.kanban-card{
+   
+    &:hover{
+        height: 310px;
+        width: 260px; 
+    }
+}
