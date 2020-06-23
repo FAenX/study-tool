@@ -5,36 +5,19 @@ import './Timer.scss';
 import PropTypes from 'prop-types';
 
 const Progress = (props) => {
-  if (props.progress <= 90) {
+    const {progress} = props
     return 	(
       <LinearProgress
         className="linear-progress"
-        variant="determinate"
-        color="primary"
-        value={props.progress}
+        variant= "determinate"
+        color= {progress < 90 ? "primary" : "secondary"}
+        value={progress}
       />
-    );
-  } if (props.progress > 90) {
-    return (
-      <LinearProgress
-        className="linear-progress"
-        variant="determinate"
-        color="secondary"
-        value={props.progress}
-      />
-    );
-  }
-  return (
-    <LinearProgress
-      className="linear-progress"
-      variant="determinate"
-      value={100}
-      color="primary"
-    />
-  );
+    )
 };
 
 const Timer = (props) => {
+  const {clickedTime} = props
   const [progress, setProgress] = useState(0);
   const [time, setTime] = useState(0);
   const [countDown, setCountDown] = useState(0);
@@ -49,13 +32,13 @@ const Timer = (props) => {
   });
 
   const updateClock = () => {
-    if (moment(props.timer).add(30, 'minutes') < moment()) {
+    if (moment(clickedTime).add(30, 'minutes') < moment()) {
       props.handleOnComplete();
       setProgress(0);
       setCountDown(0);
       setTime(0);
     }
-    const remTime = moment(props.timer).add(0.5, 'hours') - moment();
+    const remTime = moment(clickedTime).add(0.5, 'hours') - moment();
     const countDown = moment(remTime).format('mm:ss');
     // progress percentage report	!!!!!!!!!!
     const progress = 100 - (moment(remTime).format('mm') * 100) / 30;
@@ -80,7 +63,7 @@ const Timer = (props) => {
 };
 
 Timer.propTypes = {
-  timer: PropTypes.any.isRequired,
+  clickedTime: PropTypes.string.isRequired,
   handleOnComplete: PropTypes.func.isRequired,
 };
 

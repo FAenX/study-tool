@@ -8,6 +8,10 @@ import { Add } from '@material-ui/icons';
 import Timer from './timer';
 import Cell from './Cell';
 import AlertOnComplete from './AlertOnComplete';
+import cell from '../../store/reducers/cellReducer'
+import { connect } from "react-redux";
+
+const cells = connect(cell)(Table)
 
 function ProgressBlip() {
   const progress = {
@@ -59,7 +63,7 @@ const AddButton = (props: any) => (
 );
 
 export default function Table(props: any) {
-  console.log(props)
+  console.log(cells)
   useEffect(() => {
     // request permission on page load
     document.addEventListener('DOMContentLoaded', () => {
@@ -81,21 +85,22 @@ export default function Table(props: any) {
 	  };
 
   const [active, setActive] = useState(false);
-  const [cellID, setCellID] = useState();
-  const [timer, setTimer] = useState();
+  const [cellID, setCellID] = useState(null);
+  const [clickedTime, setClickedTime] = useState(null);
   const [alert, setAlert] = useState(false);
+  
   // update state from cell click
-  const handleCellClick = (ID, then) => {
+  const handleCellClick = (ID: number | null, clickedTime: string | null) => {
     setCellID(ID);
     setActive(true);
-    setTimer(then);
+    setClickedTime(clickedTime);
   };
 
   const handleOnComplete = () => {
     props.addToCompleted(cellID);
     setActive(false);
     setCellID(null);
-    setTimer(null);
+    setClickedTime(null);
     //
     notifyMe();
     setAlert(true);
@@ -113,7 +118,7 @@ export default function Table(props: any) {
       <div className="cells">
         {makeList(props.cells).map((i) => (
           <Cell
-            number={i}
+            number={cell}
             activeCell={cellID}
             key={i}
             clickHandler={handleCellClick}
@@ -124,8 +129,7 @@ export default function Table(props: any) {
       </div>
       <Timer
         handleOnComplete={handleOnComplete}
-        active={active}
-        timer={timer}
+        clickedTime={clickedTime}
       />
       <AlertOnComplete
         open={alert}
@@ -135,3 +139,4 @@ export default function Table(props: any) {
     </Paper>
   );
 }
+

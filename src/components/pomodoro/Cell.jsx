@@ -9,8 +9,8 @@ export default function Cell(props) {
     if (props.completed.includes(props.number) || props.tableActive === true) {
 
     } else if (!props.completed.includes(props.number) && props.tableActive === false) {
-      const now = moment();
-      props.clickHandler(props.number, now);
+      const clickedTime = moment().format();
+      props.clickHandler(props.number, clickedTime);
     }
   };
 
