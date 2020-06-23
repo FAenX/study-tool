@@ -5,11 +5,7 @@ import {
 
 import './CellsTable.scss';
 
-
-//redux 
-
-import { connect } from "react-redux";
-import {toggleColor} from '../../store/app'
+import Cell from './cell'
 
 
 const makeList = (num: number) => {
@@ -20,37 +16,17 @@ const makeList = (num: number) => {
   return list;
 };
 
-
-
-const Table=({color, dispatch})=> {  
-  console.log(color, dispatch)
- 
-  const cardStyle={
-    width: "40px",
-    height: "40px",
-    margin: ".25em",
-    backgroundColor: color
-  }
-
+const Table=()=> {  
   return (
     <Paper variant="outlined" className="pomodoro-table">     
       <div className="cells">
         {makeList(24).map((i) => (
-          <Card
-            key={i}
-            id={i}
-            onClick={()=>dispatch(toggleColor('green'))}
-            variant="elevation"
-            elevation={5}
-            style={cardStyle}
-          />
+          <Cell key={i}/>
          ))} 
       </div>
     </Paper>
   );
 }
 
-export default connect(state=>({
-  color: state.app.color
-}), null)(Table)
+export default Table
 
