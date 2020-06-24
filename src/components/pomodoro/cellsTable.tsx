@@ -5,7 +5,17 @@ import {
 
 import './CellsTable.scss';
 
-import Cell from './cell'
+//redux 
+import {CellState} from '../../store/reducers/tableReducer'
+
+import { connect } from "react-redux";
+import {tableReducer} from '../../store/reducers/tableReducer'
+
+import {Cell} from './cell'
+
+
+import moment from 'moment'
+
 
 
 const makeList = (num: number) => {
@@ -16,17 +26,26 @@ const makeList = (num: number) => {
   return list;
 };
 
-const Table=()=> {  
+const Table=({data, dispatch, state})=> {
+  useEffect(()=> dispatch(
+    tableReducer({done: data.allMongodbTestTabledatas.edges[0].node.data, active: [1], activeId: 1 })
+  ), [null])
+ 
+  console.log()   
   return (
     <Paper variant="outlined" className="pomodoro-table">     
       <div className="cells">
         {makeList(24).map((i) => (
-          <Cell key={i}/>
+          <Cell key={i} id={i} done={state.tableReducer.done}/>
          ))} 
       </div>
     </Paper>
   );
 }
 
-export default Table
 
+
+
+export default connect(state=>({
+  state
+}), null)(Table)

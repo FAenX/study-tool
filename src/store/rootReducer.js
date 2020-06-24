@@ -1,4 +1,4 @@
 import { combineReducers } from 'redux';
-import toggleColor from './reducers/toggleColor';
+import tableReducer from './reducers/tableReducer';
 
-export default combineReducers({ toggleColor, });
+export default combineReducers({ tableReducer, });
