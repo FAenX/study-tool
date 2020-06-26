@@ -1,9 +1,8 @@
-export interface CellState{active: Array<number>, activeId: number| null, done: Array<number>}
+export interface CellState{ activeId?: number| null, done: Array<number>}
 export interface CellAction{type: string, state: CellState}
 
 
 const initialState: CellState = {
-    active: [],
     activeId: null,
     done: [],
 }; 

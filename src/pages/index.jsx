@@ -3,26 +3,21 @@ import Layout from '../components/layout';
 import SEO from '../components/seo';
 import Table from '../components/pomodoro/cellsTable';
 import {graphql} from 'gatsby'
+import moment from 'moment'
 
-const IndexPage = ({data}) => (
+const IndexPage = ({pageContext}) =>{
+  
+  const {data} = pageContext.data
+
+  return (
+  
   <Layout>
     <SEO title="Home" />
     <Table data={data}/>
   </Layout>
-);
+);}
 
-export const query = graphql`
-  query{
-    allMongodbTestTabledatas(filter: {day: {eq: "2020June24"}}) {
-      edges {
-          node {
-          id
-          day
-          data
-        }
-      }
-    }
-}
-`
+const dayId = moment().format()
+
 
 export default IndexPage;
