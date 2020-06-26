@@ -1,4 +1,4 @@
 import { combineReducers } from 'redux';
-import tableReducer from './reducers/tableReducer';
+import tableReducer from './tableReducer';
 
 export default combineReducers({ tableReducer, });

@@ -7,6 +7,8 @@ import './CellsTable.scss';
 //redux 
 
 import Cell from './cell'
+import {graphql} from 'gatsby'
+import moment from 'moment'
 
 
 
@@ -19,7 +21,6 @@ const makeList = (num: number) => {
 };
 
 const Table=({data})=> {
-  
   return (
     <Paper variant="outlined" className="pomodoro-table">     
       <div className="cells">
@@ -30,8 +31,6 @@ const Table=({data})=> {
     </Paper>
   );
 }
-
-
 
 
 export default Table

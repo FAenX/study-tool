@@ -15,7 +15,7 @@ exports.createPages = async ({ graphql, actions }) => {
     const { createPage } = actions
     
     const data = await graphql(`
-    query($dayId: String){
+    query($dayId: String!){
     allMongodbTestTabledatas(filter: {day: {eq: $dayId }}) {
         edges {
             node {
@@ -40,5 +40,7 @@ exports.createPages = async ({ graphql, actions }) => {
           data,
         }
     })
+
+    
 
 }

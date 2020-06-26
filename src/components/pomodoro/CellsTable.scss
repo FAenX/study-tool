@@ -1,19 +1,17 @@
-@import "./base";
+@import "../../base";
 
 .pomodoro-table{
-    @include flex-col();
-    width: 100%;
+    @include flex();
+    width: 400px;
+    height: 250px;
     overflow: hidden;  
+    margin: 1.5em;
    
     .cells{
-        @include flex-row();
+        @include flex();
         flex-wrap: wrap;
-        width: 60%;
         overflow: hidden;  
-    }      
-            
-  
-   
+    }     
     
 }
 

@@ -12,7 +12,7 @@ const TOGGLE_STATE = 'TOGGLE_STATE';
 
 
 //action -----
-export const tableReducer = (state: CellState) => ({
+export const tableAction = (state: CellState) => ({
   type: TOGGLE_STATE, state
 });
 

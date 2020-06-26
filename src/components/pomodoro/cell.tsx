@@ -3,36 +3,39 @@ import {
     Paper, Button, Toolbar, Card,
   } from '@material-ui/core';
 import { connect } from "react-redux";
-
-import {CellState} from '../../store/reducers/tableReducer'
-import {tableReducer} from '../../store/reducers/tableReducer'
+import {tableAction} from '../../store/tableReducer'
 
 
 function Cell ({id, dispatch, data, state}){
-    let done = data.allMongodbTestTabledatas.edges[0].node.data
-    
+  let {tableReducer} = state
+    let done = data.allMongodbTestTabledatas.edges[0].node.data    
     useEffect(()=> dispatch(
-      tableReducer({
+      tableAction({
         done, 
       })
-    ), [null])
+    ), [dispatch])
 
     const clickFunction=()=>{
       dispatch(
-        tableReducer({
+        tableAction({
           done: done,
           activeId: id
         })
       )
     }
 
-    const cardStyle={
-      width: "40px",
-      height: "40px",
-      margin: ".25em",
-      backgroundColor: done.includes(id)? "maroon" : "grey"
+    const color = ()=>{
+      if (tableReducer.activeId === id){
+        return "green"
+      }
+      return done.includes(id)? "maroon" : "grey"
     }
-    console.log(state)
+    const cardStyle={
+      width: "50px",
+      height: "50px",
+      backgroundColor: color()
+    }
+
     return (
       <Button onClick={()=>clickFunction()}>
         <Card   
