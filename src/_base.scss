@@ -1,0 +1,11 @@
+$primary-color: #29180e;
+$primary-color-1: #29180e60;
+$primary-color-2: #29180eb6;
+
+@mixin flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+

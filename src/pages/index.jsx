@@ -3,26 +3,35 @@ import Layout from '../components/layout';
 import SEO from '../components/seo';
 import Table from '../components/pomodoro/cellsTable';
 import {graphql} from 'gatsby'
+import moment from 'moment'
+import Chart from '../components/data-display/lineGraph.tsx'
+import './index.scss'
+import Summary from '../components/data-display/summary'
 
-const IndexPage = ({data}) => (
+const Wrapper=({data})=>{
+  
+  return(
+    <div className="index-wrapper">      
+      <Summary />
+      <Table data={data.data} />
+      <Chart />
+      <Chart />
+    </div>
+  )
+}
+
+export default function IndexPage({pageContext}){
+  let {data}=pageContext
+  
+  return (  
   <Layout>
     <SEO title="Home" />
-    <Table data={data}/>
+    <Wrapper data={data}/>
   </Layout>
-);
+);}
 
-export const query = graphql`
-  query{
-    allMongodbTestTabledatas(filter: {day: {eq: "2020June24"}}) {
-      edges {
-          node {
-          id
-          day
-          data
-        }
-      }
-    }
-}
-`
 
-export default IndexPage;
+
+
+
+

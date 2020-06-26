@@ -1,0 +1,7 @@
+@import '../base';
+
+.index-wrapper{
+    @include flex();
+    flex-flow: row wrap;
+}
+
