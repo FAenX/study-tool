@@ -15,7 +15,7 @@ const makeList = (num: number) => {
 export default function Summary(){
     return(
         <Card variant="outlined" className="summary-wrapper">
-            {makeList(14).map(i =>(<Cell key={i}/>))}
+            {/* {makeList(14).map(i =>(<Cell key={i}/>))} */}
         </Card>
     )
 }

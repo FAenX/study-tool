@@ -3,8 +3,11 @@ import {useStaticQuery, graphql} from 'gatsby'
 import {DataFactory} from './DataFunctions'
 import './lineGraph.scss'
 
-import  CCharts  from "react-chartjs-2";
+import  CCharts, {Line}  from "react-chartjs-2";
 import { Card } from '@material-ui/core';
+import {chart1data} from './variables'
+
+
 const Chart =()=>{
   let data = useStaticQuery(graphql`
     query{
@@ -32,7 +35,9 @@ const Chart =()=>{
 
   //averages 
   let averageData = keys.map(key=>dataFactory.average(key))
- 
+
+  let chartData = chart1data(days, dailyData, averageData)
+
   return (
     <Card variant="outlined" className="chart-wrapper">
       
@@ -41,40 +46,8 @@ const Chart =()=>{
         label= "Productivity"
         height={300}
         width={400}
-        data={{
-        labels:days,
-        datasets:[         
-            {
-              label: "Study time",
-              backgroundColor: "#1455ee17",
-              borderColor: "rgba(179,181,198,1)",
-              pointBackgroundColor: "rgba(179,181,198,1)",
-              pointBorderColor: "#fff",
-              pointHoverBackgroundColor: "#fff",
-              pointHoverBorderColor: "rgba(179,181,198,1)",
-              tooltipLabelColor: "rgba(179,181,198,1)",
-              data: dailyData,
-            },   
-            {
-              label: "Study time Avarage",
-              backgroundColor: "#9e14ee17",
-              borderColor: "#14dcee42",
-              pointBackgroundColor: "rgba(179,181,198,1)",
-              pointBorderColor: "#fff",
-              pointHoverBackgroundColor: "#fff",
-              pointHoverBorderColor: "rgba(179,181,198,1)",
-              tooltipLabelColor: "rgba(179,181,198,1)",
-              data: averageData,
-            },   
-                
-        ]
-      }}
-      options={{
-        aspectRatio: 16 / 9,
-        tooltips: {
-          enabled: true,
-        },
-      }}
+        data={chartData.dailyData}
+        options={chartData.options}
           
         
       /></Card>

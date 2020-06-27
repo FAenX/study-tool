@@ -3,6 +3,7 @@
 .index-wrapper{
     @include flex();
     flex-flow: row wrap;    
+    height: 80vh;
     
 }
 

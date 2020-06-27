@@ -12,12 +12,12 @@ import {Card} from '@material-ui/core'
 const Wrapper=({allData})=>{
   const {data} =allData
   return(
-    <Card className="index-wrapper" style={{backgroundColor: "#00000059"}}>      
+    <div className="index-wrapper">      
       <Summary />
       <Table data={data} />
       <Chart />
       <Chart />
-    </Card>
+    </div>
   )
 }
 
