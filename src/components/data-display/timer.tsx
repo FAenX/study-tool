@@ -70,6 +70,7 @@ const Timer = ({state, dispatch}) => {
         activeId: null,
       }))
       // write data to db
+      //here
 
     }
   };
