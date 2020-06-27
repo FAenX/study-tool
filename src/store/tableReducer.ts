@@ -1,10 +1,18 @@
-export interface CellState{ activeId?: number| null, done: Array<number>}
-export interface CellAction{type: string, state: CellState}
+export interface TableState{ 
+  activeId: number| null, 
+  done: Array<number>,
+  active: boolean,
+}
+export interface CellAction{
+  type: string, 
+  state: TableState
+}
 
 
-const initialState: CellState = {
+const initialState: TableState = {
     activeId: null,
     done: [],
+    active: false,    
 }; 
 
 //action
@@ -12,7 +20,7 @@ const TOGGLE_STATE = 'TOGGLE_STATE';
 
 
 //action -----
-export const tableAction = (state: CellState) => ({
+export const tableAction = (state: TableState) => ({
   type: TOGGLE_STATE, state
 });
 

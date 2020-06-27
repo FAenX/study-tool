@@ -1,4 +1,4 @@
-@import "./base";
+@import "../../base";
 
 /*progress */
 @keyframes heightTop {
@@ -7,7 +7,7 @@
 }
 
 #progress-bar{
-    @include flex-col;
+    @include flex();
     color: $color_2;
     
     margin: 1em;

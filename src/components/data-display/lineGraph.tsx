@@ -26,7 +26,7 @@ const Chart =()=>{
   `)
 
   data = data.allMongodbTestTabledatas.edges
-  let dataFactory = new DataFactory(data, 14)
+  let dataFactory = new DataFactory(data, 10)
 
   //alldata
   let keys: string[] = dataFactory.makeHistoryKeysArr()
