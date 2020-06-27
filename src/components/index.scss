@@ -2,6 +2,7 @@
 
 .index-wrapper{
     @include flex();
-    flex-flow: row wrap;
+    flex-flow: row wrap;    
+    
 }
 

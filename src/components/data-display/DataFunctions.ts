@@ -64,7 +64,7 @@ export class DataFactory {
             .diff(moment(earliestData), 'days')  
 
         let cleanData: number[] = [];
-        for (let i=0; i < period; i++){
+        for (let i=0; i <= period; i++){
             const forDay = moment(earliestData).add(i, 'day').format('YYYYMMMMDD')
 
             const dailyData = this.dailyData(forDay)

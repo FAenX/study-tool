@@ -56,9 +56,9 @@ const Chart =()=>{
               data: dailyData,
             },   
             {
-              label: "Study time",
+              label: "Study time Avarage",
               backgroundColor: "#9e14ee17",
-              borderColor: "rgba(179,181,198,1)",
+              borderColor: "#14dcee42",
               pointBackgroundColor: "rgba(179,181,198,1)",
               pointBorderColor: "#fff",
               pointHoverBackgroundColor: "#fff",

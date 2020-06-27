@@ -1,22 +1,23 @@
 import React, {Context} from 'react';
-import Layout from '../components/layout';
-import SEO from '../components/seo';
-import Table from '../components/pomodoro/cellsTable';
+import Layout from './layout';
+import SEO from './seo';
+import Table from './pomodoro/cellsTable';
 import {graphql} from 'gatsby'
 import moment from 'moment'
 import Chart from '../components/data-display/lineGraph.tsx'
 import './index.scss'
-import Summary from '../components/data-display/summary'
+import Summary from './data-display/summary'
+import {Card} from '@material-ui/core'
 
 const Wrapper=({allData})=>{
   const {data} =allData
   return(
-    <div className="index-wrapper">      
+    <Card className="index-wrapper" style={{backgroundColor: "#00000059"}}>      
       <Summary />
       <Table data={data} />
       <Chart />
       <Chart />
-    </div>
+    </Card>
   )
 }
 

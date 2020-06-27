@@ -32,8 +32,8 @@ exports.createPages = async ({ graphql, actions }) => {
     console.log(data)
 
     createPage({
-        path: `/home`,
-        component: path.resolve(`./src/pages/index.jsx`),
+        path: `/`,
+        component: path.resolve(`./src/components/index.jsx`),
         // The context is passed as props to the component as well
         // as into the component's GraphQL query.
         context: {
