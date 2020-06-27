@@ -9,3 +9,10 @@ $primary-color-2: #29180eb6;
     align-content: center;
 }
 
+
+body{
+    @include flex();
+    width: 98vw;
+    min-height: 100vh;
+    background-color: rgba(10, 7, 36, 0.883);
+}
