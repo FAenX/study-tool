@@ -1,5 +1,7 @@
 @import '../../base';
 
+$c: #1455ee17;
+
 .chart-wrapper{
     @include flex();
     width: 400px;

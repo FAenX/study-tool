@@ -37,7 +37,7 @@ exports.createPages = async ({ graphql, actions }) => {
         // The context is passed as props to the component as well
         // as into the component's GraphQL query.
         context: {
-          data,
+          allData: data,
         }
     })
 

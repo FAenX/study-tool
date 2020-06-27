@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {useStaticQuery, graphql} from 'gatsby'
-import {AllData} from './DataFunctions'
+import {DataFactory} from './DataFunctions'
 import './lineGraph.scss'
 
 import  CCharts  from "react-chartjs-2";
@@ -23,11 +23,16 @@ const Chart =()=>{
   `)
 
   data = data.allMongodbTestTabledatas.edges
-  console.log(data)
-  let keys =AllData.makeHistoryKeysArr(data, 12)
-  let days = AllData.makeDaysArr(data, 12)
-  data = keys.map(key=>AllData.filterHistory(data, key))
-  console.log(data)
+  let dataFactory = new DataFactory(data, 14)
+
+  //alldata
+  let keys: string[] = dataFactory.makeHistoryKeysArr()
+  let days: string[] = dataFactory.makeDaysArr()
+  let dailyData = keys.map(key=>dataFactory.dailyData(key))
+
+  //averages 
+  let averageData = keys.map(key=>dataFactory.average(key))
+ 
   return (
     <Card variant="outlined" className="chart-wrapper">
       
@@ -41,14 +46,25 @@ const Chart =()=>{
         datasets:[         
             {
               label: "Study time",
-              backgroundColor: "rgba(179,181,198,0.2)",
+              backgroundColor: "#1455ee17",
               borderColor: "rgba(179,181,198,1)",
               pointBackgroundColor: "rgba(179,181,198,1)",
               pointBorderColor: "#fff",
               pointHoverBackgroundColor: "#fff",
               pointHoverBorderColor: "rgba(179,181,198,1)",
               tooltipLabelColor: "rgba(179,181,198,1)",
-              data: data,
+              data: dailyData,
+            },   
+            {
+              label: "Study time",
+              backgroundColor: "#9e14ee17",
+              borderColor: "rgba(179,181,198,1)",
+              pointBackgroundColor: "rgba(179,181,198,1)",
+              pointBorderColor: "#fff",
+              pointHoverBackgroundColor: "#fff",
+              pointHoverBorderColor: "rgba(179,181,198,1)",
+              tooltipLabelColor: "rgba(179,181,198,1)",
+              data: averageData,
             },   
                 
         ]

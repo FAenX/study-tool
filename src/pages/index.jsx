@@ -8,12 +8,12 @@ import Chart from '../components/data-display/lineGraph.tsx'
 import './index.scss'
 import Summary from '../components/data-display/summary'
 
-const Wrapper=({data})=>{
-  
+const Wrapper=({allData})=>{
+  const {data} =allData
   return(
     <div className="index-wrapper">      
       <Summary />
-      <Table data={data.data} />
+      <Table data={data} />
       <Chart />
       <Chart />
     </div>
@@ -21,12 +21,12 @@ const Wrapper=({data})=>{
 }
 
 export default function IndexPage({pageContext}){
-  let {data}=pageContext
+  let {allData}=pageContext
   
   return (  
   <Layout>
     <SEO title="Home" />
-    <Wrapper data={data}/>
+    <Wrapper allData={allData}/>
   </Layout>
 );}
 
