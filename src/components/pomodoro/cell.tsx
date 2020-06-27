@@ -2,13 +2,14 @@ import React, {useEffect} from 'react'
 import {
     Paper, Button, Toolbar, Card,
   } from '@material-ui/core';
-import { connect } from "react-redux";
 import {tableAction} from '../../store/tableReducer'
+import {timerAction} from '../../store/timerReducer'
+import moment from 'moment'
 
 
 function Cell ({id, dispatch, data, state}){
   let {tableReducer} = state
-  let done;
+  let done: number[];
   try{
     done = data.allMongodbTestTabledatas.edges[0].node.data   
   }catch(e){
@@ -17,17 +18,34 @@ function Cell ({id, dispatch, data, state}){
    
   useEffect(()=> dispatch(
     tableAction({
-      done, 
+      done,
+      activeId: null,
+      active: false,
     })
-  ), [dispatch])
+  ), [])
 
   const clickFunction=()=>{
-    dispatch(
-      tableAction({
-        done: done,
-        activeId: id
-      })
-    )
+    // start timer
+    if(!tableReducer.active){
+      dispatch(
+        timerAction({
+          startTime: moment().format(),
+          active: true,
+          progress: 0,
+          countDown: 'started',
+          endTime: moment().add(1, 'minutes').format()
+  
+        })
+      )
+       // change state
+      dispatch(
+        tableAction({
+          activeId: id,
+          active: true,
+          done,
+        })
+      )
+    }  
   }
 
   const color = ()=>{
@@ -54,6 +72,4 @@ function Cell ({id, dispatch, data, state}){
   )
 }
   
-export default connect(state=>({
-    state
-  }), null)(Cell)  
+export default Cell

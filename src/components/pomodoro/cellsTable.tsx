@@ -3,6 +3,7 @@ import {
   Paper, Button, Toolbar, Card,
 } from '@material-ui/core';
 import './CellsTable.scss';
+import { connect } from "react-redux";
 
 //redux 
 
@@ -20,17 +21,18 @@ const makeList = (num: number) => {
   return list;
 };
 
-const Table=({data})=> {
+const Table=({data, dispatch, state})=> {
   return (
     <Paper variant="outlined" className="pomodoro-table">     
       <div className="cells">
         {makeList(24).map((i) => (
-          <Cell key={i} id={i} data={data}/>
+          <Cell key={i} id={i} data={data} dispatch={dispatch} state={state}/>
          ))} 
       </div>
     </Paper>
   );
 }
 
-
-export default Table
+export default connect(state=>({
+  state
+}), null)(Table) 
