@@ -8,14 +8,7 @@ import moment from 'moment'
 import {connect} from 'react-redux'
 
 
-function Cell ({id, dispatch, data, state}){
-  
-  let done: number[];
-  try{
-    done = data.allMongodbTestTabledatas.edges[0].node.data   
-  }catch(e){
-    done = []
-  }
+function Cell ({id, dispatch, state}){
 
   const clickFunction=()=>{
     // start timer
@@ -26,7 +19,7 @@ function Cell ({id, dispatch, data, state}){
           active: true,
           progress: 0,
           countDown: 'started',
-          endTime: moment().add(1, 'minutes').format()
+          endTime: moment().add(30, 'minutes').format()
   
         })
       )
@@ -35,17 +28,18 @@ function Cell ({id, dispatch, data, state}){
         tableAction({
           activeId: id,
           active: true,
-          done,
+          done: state.tableReducer.done,
         })
       )
     }  
   }
 
+
   const color = ()=>{
     if (state.tableReducer.activeId === id){
       return "green"
     }
-    return done.includes(id)? "maroon" : "grey"
+    return state.tableReducer.done.includes(id)? "maroon" : "grey"
   }
   const cardStyle={
     width: "50px",

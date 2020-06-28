@@ -10,6 +10,7 @@ import { connect } from "react-redux";
 import Cell from './cell'
 import {graphql} from 'gatsby'
 import moment from 'moment'
+import { tableAction } from '../../store/tableReducer';
 
 
 
@@ -22,11 +23,12 @@ const makeList = (num: number) => {
 };
 
 const Table=({data, dispatch, state})=> {
+  
   return (
     <Paper variant="outlined" className="pomodoro-table">     
       <div className="cells">
         {makeList(24).map((i) => (
-          <Cell key={i} id={i} data={data} dispatch={dispatch} state={state}/>
+          <Cell key={i} id={i} dispatch={dispatch} state={state}/>
          ))} 
       </div>
     </Paper>

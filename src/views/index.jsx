@@ -1,35 +1,50 @@
-import React, {Context} from 'react';
+import React, {Context, useEffect} from 'react';
 import Layout from '../components/layout';
 import SEO from '../components/seo';
-import Table from '../components/pomodoro/cellsTable';
 import {graphql} from 'gatsby'
-import moment from 'moment'
-import Chart from '../components/data-display/lineGraph.tsx'
+
 import './index.scss'
-import Summary from '../components/data-display/summary'
-import {Card} from '@material-ui/core'
+import Wrapper from './wrapper.tsx'
+import {connect} from 'react-redux'
+import { tableAction } from '../store/tableReducer';
 
-const Wrapper=({allData})=>{
-  const {data} =allData
-  return(
-    <div className="index-wrapper">      
-      <Summary/>
-      <Table data={data} />
-      <Chart />
-      <Chart />
-    </div>
-  )
-}
 
-export default function IndexPage({pageContext}){
-  let {allData}=pageContext
+
+export function IndexPage({data, dispatch, state}){
+  
+  console.log(data.allMongodbTestTabledatas.edges[0].node.data)
+  useEffect(()=>{
+    dispatch(
+      tableAction({
+        activeId: null,
+        active: false,
+        done: data.allMongodbTestTabledatas.edges[0].node.data,
+      })
+    )
+  }, [null])
   
   return (  
   <Layout>
     <SEO title="Home" />
-    <Wrapper allData={allData}/>
+    <Wrapper data={data} dispatch={dispatch} state={state}/>
   </Layout>
 );}
+
+export const data = graphql`
+  query($dayId: String!){
+      allMongodbTestTabledatas(filter: {day: {eq: $dayId }}) {
+          edges {
+              node {
+              id
+              day
+              data
+          }
+      }
+  }
+}
+`
+
+export default connect(state=>state, null)(IndexPage)
 
 
 

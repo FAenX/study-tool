@@ -12,7 +12,11 @@ module.exports = {
     'gatsby-plugin-sharp',
     {
       resolve: `gatsby-source-mongodb`,
-      options: { connectionString: 'mongodb+srv://Davidson:p8L8qu5sgmS$9VH@cluster0-dpfwx.mongodb.net/test', dbName: `test`, collection: `tabledatas` },
+      options: { 
+        connectionString: 'mongodb+srv://Davidson:p8L8qu5sgmS$9VH@cluster0-dpfwx.mongodb.net/test', 
+        dbName: `test`, 
+        collection: `tabledatas` 
+      },
     },
     {
       resolve: 'gatsby-source-filesystem',
