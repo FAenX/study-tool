@@ -2,7 +2,23 @@
 
 .summary-wrapper{
     @include flex();
+    flex-flow: column;
+    justify-content: flex-start;
     height: 250px;
     width: 400px;
-    margin: 1.5em
+    margin: 1.5em;
+    
+}
+
+.index-wrapper .MuiPaper-root{
+    color: #9a9a9a
+}
+
+.summary-wrapper .MuiList-root{
+    width: 95%;
+    background-color: #9a9a9a23;
+    margin: 1px;
+    padding: 5px;
+    @include flex();
+    justify-content: space-between;
 }

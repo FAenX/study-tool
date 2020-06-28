@@ -55,7 +55,7 @@ const Timer = ({state, dispatch}) => {
         countDown: countDown,
         endTime: timerReducer.endTime
       }))
-    }else{
+    }else if(moment().format('mm') === moment(timerReducer.endTime).format('mm')){
       dispatch(timerAction({
         startTime: null,
         active: false,
@@ -65,7 +65,7 @@ const Timer = ({state, dispatch}) => {
       }))
      
       dispatch(tableAction({
-        done: tableReducer.done,
+        done: tableReducer.done.concat(tableReducer.activeId),
         active: false,
         activeId: null,
       }))
@@ -77,14 +77,10 @@ const Timer = ({state, dispatch}) => {
 
   return (
     <div id="progress-bar">
+      <Progress progress={timerReducer.progress}/>
       <div >
         {timerReducer.countDown}
-        {' '}
-        Mins remaining
       </div>
-
-      <Progress progress={timerReducer.progress}/>
-
     </div>
 
   );
