@@ -18,7 +18,7 @@ export function IndexPage({data, dispatch, state}){
       tableAction({
         activeId: null,
         active: false,
-        done: data.allMongodbTestTabledatas.edges > 1 ? data.allMongodbTestTabledatas.edges[0].node.data : [],
+        done: data.allMongodbTestTabledatas.edges > 0 ? data.allMongodbTestTabledatas.edges[0].node.data : [],
       })
     )
   }, [null])
