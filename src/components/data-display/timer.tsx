@@ -80,7 +80,7 @@ const Timer = ({state, dispatch}) => {
       //here
 
       const writeToDb =()=>graphql`
-        mutation CreateReviewForEpisode($ep: Episode!, $review: ReviewInput!) {
+        mutation mongodbTestTabledatas($ep: Episode!, $review: ReviewInput!) {
           createReview(episode: $ep, review: $review) {
             stars
             commentary

@@ -12,13 +12,13 @@ import { tableAction } from '../store/tableReducer';
 
 export function IndexPage({data, dispatch, state}){
   
-  console.log(data.allMongodbTestTabledatas.edges[0].node.data)
+  console.log()
   useEffect(()=>{
     dispatch(
       tableAction({
         activeId: null,
         active: false,
-        done: data.allMongodbTestTabledatas.edges[0].node.data,
+        done: data.allMongodbTestTabledatas.edges > 1 ? data.allMongodbTestTabledatas.edges[0].node.data : [],
       })
     )
   }, [null])

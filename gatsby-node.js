@@ -25,25 +25,30 @@ exports.createPages = async ({ graphql, actions }) => {
     })
 }
 
+exports.createResolvers = ({ createResolvers, actions }) => {
+  const resolvers = {
+    
+    Mutation: {
+      updateTable: {
+        type: [`mongodbTestTabledatas`],
+        resolve: (source, args, context, info) => {
+          ///////
+          
+          const posts = context.nodeModel.getAllNodes({ type: `mongodbTestTabledatas` })
+          console.log(context, info)
+          return posts
+        }
+      }
+    }
+  }
+  createResolvers(resolvers)
+}
+
 exports.createSchemaCustomization = ({ actions }) => {
   const { createTypes, createFieldExtension } = actions
 
-  createFieldExtension({
-    name: 'shout',
-    extend: () => ({
-      resolve(source, args, context, dayId) {
-        return String(source[dayId]).toUpperCase()
-      }
-    })
-  })
-
   const typeDefs = `
-    type Mongo implements Node @dontInfer {
-      data: Data
-    }
-    type Data {
-      dayId: String!
-    }
+    type Mutation
   `
   createTypes(typeDefs)
 }
