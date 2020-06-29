@@ -9,7 +9,7 @@ const path = require(`path`)
 const moment = require('moment')
 
 
-const date = moment().format("YYYYMMMMDD")+''
+const date = moment().format("YYYYMMMMDD")
 
 exports.createPages = async ({ graphql, actions }) => {
     const { createPage } = actions
