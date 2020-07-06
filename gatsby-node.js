@@ -11,19 +11,19 @@ const moment = require('moment')
 
 const date = moment().format("YYYYMMMMDD")
 
-exports.createPages = async ({ graphql, actions }) => {
-    const { createPage } = actions
+// exports.createPages = async ({ graphql, actions }) => {
+//     const { createPage } = actions
 
-    createPage({
-        path: `/`,
-        component: path.resolve(`./src/views/index.jsx`),
-        // The context is passed as props to the component as well
-        // as into the component's GraphQL query.
-        context: {
-          dayId: date,
-        }
-    })
-}
+//     createPage({
+//         path: `/`,
+//         component: path.resolve(`./src/views/index.jsx`),
+//         // The context is passed as props to the component as well
+//         // as into the component's GraphQL query.
+//         context: {
+//           dayId: date,
+//         }
+//     })
+// }
 
 exports.createResolvers = ({ createResolvers, actions }) => {
   const resolvers = {

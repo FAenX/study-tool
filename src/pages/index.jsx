@@ -12,13 +12,13 @@ import { tableAction } from '../store/tableReducer';
 
 export function IndexPage({data, dispatch, state}){
   
-  console.log()
+  console.log(data)
   useEffect(()=>{
     dispatch(
       tableAction({
         activeId: null,
         active: false,
-        done: data.allMongodbTestTabledatas.edges.length > 0 ? data.allMongodbTestTabledatas.edges[0].node.data : [],
+        done: data.allMongodbTestTabledatas.edges.length > 0 ? data.allMongodbTestTabledatas.edges.reverse()[0].node.data : [],
       })
     )
   }, [null])
@@ -31,8 +31,8 @@ export function IndexPage({data, dispatch, state}){
 );}
 
 export const data = graphql`
-  query($dayId: String!){
-      allMongodbTestTabledatas(filter: {day: {eq: $dayId }}) {
+  query{
+      allMongodbTestTabledatas {
           edges {
               node {
               id
