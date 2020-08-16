@@ -98,7 +98,7 @@ const Timer = ({state, dispatch}) => {
             day: state.tableReducer.day,
             user_id: state.userReducer.id,
           },
-          date: moment().format('YYYYMMMMDD')
+          date: state.tableReducer.day
         }
       })
       //here
