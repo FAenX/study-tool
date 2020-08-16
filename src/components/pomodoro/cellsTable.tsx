@@ -38,7 +38,7 @@ function Table({dispatch, state}){
     <Paper variant="outlined" className="pomodoro-table">     
       <div className="cells">
         {makeList(24).map((i) => (
-          <Cell key={i} id={i} data={data} dispatch={dispatch} state={state}/>
+          <Cell key={i} id={i} dispatch={dispatch} state={state}/>
          ))} 
       </div>
     </Paper>

@@ -6,6 +6,13 @@ import PropTypes, { string } from 'prop-types';
 import { connect } from "react-redux";
 import {TimerState, timerAction} from '../../store/timerReducer'
 import {TableState, tableAction} from '../../store/tableReducer'
+import { graphql } from 'gatsby';
+
+interface Model{
+  id: string;
+  day: string;
+  data: number[]
+}
 
 interface Model{
   id: string;
@@ -76,7 +83,22 @@ const Timer = ({state, dispatch}) => {
         activeId: null,
       }))
       // write data to db
+<<<<<<< HEAD
       //here      
+=======
+      //here
+
+      const writeToDb =()=>graphql`
+        mutation mongodbTestTabledatas($ep: Episode!, $review: ReviewInput!) {
+          createReview(episode: $ep, review: $review) {
+            stars
+            commentary
+          }
+        }
+        `
+        writeToDb()
+      
+>>>>>>> 9fba6b9cb51cbb012c80c3df4f2ea030adff1b8b
 
     }
   };

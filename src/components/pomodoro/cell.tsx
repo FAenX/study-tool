@@ -5,28 +5,14 @@ import {
 import {tableAction} from '../../store/tableReducer'
 import {timerAction} from '../../store/timerReducer'
 import moment from 'moment'
+import {connect} from 'react-redux'
 
 
-function Cell ({id, dispatch, data, state}){
-  let {tableReducer} = state
-  let done: number[];
-  try{
-    done = data.allMongodbTestTabledatas.edges[0].node.data   
-  }catch(e){
-    done = []
-  }
-   
-  useEffect(()=> dispatch(
-    tableAction({
-      done,
-      activeId: null,
-      active: false,
-    })
-  ), [])
+function Cell ({id, dispatch, state}){
 
   const clickFunction=()=>{
     // start timer
-    if(!tableReducer.active){
+    if(!state.tableReducer.active){
       dispatch(
         timerAction({
           startTime: moment().format(),
@@ -42,17 +28,18 @@ function Cell ({id, dispatch, data, state}){
         tableAction({
           activeId: id,
           active: true,
-          done,
+          done: state.tableReducer.done,
         })
       )
     }  
   }
 
+
   const color = ()=>{
-    if (tableReducer.activeId === id){
+    if (state.tableReducer.activeId === id){
       return "green"
     }
-    return done.includes(id)? "maroon" : "grey"
+    return state.tableReducer.done.includes(id)? "maroon" : "grey"
   }
   const cardStyle={
     width: "50px",
