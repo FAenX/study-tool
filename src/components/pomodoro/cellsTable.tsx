@@ -4,11 +4,11 @@ import {
 } from '@material-ui/core';
 import './CellsTable.scss';
 import { connect } from "react-redux";
-
-
-
-//redux 
+import { gql, useQuery } from '@apollo/client';
+import  {setData} from '../../store/pomodorosReducer'
+import {setTableData} from '../../store/tableReducer'
 import Cell from './cell'
+
 
 const makeList = (num: number) => {
   const list = [];
@@ -18,6 +18,8 @@ const makeList = (num: number) => {
   return list;
 };
 
+
+// table
 function Table({dispatch, state}){
 
   return (

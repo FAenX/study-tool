@@ -7,7 +7,7 @@ let chart1_2_options = {
       backgroundColor: "#f5f5f5",
       titleFontColor: "#333",
       bodyFontColor: "#666",
-      bodySpacing: 4,
+      bodySpacing: 3,
       xPadding: 12,
       mode: "nearest",
       intersect: 0,
@@ -26,7 +26,7 @@ let chart1_2_options = {
           ticks: {
             suggestedMin: 60,
             suggestedMax: 125,
-            padding: 20,
+            padding: 10,
             fontColor: "#9a9a9a"
           }
         }

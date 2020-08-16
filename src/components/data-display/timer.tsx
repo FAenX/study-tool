@@ -5,8 +5,19 @@ import './Timer.scss';
 import PropTypes, { string } from 'prop-types';
 import { connect } from "react-redux";
 import {TimerState, timerAction} from '../../store/timerReducer'
-import {TableState, tableAction} from '../../store/tableReducer'
-import { graphql } from 'gatsby';
+import {TableState, setTableData} from '../../store/tableReducer'
+import {studyDataFunctions} from '../../backend/studyData'
+import { gql, useMutation } from '@apollo/client';
+
+const UPDATE_TABLE =  gql`
+  mutation UpsertOnePomodoro($data: Pomodoro) {
+    upsertOnePomodoro(data: $data) {
+      returning{
+        _id
+      }
+    }
+  }
+`
 
 interface Model{
   id: string;
@@ -33,8 +44,10 @@ const Progress = ({progress}) => {
 };
 
 const Timer = ({state, dispatch}) => {
-  let timerReducer: TimerState = state.timerReducer
-  let tableReducer: TableState = state.tableReducer
+  let timerReducer = state.timerReducer
+  let tableReducer = state.tableReducer
+
+  const [updateTable, {...data}] = useMutation(UPDATE_TABLE)
 
   useEffect(() => {
     const timer = setInterval(
@@ -77,29 +90,23 @@ const Timer = ({state, dispatch}) => {
         endTime: null
       }))
      
-      dispatch(tableAction({
-        done: tableReducer.done.concat(tableReducer.activeId),
-        active: false,
-        activeId: null,
+      dispatch(
+        setTableData({
+          done: tableReducer.done.concat(tableReducer.activeId),
+          active: false,
+          activeId: null,
       }))
       // write data to db
-<<<<<<< HEAD
-      //here      
-=======
+      updateTable({
+        variables: {
+          data: {
+            _d: '', 
+            data: tableReducer.done, 
+            day: '',
+            user_id: '',
+          }}
+      })
       //here
-
-      const writeToDb =()=>graphql`
-        mutation mongodbTestTabledatas($ep: Episode!, $review: ReviewInput!) {
-          createReview(episode: $ep, review: $review) {
-            stars
-            commentary
-          }
-        }
-        `
-        writeToDb()
-      
->>>>>>> 9fba6b9cb51cbb012c80c3df4f2ea030adff1b8b
-
     }
   };
 
