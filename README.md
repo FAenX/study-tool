@@ -1,3 +1,3 @@
 # study tool based on pomodoro technique
 
-## Using typescript, Graphql $ MongoDB
+## Using React.js Typescript, Graphql & MongoDB
