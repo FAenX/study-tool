@@ -28,7 +28,6 @@ export class studyDataFunctions {
       config
       
       )
-      console.log(auth)
     return auth.data
   
   }
