@@ -2,6 +2,8 @@ export interface TableState{
   activeId: number| null, 
   done: Array<number>,
   active: boolean,
+  day: string,
+  id?: string
 }
 export interface CellAction{
   type: string, 
@@ -12,7 +14,8 @@ export interface CellAction{
 const initialState: TableState = {
     activeId: null,
     done: [],
-    active: false,    
+    active: false, 
+    day: '',
 }; 
 
 //action

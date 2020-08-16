@@ -29,6 +29,8 @@ function Cell ({id, dispatch, state}){
           activeId: id,
           active: true,
           done: state.tableReducer.done,
+          day: state.tableReducer.day,
+          id: state.tableReducer.id
         })
       )
     }  

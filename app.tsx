@@ -17,7 +17,8 @@ import {studyDataFunctions} from './src/backend/studyData'
 import moment from "moment";
 import { gql, useQuery } from '@apollo/client';
 import  {setData} from './src/store/pomodorosReducer'
-import {setTableData} from './src//store/tableReducer'
+import {setTableData} from './src/store/tableReducer'
+import {setUser} from './src/store/userReducer'
 
 // const GET_DATA = gql`
 //    query pomodoros {
@@ -26,33 +27,53 @@ import {setTableData} from './src//store/tableReducer'
 //      data
 //    }}`
 
-const client = new studyDataFunctions().client
+const backend = new studyDataFunctions()
+
+const client = backend.client
 // app
+
+backend.authenticate().then(res=>{
+  store.dispatch(
+    setUser({
+      id: res.user_id
+    })
+  )
+  return
+})
+
 
 client.query({
   query: gql`
-  query pomodoros {
-  pomodoros {
+  query {
+  pomodoros(limit: 1000) {
     day
     data
+    _id
+    user_id
   }}
 `}).then(res=>{
+  let response = res
   store.dispatch(
     setData({
-      pomodoros: res.data.pomodoros
-
+      pomodoros: response.data.pomodoros
     })
   )
-  const today = res.data.pomodoros.find(
-    (item: {day: string, data: number[]})=>{
-    item.day === moment().format('YYYYMMMDD')
+  const today = response.data.pomodoros.find(
+    (item: any)=>{
+    return item.day+'' === moment().format('YYYYMMMMDD')
   })
 
+
   let done: number[];
+  let day: string
+  let id: string
   if (!today){
     done=[]
+    day=moment().format('YYYYMMMMDD')
   }else{
     done=today.data
+    day=today.day
+    id = today._id
   }
 
   store.dispatch(
@@ -60,6 +81,8 @@ client.query({
       activeId: null,
       active: false,
       done,
+      day,
+      id
     })
   )
 }).catch(err=>err)
@@ -74,11 +97,7 @@ client.query({
 
 const App = () => {  
 
-  // const { loading, error, data } = useQuery(GET_DATA);
-
-  // if (loading) return 'Loading...';
-  // if (error) return `Error! ${error.message}`;
-  //retrun
+  
   return(
     
     <Provider store={store}> 

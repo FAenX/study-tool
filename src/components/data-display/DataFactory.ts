@@ -17,7 +17,10 @@ export class DataFactory {
             this.data = data
         }
     
-    private getDataPoint(day: string) {
+    getDataPoint(day: string) {
+        if(!this.data){
+            return
+        }
         let data = this.data
         return data.find((item: Data)=>item.day === day) 
     }
@@ -60,7 +63,7 @@ export class DataFactory {
 
     average(day: string){
         // the last recorded data
-        if(this.data.length < 1){
+        if(!this.data || this.data.length < 1 ){
             return
         }
         const earliestData=this.data[0].day 

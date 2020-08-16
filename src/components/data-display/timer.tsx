@@ -4,23 +4,19 @@ import moment from 'moment';
 import './Timer.scss';
 import {timerAction} from '../../store/timerReducer'
 import {setTableData} from '../../store/tableReducer'
-import { gql, useMutation, useQuery } from '@apollo/client';
-
+import { gql, useMutation} from '@apollo/client';
 
 
 const UPDATE_TABLE =  gql`
-    mutation($data: PomodoroUpdateInput!, $date: String!) {
-      updateOnePomodoro(query: {day: $date}, set:$data) {
-        _id
-        data
-        day
-        user_id
-      }
+    mutation($data: PomodoroUpdateInput!, $date: String!){
+    updateOnePomodoro(query: {day: $date}, set: $data) {
+      data
+      day
+      user_id
+      _id
+    }
   }
 `
-
-
-
 
 const Progress = ({progress}) => {
    
@@ -38,8 +34,7 @@ const Timer = ({state, dispatch}) => {
   let timerReducer = state.timerReducer
   let tableReducer = state.tableReducer
 
-  const [updateTable] = useMutation(UPDATE_TABLE)
-
+  const [updateTable, { data }] = useMutation(UPDATE_TABLE)
 
   useEffect(() => {
     const timer = setInterval(
@@ -64,17 +59,21 @@ const Timer = ({state, dispatch}) => {
       // progress percentage
       let t: number = parseFloat(moment.utc(diff).format("mm.ss"));
       const progress = (t/30)*100;
-      console.log(t)
 
-      dispatch(timerAction({
+      dispatch(
+        timerAction({
         startTime: moment().format(),
         active: timerReducer.active,
         progress: progress,
         countDown: countDown,
         endTime: timerReducer.endTime
       }))
-    }else if(moment().format('mm') === moment(timerReducer.endTime).format('mm')){
-      dispatch(timerAction({
+    }else if(
+      moment().format('mm') === moment(timerReducer.endTime)
+      .format('mm')){
+        
+      dispatch(
+        timerAction({
         startTime: null,
         active: false,
         progress: 0,
@@ -87,24 +86,26 @@ const Timer = ({state, dispatch}) => {
           done: tableReducer.done.concat(tableReducer.activeId),
           active: false,
           activeId: null,
+          day:tableReducer.day,
+          id: tableReducer.id
       }))
-
-
       
       // write data to db
       updateTable({
         variables: {
           data: {
-            data: tableReducer.done, 
-            day: moment().format('YYYYMMMDD'),
-            user_id: '',
+            data: state.tableReducer.done, 
+            day: state.tableReducer.day,
+            user_id: state.userReducer.id,
           },
-          date: moment().format('YYYYMMMDD')
+          date: moment().format('YYYYMMMMDD')
         }
       })
       //here
     }
   };
+
+  
 
   return (
     <div id="progress-bar">

@@ -20,13 +20,10 @@ const Chart =({dispatch, state})=>{
   
   let dailyData = keys.map(key=>dataFactory.dailyData(key))
 
-  console.log(keys)
-
   //averages 
   let averageData = keys.map(key=>dataFactory.average(key))
 
   let chartData = chart1data(days, dailyData, averageData)
-  console.log(chartData)
 
   return (
     <Card variant="outlined" className="chart-wrapper">
