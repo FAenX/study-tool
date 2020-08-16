@@ -3,7 +3,7 @@ import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 
 
-let APP_ID='application-0-gcawx'
+let APP_ID=process.env.APP_ID
 
 export class studyDataFunctions {
 
@@ -19,8 +19,8 @@ export class studyDataFunctions {
     }
   
     let data = {
-      username: 'kipronofb@gmail.com',
-      password: 'p8L8qu5sgmS$9VH'
+      username: process.env.USERNAME,
+      password: process.env.PASSWORD
     }
     
     let auth = await axios.post(
