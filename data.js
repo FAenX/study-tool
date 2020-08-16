@@ -3,21 +3,31 @@ const dotenv = require('dotenv')
 
 dotenv.config()
 
-mongoose.connect(process.env.MONGO_URL, {useNewUrlParser: true})
+const connection1 = mongoose.createConnection(
+    'mongodb+srv://Davidson:p8L8qu5sgmS$9VH@cluster0-dpfwx.mongodb.net/test?retryWrites=true&w=majority', 
+    {useNewUrlParser: true})
 
-const MyModel = mongoose.model('tabledatas', new mongoose.Schema({ name: String }));
+const connection2 = mongoose.createConnection('mongodb://localhost/pomodoro', {useNewUrlParser: true})
+
+const MyModel = connection2
+.model('pomodoro', new mongoose.Schema({}));
+const MyModel2 = connection1
+.model('Pomodoro', new mongoose.Schema({data: Array, day: String, user_id: String}));
 
 MyModel.find().then(
     res=>{
         console.log(res)
         res.forEach((one)=>{
-        console.log(one.toJSON())
-        // MyModel.where({day: one.toJSON().day}).update({...one.toJSON(), user_id: '5f3863fc2a0da57857fc540a'})
+        let data=one.toJSON()
+        delete data._id
+        delete data.__v
+        console.log(data)
+
+        MyModel2.create({...data})
         // .then(res=>{console.log(res); mongoose.disconnect()})
-        // .catch(err=>console.log(err))
-        mongoose.disconnect()
+        // .catch(err=>console.log(err)
     })})
-    .catch(err=>{console.log(err); mongoose.disconnect()})
+    .catch(err=>{console.log(err); })
 
 // 5f3863fc2a0da57857fc540a
 

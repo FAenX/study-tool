@@ -2,8 +2,7 @@ import axios from 'axios'
 import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 
-
-let APP_ID=process.env.APP_ID
+let APP_ID=process.env.REACT_APP_APP_ID
 
 export class studyDataFunctions {
 
@@ -19,8 +18,8 @@ export class studyDataFunctions {
     }
   
     let data = {
-      username: process.env.USERNAME,
-      password: process.env.PASSWORD
+      username: process.env.REACT_APP_USERNAME,
+      password: process.env.REACT_APP_PASSWORD
     }
     
     let auth = await axios.post(
@@ -29,6 +28,7 @@ export class studyDataFunctions {
       config
       
       )
+      console.log(auth)
     return auth.data
   
   }

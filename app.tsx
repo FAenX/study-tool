@@ -10,25 +10,34 @@ import Summary from './src/components/data-display/summary'
 import Table from './src/components/pomodoro/cellsTable';
 import Chart from './src/components/data-display/lineGraph'
 import './app.scss'
-import {studyDataFunctions} from './src/backend/studyData'
 import { ApolloProvider } from '@apollo/client';
-
+import  {setData} from './src/store/pomodorosReducer'
 // import { gql} from '@apollo/client';
 
 
 const store = createStore(rootReducer);
-  // init client
+import { gql, useQuery } from '@apollo/client';
+import {studyDataFunctions} from './src/backend/studyData'
+
 const client = new studyDataFunctions().client
 
-// console.log(client.query({
-//   query: gql`
-//   query tabledatas {
-//   tabledata {
-//     day
-//     data
-//   }}
-// `}).then(res=>console.log(res)).catch(err=>console.log(err))
-// )
+client.query({
+  query: gql`
+  query pomodoros {
+  pomodoros {
+    day
+    data
+  }}
+`}).then(res=>{
+  store.dispatch(
+    setData({
+      pomodoros: res.data.pomodoros
+
+    })
+  )
+  res
+}).catch(err=>err)
+
 
 
 const App = () => {  

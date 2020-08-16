@@ -4,19 +4,7 @@ import {
 } from '@material-ui/core';
 import './CellsTable.scss';
 import { connect } from "react-redux";
-import { gql, useQuery } from '@apollo/client';
-import {studyDataFunctions} from '../../backend/studyData'
 
-const client = new studyDataFunctions().client
-
-const data = client.query({
-  query: gql`
-  query tabledatas {
-  tabledata {
-    day
-    data
-  }}
-`}).then(res=>console.log(res)).catch(err=>console.log(err))
 
 
 //redux 
@@ -31,8 +19,6 @@ const makeList = (num: number) => {
 };
 
 function Table({dispatch, state}){
-
-  console.log(data)
 
   return (
     <Paper variant="outlined" className="pomodoro-table">     

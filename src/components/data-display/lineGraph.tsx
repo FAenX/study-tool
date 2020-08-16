@@ -1,20 +1,23 @@
-import React from 'react';
-import {DataFactory} from './DataFunctions'
+import React, { useEffect } from 'react';
+import {DataFactory} from './DataFactory'
 import './lineGraph.scss'
 
 import  CCharts, {Line}  from "react-chartjs-2";
 import { Card } from '@material-ui/core';
 import {chart1data} from './variables'
+import { connect } from "react-redux";
 
 
-const Chart =()=>{
-  let data = [{day: '2020July10', data: [1,2]}]
-  let dataFactory = new DataFactory(data, 10)
+const Chart =({dispatch, state})=>{
+
+  const {pomodoros} = state.pomodorosReducer
+  let dataFactory = new DataFactory(pomodoros, 10)
   // console.log(dataFactory.)
 
   //alldata
-  let keys: string[] = dataFactory.makeHistoryKeysArr()
-  let days: string[] = dataFactory.makeDaysArr()
+  let keys = dataFactory.makeHistoryKeysArr()
+  let days = dataFactory.makeDaysArr()
+  
   let dailyData = keys.map(key=>dataFactory.dailyData(key))
 
   console.log(keys)
@@ -23,6 +26,7 @@ const Chart =()=>{
   let averageData = keys.map(key=>dataFactory.average(key))
 
   let chartData = chart1data(days, dailyData, averageData)
+  console.log(chartData)
 
   return (
     <Card variant="outlined" className="chart-wrapper">
@@ -40,4 +44,4 @@ const Chart =()=>{
     );}
 
 
-export default Chart;
+export default connect((state, dispatch)=>({state, dispatch}))(Chart);
