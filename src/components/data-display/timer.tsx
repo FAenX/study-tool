@@ -1,24 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { LinearProgress } from '@material-ui/core';
 import moment from 'moment';
 import './Timer.scss';
-import PropTypes, { string } from 'prop-types';
-import { connect } from "react-redux";
-import {TimerState, timerAction} from '../../store/timerReducer'
-import {TableState, tableAction} from '../../store/tableReducer'
-import { graphql } from 'gatsby';
+import {timerAction} from '../../store/timerReducer'
+import {setTableData} from '../../store/tableReducer'
+import { gql, useMutation, useQuery } from '@apollo/client';
 
-interface Model{
-  id: string;
-  day: string;
-  data: number[]
-}
 
-interface Model{
-  id: string;
-  day: string;
-  data: number[]
-}
+
+const UPDATE_TABLE =  gql`
+    mutation($data: PomodoroUpdateInput!, $date: String!) {
+      updateOnePomodoro(query: {day: $date}, set:$data) {
+        _id
+        data
+        day
+        user_id
+      }
+  }
+`
+
+
+
 
 const Progress = ({progress}) => {
    
@@ -33,8 +35,11 @@ const Progress = ({progress}) => {
 };
 
 const Timer = ({state, dispatch}) => {
-  let timerReducer: TimerState = state.timerReducer
-  let tableReducer: TableState = state.tableReducer
+  let timerReducer = state.timerReducer
+  let tableReducer = state.tableReducer
+
+  const [updateTable] = useMutation(UPDATE_TABLE)
+
 
   useEffect(() => {
     const timer = setInterval(
@@ -77,29 +82,27 @@ const Timer = ({state, dispatch}) => {
         endTime: null
       }))
      
-      dispatch(tableAction({
-        done: tableReducer.done.concat(tableReducer.activeId),
-        active: false,
-        activeId: null,
+      dispatch(
+        setTableData({
+          done: tableReducer.done.concat(tableReducer.activeId),
+          active: false,
+          activeId: null,
       }))
-      // write data to db
-<<<<<<< HEAD
-      //here      
-=======
-      //here
 
-      const writeToDb =()=>graphql`
-        mutation mongodbTestTabledatas($ep: Episode!, $review: ReviewInput!) {
-          createReview(episode: $ep, review: $review) {
-            stars
-            commentary
-          }
-        }
-        `
-        writeToDb()
+
       
->>>>>>> 9fba6b9cb51cbb012c80c3df4f2ea030adff1b8b
-
+      // write data to db
+      updateTable({
+        variables: {
+          data: {
+            data: tableReducer.done, 
+            day: moment().format('YYYYMMMDD'),
+            user_id: '',
+          },
+          date: moment().format('YYYYMMMDD')
+        }
+      })
+      //here
     }
   };
 

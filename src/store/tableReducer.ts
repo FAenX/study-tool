@@ -16,20 +16,21 @@ const initialState: TableState = {
 }; 
 
 //action
-const TOGGLE_STATE = 'TOGGLE_STATE';
+const SET_TABLE_DATA = 'SET_TABLE_DATA';
 
 
 //action -----
-export const tableAction = (state: TableState) => ({
-  type: TOGGLE_STATE, state
+export const setTableData = (state: TableState) => ({
+  type: SET_TABLE_DATA, state
 });
+
 
 
 //reducer
 export default (state = initialState, action: CellAction) => {
     switch (action.type) {
-      case TOGGLE_STATE:
-        return {...action.state};
+      case SET_TABLE_DATA:
+        return {...action.state}
       default:
         return state;
     }

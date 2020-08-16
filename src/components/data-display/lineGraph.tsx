@@ -11,7 +11,7 @@ import { connect } from "react-redux";
 const Chart =({dispatch, state})=>{
 
   const {pomodoros} = state.pomodorosReducer
-  let dataFactory = new DataFactory(pomodoros, 10)
+  let dataFactory = new DataFactory(pomodoros, 30)
   // console.log(dataFactory.)
 
   //alldata
@@ -37,9 +37,7 @@ const Chart =({dispatch, state})=>{
         height={300}
         width={400}
         data={chartData.dailyData}
-        options={chartData.options}
-          
-        
+        options={chartData.options} 
       /></Card>
     );}
 
