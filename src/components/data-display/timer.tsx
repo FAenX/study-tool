@@ -2,10 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { LinearProgress } from '@material-ui/core';
 import moment from 'moment';
 import './Timer.scss';
-import PropTypes from 'prop-types';
+import PropTypes, { string } from 'prop-types';
 import { connect } from "react-redux";
 import {TimerState, timerAction} from '../../store/timerReducer'
 import {TableState, tableAction} from '../../store/tableReducer'
+
+interface Model{
+  id: string;
+  day: string;
+  data: number[]
+}
 
 const Progress = ({progress}) => {
    
@@ -45,7 +51,7 @@ const Timer = ({state, dispatch}) => {
 
       // progress percentage
       let t: number = parseFloat(moment.utc(diff).format("mm.ss"));
-      const progress = (t/10)*100;
+      const progress = (t/30)*100;
       console.log(t)
 
       dispatch(timerAction({
@@ -55,7 +61,7 @@ const Timer = ({state, dispatch}) => {
         countDown: countDown,
         endTime: timerReducer.endTime
       }))
-    }else{
+    }else if(moment().format('mm') === moment(timerReducer.endTime).format('mm')){
       dispatch(timerAction({
         startTime: null,
         active: false,
@@ -65,25 +71,22 @@ const Timer = ({state, dispatch}) => {
       }))
      
       dispatch(tableAction({
-        done: tableReducer.done,
+        done: tableReducer.done.concat(tableReducer.activeId),
         active: false,
         activeId: null,
       }))
       // write data to db
+      //here      
 
     }
   };
 
   return (
     <div id="progress-bar">
+      <Progress progress={timerReducer.progress}/>
       <div >
         {timerReducer.countDown}
-        {' '}
-        Mins remaining
       </div>
-
-      <Progress progress={timerReducer.progress}/>
-
     </div>
 
   );
