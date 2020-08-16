@@ -1,35 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { LinearProgress } from '@material-ui/core';
 import moment from 'moment';
 import './Timer.scss';
-import PropTypes, { string } from 'prop-types';
-import { connect } from "react-redux";
-import {TimerState, timerAction} from '../../store/timerReducer'
-import {TableState, setTableData} from '../../store/tableReducer'
-import {studyDataFunctions} from '../../backend/studyData'
-import { gql, useMutation } from '@apollo/client';
+import {timerAction} from '../../store/timerReducer'
+import {setTableData} from '../../store/tableReducer'
+import { gql, useMutation, useQuery } from '@apollo/client';
+
+
 
 const UPDATE_TABLE =  gql`
-  mutation UpsertOnePomodoro($data: Pomodoro) {
-    upsertOnePomodoro(data: $data) {
-      returning{
+    mutation($data: PomodoroUpdateInput!, $date: String!) {
+      updateOnePomodoro(query: {day: $date}, set:$data) {
         _id
+        data
+        day
+        user_id
       }
-    }
   }
 `
 
-interface Model{
-  id: string;
-  day: string;
-  data: number[]
-}
 
-interface Model{
-  id: string;
-  day: string;
-  data: number[]
-}
+
 
 const Progress = ({progress}) => {
    
@@ -47,7 +38,8 @@ const Timer = ({state, dispatch}) => {
   let timerReducer = state.timerReducer
   let tableReducer = state.tableReducer
 
-  const [updateTable, {...data}] = useMutation(UPDATE_TABLE)
+  const [updateTable] = useMutation(UPDATE_TABLE)
+
 
   useEffect(() => {
     const timer = setInterval(
@@ -96,15 +88,19 @@ const Timer = ({state, dispatch}) => {
           active: false,
           activeId: null,
       }))
+
+
+      
       // write data to db
       updateTable({
         variables: {
           data: {
-            _d: '', 
             data: tableReducer.done, 
-            day: '',
+            day: moment().format('YYYYMMMDD'),
             user_id: '',
-          }}
+          },
+          date: moment().format('YYYYMMMDD')
+        }
       })
       //here
     }

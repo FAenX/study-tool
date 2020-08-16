@@ -19,7 +19,12 @@ import { gql, useQuery } from '@apollo/client';
 import  {setData} from './src/store/pomodorosReducer'
 import {setTableData} from './src//store/tableReducer'
 
-
+// const GET_DATA = gql`
+//    query pomodoros {
+//    pomodoros {
+//      day
+//      data
+//    }}`
 
 const client = new studyDataFunctions().client
 // app
@@ -59,7 +64,20 @@ client.query({
   )
 }).catch(err=>err)
 
+// import { ApolloConsumer } from '@apollo/client';
+
+// const WithApolloClient = () => (
+//   <ApolloConsumer>
+//     {client => 'We have access to the client!' /* do stuff here */}
+//   </ApolloConsumer>
+// );
+
 const App = () => {  
+
+  // const { loading, error, data } = useQuery(GET_DATA);
+
+  // if (loading) return 'Loading...';
+  // if (error) return `Error! ${error.message}`;
   //retrun
   return(
     
