@@ -10,11 +10,11 @@
     @include flex();
     color: $color_2;
     
-    margin: 1em;
+    margin: 0;
     
     .MuiLinearProgress-root{
         height: 5px;
-        width: 300px;
+        width: 200px;
         margin: 1em;
     }
     .MuiLinearProgress-colorPrimary{

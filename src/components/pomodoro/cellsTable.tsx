@@ -1,17 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import {
-  Paper, Button, Toolbar, Card,
+  Paper,
 } from '@material-ui/core';
 import './CellsTable.scss';
 import { connect } from "react-redux";
+import { gql, useQuery } from '@apollo/client';
+import {studyDataFunctions} from '../../backend/studyData'
+
+const client = new studyDataFunctions().client
+
+const data = client.query({
+  query: gql`
+  query tabledatas {
+  tabledata {
+    day
+    data
+  }}
+`}).then(res=>console.log(res)).catch(err=>console.log(err))
+
 
 //redux 
-
 import Cell from './cell'
-import {graphql} from 'gatsby'
-import moment from 'moment'
-
-
 
 const makeList = (num: number) => {
   const list = [];
@@ -21,18 +30,19 @@ const makeList = (num: number) => {
   return list;
 };
 
-const Table=({data, dispatch, state})=> {
+function Table({dispatch, state}){
+
+  console.log(data)
+
   return (
     <Paper variant="outlined" className="pomodoro-table">     
       <div className="cells">
         {makeList(24).map((i) => (
-          <Cell key={i} id={i} data={data} dispatch={dispatch} state={state}/>
+          <Cell key={i} id={i} dispatch={dispatch} state={state}/>
          ))} 
       </div>
     </Paper>
   );
 }
 
-export default connect(state=>({
-  state
-}), null)(Table) 
+export default connect((state, dispatch)=>({state, dispatch}))(Table) 

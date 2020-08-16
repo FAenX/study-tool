@@ -17,22 +17,24 @@ $primary-color-2: #29180eb6;
   
 @mixin sliding-effect10s{
     animation: righttoleft 6s;
-  }
+}
+  
+@mixin flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+  
+body{
+    @include flex();
+    min-width: 100vw;
+    min-height: 100vh;
+    background-color: rgba(7, 16, 36, 0.883);
+}
 
 
-  
-  @mixin flex {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      align-content: center;
-  }
-  
-  
-  body{
-      @include flex();
-      width: 98vw;
-      min-height: 100vh;
-      background-color: rgba(10, 7, 36, 0.883);
-  }
+
+
+
   

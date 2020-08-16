@@ -1,11 +1,9 @@
 import moment from "moment"
 import { node } from "prop-types";
 
-interface Data {
-    node: {
-        day: string, 
-        data: Array<number>
-    }
+interface Data {    
+    day: string, 
+    data: Array<number>    
 }
 
 export class DataFactory {
@@ -20,7 +18,7 @@ export class DataFactory {
         }
     
     private getDataPoint = (day: string)=> (
-        this.data.find((item: Data)=>item.node.day === day) 
+        this.data.find((item: Data)=>item.day === day) 
     ) 
     
     //takes an array retruns an average
@@ -53,13 +51,13 @@ export class DataFactory {
                 if (!dataPoint){
                     return 0
                 }           
-                return dataPoint.node.data.length*30
+                return dataPoint.data.length*30
         };
 
 
     average(day: string){
         
-        const earliestData=this.data[0].node.day 
+        const earliestData=this.data[0].day 
         let period = moment(day)
             .diff(moment(earliestData), 'days')  
 

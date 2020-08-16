@@ -1,11 +1,10 @@
-import { Link } from "gatsby"
-import PropTypes from "prop-types"
-import React from "react"
+import React from "react";
+import './header.scss'
 
-const Header = ({ siteTitle }) => (
-  <header>
-    Header
-  </header>
-)
+const Header = () => (
+  <nav className="navbar">
+    study tool
+  </nav>
+);
 
-export default Header
+export default Header;

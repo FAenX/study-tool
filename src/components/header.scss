@@ -1,0 +1,7 @@
+@import "./src/base";
+
+.navbar{
+    @include flex();
+    background-color: transparent;
+    width: 100%;
+}

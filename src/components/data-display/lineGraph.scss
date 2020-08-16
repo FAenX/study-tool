@@ -1,6 +1,6 @@
 @import '../../base';
 
-$c: #7a808142;
+
 
 .chart-wrapper{
     @include flex();
@@ -10,6 +10,3 @@ $c: #7a808142;
     
 }
 
-.index-wrapper .MuiPaper-root{
-    background-color: $c;
-}

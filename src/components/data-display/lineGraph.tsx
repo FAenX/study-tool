@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import {useStaticQuery, graphql} from 'gatsby'
+import React from 'react';
 import {DataFactory} from './DataFunctions'
 import './lineGraph.scss'
 
@@ -9,29 +8,16 @@ import {chart1data} from './variables'
 
 
 const Chart =()=>{
-  let data = useStaticQuery(graphql`
-    query{
-    allMongodbTestTabledatas{
-        edges {
-            node {
-            id
-            day
-            data
-        }
-        }
-    }
-    
-    }
-  
-  `)
-
-  data = data.allMongodbTestTabledatas.edges
+  let data = [{day: '2020July10', data: [1,2]}]
   let dataFactory = new DataFactory(data, 10)
+  // console.log(dataFactory.)
 
   //alldata
   let keys: string[] = dataFactory.makeHistoryKeysArr()
   let days: string[] = dataFactory.makeDaysArr()
   let dailyData = keys.map(key=>dataFactory.dailyData(key))
+
+  console.log(keys)
 
   //averages 
   let averageData = keys.map(key=>dataFactory.average(key))

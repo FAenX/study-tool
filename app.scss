@@ -1,0 +1,17 @@
+@import "./src/base";
+$c: #7a808142;
+
+#app{
+    @include flex();
+    flex-flow: column;
+}
+
+.wrapper{
+    @include flex();
+    flex-flow: row wrap;
+}
+
+.wrapper .MuiPaper-root{
+    background-color: $c;
+    color: #9a9a9a;
+}
