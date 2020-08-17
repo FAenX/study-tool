@@ -1,7 +1,6 @@
 import React from "react";
 import './header.scss'
 import {Button} from '@material-ui/core'
-import { studyDataFunctions } from "../backend/studyData";
 
 
 const Header = () => {
