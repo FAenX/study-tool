@@ -1,11 +1,10 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import {
-    Paper, Button, Toolbar, Card,
+    Button, Card,
   } from '@material-ui/core';
 import {setTableData} from '../../store/tableReducer'
 import {timerAction} from '../../store/timerReducer'
 import moment from 'moment'
-import {connect} from 'react-redux'
 
 
 function Cell ({id, dispatch, state}){

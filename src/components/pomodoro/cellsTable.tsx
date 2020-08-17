@@ -4,10 +4,22 @@ import {
 } from '@material-ui/core';
 import './CellsTable.scss';
 import { connect } from "react-redux";
-import { gql, useQuery } from '@apollo/client';
 import  {setData} from '../../store/pomodorosReducer'
 import {setTableData} from '../../store/tableReducer'
 import Cell from './cell'
+import { gql, useMutation} from '@apollo/client';
+
+
+const UPDATE_TABLE =  gql`
+    mutation($data: PomodoroUpdateInput!, $date: String!){
+    updateOnePomodoro(query: {day: $date}, set: $data) {
+      data
+      day
+      user_id
+      _id
+    }
+  }
+`
 
 
 const makeList = (num: number) => {
@@ -21,6 +33,18 @@ const makeList = (num: number) => {
 
 // table
 function Table({dispatch, state}){
+  const [updateTable, { data }] = useMutation(UPDATE_TABLE)
+  // write data to db
+  updateTable({
+    variables: {
+      data: {
+        data: state.tableReducer.done, 
+        day: state.tableReducer.day,
+        user_id: state.userReducer.id,
+      },
+      date: state.tableReducer.day
+    }
+  })
 
   return (
     <Paper variant="outlined" className="pomodoro-table">     

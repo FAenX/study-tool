@@ -4,19 +4,7 @@ import moment from 'moment';
 import './Timer.scss';
 import {timerAction} from '../../store/timerReducer'
 import {setTableData} from '../../store/tableReducer'
-import { gql, useMutation} from '@apollo/client';
 
-
-const UPDATE_TABLE =  gql`
-    mutation($data: PomodoroUpdateInput!, $date: String!){
-    updateOnePomodoro(query: {day: $date}, set: $data) {
-      data
-      day
-      user_id
-      _id
-    }
-  }
-`
 
 const Progress = ({progress}) => {
    
@@ -33,8 +21,6 @@ const Progress = ({progress}) => {
 const Timer = ({state, dispatch}) => {
   let timerReducer = state.timerReducer
   let tableReducer = state.tableReducer
-
-  const [updateTable, { data }] = useMutation(UPDATE_TABLE)
 
   useEffect(() => {
     const timer = setInterval(
@@ -53,7 +39,6 @@ const Timer = ({state, dispatch}) => {
       let start = moment(timerReducer.startTime); 
       let end = moment(timerReducer.endTime);
       let diff = end.diff(start);
-
       let countDown = moment.utc(diff).format("mm:ss");      
 
       // progress percentage
@@ -89,18 +74,6 @@ const Timer = ({state, dispatch}) => {
           day:tableReducer.day,
           id: tableReducer.id
       }))
-      
-      // write data to db
-      updateTable({
-        variables: {
-          data: {
-            data: state.tableReducer.done, 
-            day: state.tableReducer.day,
-            user_id: state.userReducer.id,
-          },
-          date: state.tableReducer.day
-        }
-      })
       //here
     }
   };

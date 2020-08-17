@@ -5,8 +5,16 @@ import { setContext } from '@apollo/client/link/context';
 let APP_ID=process.env.REACT_APP_APP_ID
 
 export class studyDataFunctions {
+  public email?:string
+  public password?: string
 
-  constructor(){}
+  constructor(
+    email?: string,
+    password?: string
+  ){
+    this.email = email
+    this.password = password
+  }
 
   //authenticate
  async authenticate(){
@@ -18,8 +26,8 @@ export class studyDataFunctions {
     }
   
     let data = {
-      username: process.env.REACT_APP_USERNAME,
-      password: process.env.REACT_APP_PASSWORD
+      username: this.email ? this.email : process.env.REACT_APP_USERNAME,
+      password: this.password? this.password : process.env.REACT_APP_PASSWORD
     }
     
     let auth = await axios.post(

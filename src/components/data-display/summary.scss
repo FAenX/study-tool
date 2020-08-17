@@ -4,14 +4,13 @@
     @include flex();
     flex-flow: column;
     justify-content: flex-start;
-    height: 250px;
     width: 400px;
-    margin: 1.5em;
+    padding: .5em;
     
 }
 
 .summary-wrapper .MuiList-root{
-    width: 95%;
+    width: 100%;
     background-color: #9a9a9a23;
     margin: 1px;
     padding: 5px;

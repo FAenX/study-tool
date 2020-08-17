@@ -2,6 +2,23 @@
 
 .navbar{
     @include flex();
+    flex-flow: row;
+    justify-content: space-between;
     background-color: transparent;
     width: 100%;
+    position: fixed;
+    top: 0;
+    padding: 1em;
+    
+    .logo{
+        font-weight: 600;
+        font-size: 2em;
+       
+    }
+    
+    .login-button{
+        font-weight: 400;
+        font-size: 1em;
+    }
 }
+
