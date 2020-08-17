@@ -43,8 +43,8 @@ function Cell ({id, dispatch, state}){
     return state.tableReducer.done.includes(id)? "maroon" : "grey"
   }
   const cardStyle={
-    width: "50px",
-    height: "50px",
+    width: "40px",
+    height: "40px",
     backgroundColor: color()
   }
 
