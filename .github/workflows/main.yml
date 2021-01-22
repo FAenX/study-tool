@@ -52,7 +52,7 @@ jobs:
             ls -lhart ~/.ssh/id_rsa
 
             git remote add develop root@coderafiki.info:/srv/git/study-tool.git
-            git remote add github git@github.com:ohospital/study-tool.git
+            git remote add github git@github.com:FAenX/study-tool.git
             
             git config --global user.name github-actions
             git config --global user.email actions@git.com
