@@ -1,3 +1,9 @@
 # study tool based on pomodoro technique
 
-## Using React.js Typescript, Graphql & MongoDB
+```sh 
+npm install
+npm start
+```
+
+#
+[Project Home](https://study-tool.coderafiki.info)
