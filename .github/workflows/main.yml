@@ -58,5 +58,5 @@ jobs:
             git config --global user.email actions@git.com
 
       - run: git fetch --unshallow github main
-      - run: git push develop develop:master
+      - run: git push develop main:master
       
