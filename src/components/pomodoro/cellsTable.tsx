@@ -5,6 +5,7 @@ import {
 import './CellsTable.scss';
 import { connect } from "react-redux";
 import Cell from './cell'
+import {api} from "../../api/table"
 
 
 
@@ -19,6 +20,10 @@ const makeList = (num: number) => {
 
 // table
 function Table({dispatch, state}){
+  React.useEffect(()=>{
+    const response = api.login('','')
+    console.log(response)
+  })
 
   return (
     <Paper variant="outlined" className="pomodoro-table">     
