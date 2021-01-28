@@ -9,7 +9,7 @@ export const api = {
   },
 
   register(user: User) {
-    return Axios.post(`/api/users/signup`, { ...user });
+    return Axios.post(`/api/users`, { ...user });
   },
 
   updatePassword(currentPassword: String, newPassword: String) {
