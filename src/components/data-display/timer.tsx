@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { LinearProgress } from '@material-ui/core';
 import moment from 'moment';
-import './Timer.scss';
 import {timerAction} from '../../store/timerReducer'
 import {setTableData} from '../../store/tableReducer'
 

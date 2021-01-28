@@ -1,9 +1,6 @@
 import React from 'react'
-import {Card, List} from '@material-ui/core'
-import './summary.scss'
 import Timer from './timer'
 import {connect} from 'react-redux'
-import moment from 'moment'
 
 const makeList = (num: number) => {
   const list = [];
@@ -23,34 +20,34 @@ function TotalTime(){
 
 function Summary({dispatch, state,}){
     return(
-        <Card variant="outlined" className="summary-wrapper">
-          <List>
+        <div className="summary-wrapper is-flex is-justify-content-center is-align-content-center is-flex-direction-column ">
+          <div className="summary p-2">
             <div>Timer:</div>
             <Timer dispatch={dispatch} state={state}/>
-          </List>
+          </div>
             {/* {makeList(14).map(i =>(<Cell key={i}/>))} */}
-          <List>
+          <div className="summary p-2">
             <div>Total time:</div>
-             <TotalTime />
-          </List>
-          <List>
+             {/* <TotalTime /> */}
+          </div>
+          <div className="summary p-2">
             <div>Streak:</div>
-             <TotalTime />
-          </List>
-          <List>
+             {/* <TotalTime /> */}
+          </div>
+          <div className="summary p-2">
             <div>Best time:</div>
-             <TotalTime />
-          </List>
-          <List>
+             {/* <TotalTime /> */}
+          </div>
+          <div className="summary p-2">
             <div>Avarage today:</div>
-             <TotalTime />
-          </List>
-          <List>
+             {/* <TotalTime /> */}
+          </div>
+          <div className="summary p-2">
             <div>Time to mastery:</div>
-             <TotalTime />
-          </List>
+             {/* <TotalTime /> */}
+          </div>
           
-        </Card>
+        </div>
     )
 }
 

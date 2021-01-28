@@ -1,20 +1,12 @@
 import React from "react";
-import './header.scss'
-import {Button} from '@material-ui/core'
 
 
 const Header = () => {
 
   return(
-    <nav className="navbar">
-      <div className="logo">study tool</div>
-      <Button 
-        variant="outlined" 
-        className="login-button" 
-        // onClick={()=>login()}
-      >
-        login
-        </Button>
+    <nav className="navbar is-flex is-justify-content-center">
+      <div className="logo m-4 is-size-4">Study Tool</div>
+      <a type="button" className="button m-4">login</a>
     </nav>
   )
 };

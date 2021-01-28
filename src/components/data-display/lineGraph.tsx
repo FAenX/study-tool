@@ -1,9 +1,7 @@
 import React, { useEffect } from 'react';
 import {DataFactory} from './DataFactory'
-import './lineGraph.scss'
 
 import  CCharts, {Line}  from "react-chartjs-2";
-import { Card } from '@material-ui/core';
 import {chart1data} from './variables'
 import { connect } from "react-redux";
 
@@ -26,7 +24,7 @@ const Chart =({dispatch, state})=>{
   let chartData = chart1data(days, dailyData, averageData)
 
   return (
-    <Card variant="outlined" className="chart-wrapper">
+    <div className="chart-wrapper is-flex p-2 m-2">
       
     <CCharts
         type="line"
@@ -35,7 +33,7 @@ const Chart =({dispatch, state})=>{
         width={400}
         data={chartData.dailyData}
         options={chartData.options} 
-      /></Card>
+      /></div>
     );}
 
 

@@ -1,17 +1,47 @@
-@import "./src/base";
-$c: #7a808142;
+@import './src/styles/bulma/bulma.sass';
 
-#app{
-    @include flex();
-    flex-flow: column;
+.pomodoro-table{
+    width: 500px;
+    height: 300px;
+    overflow: hidden;  
+    .cells{       
+        overflow: hidden;  
+    }  
 }
 
-.wrapper{
-    @include flex();
-    flex-flow: row wrap;
+.summary{
+    background-color: rgb(80, 80, 80);
 }
 
-.wrapper .MuiPaper-root{
-    background-color: $c;
-    color: #9a9a9a;
+.chart-wrapper{
+    width: 500px;
+    height: 300px;
+    background-color: rgb(80, 80, 80);
 }
+
+.summary-wrapper{
+    // width: 500px;
+    // height: 300px;
+    background-color: rgb(97, 97, 97);
+}
+
+
+/*progress */
+@keyframes heightTop {
+    0%{height: 1%;width: 1%; background-color: black;}
+    100%{height: 100%; width: 100%; background-color: rgb(219, 60, 60);}
+}
+
+#progress-bar{
+    color: black;
+    margin: 0;
+}
+
+
+.d {
+    border: black 1px solid;
+}
+
+
+
+
