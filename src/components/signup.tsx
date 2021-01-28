@@ -1,18 +1,15 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { connect } from 'react-redux'
-import { api } from '../api/users'
-import { userAuth } from '../api/auth'
-import Signup from './signup'
+import {api} from '../api/users'
 
 
-function Login({dispatch, state}){
-
+function Signup(){
     const [user, setUser] = React.useState({login: '', password: ''})
-    
-    const signup=()=>{
-        dispatch({type: 'SET_COMPONENT', state: {component: <Signup/>}})
+    const signup =async ()=>{
+        const response = await api.register({...user})
+        console.log(response)
     }
+
     const change=(event: { preventDefault: () => void; target: { name: any; value: any } })=>{
         event.preventDefault()
         const name = event.target.name
@@ -21,15 +18,11 @@ function Login({dispatch, state}){
         setUser(userr)
         
     }
-    const login=async ()=>{
-        const response = await api.login(user.login, user.password)
-        console.log(response)
-
-    }
+    
     return(
         
-        <div id="login" style={{width: "30vw"}} className="container is-flex is-flex-direction-column is-justify-content-center is-align-content-center">
-            <div className="p-4">Login</div>
+        <div id="login" className="container is-flex is-flex-direction-column is-justify-content-center is-align-content-center">
+            <div className="p-4">Signup</div>
             <div className="field">
                 <div className="control m-2">
                     <input onChange={change} className="input is-primary" type="email" placeholder="email" name="login"/>
@@ -41,7 +34,6 @@ function Login({dispatch, state}){
                 </div>                
             </div>
             <div>
-                <a type="button" className="button m-4 is-rounded" onClick={login}>login</a>
                 <a type="button" className="button m-4 is-rounded" onClick={signup}>register</a>
             </div>
             
@@ -50,5 +42,4 @@ function Login({dispatch, state}){
     )
 }
 
-
-export default connect((state, dispatch)=>({state, dispatch}))(Login)
+export default Signup
