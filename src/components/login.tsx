@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { api } from '../api/users'
 import { userAuth } from '../api/auth'
 import Signup from './signup'
+import { ptfs0u } from "../utils/variables";
 
 
 function Login({dispatch, state}){
@@ -24,6 +25,9 @@ function Login({dispatch, state}){
     const login=async ()=>{
         const response = await api.login(user.login, user.password)
         console.log(response)
+        if(response.token){
+            localStorage.setItem(ptfs0u, response.token)
+        }
 
     }
     return(
