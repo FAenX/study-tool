@@ -24,8 +24,8 @@ function Login({dispatch, state}){
     }
     const login=async ()=>{
         const response = await api.login(user.login, user.password)
-        console.log(response.data)
-        if(response.data){
+        console.log(response.status)
+        if(response.status === 200){
             localStorage.setItem(ptfs0u, response.data.token)
         }
 
