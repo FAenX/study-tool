@@ -4,7 +4,7 @@ import { User } from "../models/user";
 import {Session} from "./types"
 
 export const api = {
-  login(login: String, password: String): Promise<Session> {   
+  login(login: String, password: String): Promise<any> {   
       return Axios.post(`/api/users/login`, { login, password });   
   },
 
