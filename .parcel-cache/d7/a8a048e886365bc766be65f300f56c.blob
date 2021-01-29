@@ -1,0 +1,90 @@
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.DataFactory = void 0;
+
+var _moment = _interopRequireDefault(require("moment"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+class DataFactory {
+  constructor(data, length) {
+    this.length = length;
+    this.data = data;
+  }
+
+  getDataPoint(day) {
+    if (!this.data) {
+      return;
+    }
+
+    let data = this.data;
+    return data.find(item => item.day === day);
+  } //takes an array retruns an average
+
+
+  getaverage(arr, period) {
+    return arr.reduce((a, b) => a + b, 0) / period;
+  } //return an array of keys for ${length}
+
+
+  makeHistoryKeysArr() {
+    let historyKeysArr = [];
+
+    for (let i = 0; i < this.length; i++) {
+      historyKeysArr.push((0, _moment.default)().subtract(i, 'days').format("YYYYMMMMDD"));
+    }
+
+    historyKeysArr = historyKeysArr.reverse();
+    return historyKeysArr;
+  }
+
+  //retrun an array of strings
+  makeDaysArr() {
+    let days = [];
+
+    for (let i = 0; i < this.length; i++) {
+      days.push((0, _moment.default)().subtract(i, 'days').format("dd"));
+    }
+
+    days = days.reverse();
+    return days;
+  } // filter history by key && multiply returned array.length by 30 mins
+  // to get total time on that day 
+
+
+  dailyData(key) {
+    let dataPoint = this.getDataPoint(key);
+
+    if (!dataPoint) {
+      return 0;
+    }
+
+    return dataPoint.data.length * 30;
+  }
+
+  average(day) {
+    // the last recorded data
+    if (!this.data || this.data.length < 1) {
+      return;
+    }
+
+    const earliestData = this.data[0].day;
+    let period = (0, _moment.default)(day).diff((0, _moment.default)(earliestData), 'days');
+    let cleanData = [];
+
+    for (let i = 0; i <= period; i++) {
+      const forDay = (0, _moment.default)(earliestData).add(i, 'day').format('YYYYMMMMDD');
+      const dailyData = this.dailyData(forDay);
+      cleanData.push(dailyData);
+    }
+
+    let average = this.getaverage(cleanData, period);
+    return average;
+  }
+
+}
+
+exports.DataFactory = DataFactory;

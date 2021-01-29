@@ -1,0 +1,36 @@
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = exports.timerAction = void 0;
+const initialState = {
+  startTime: null,
+  active: false,
+  progress: 0,
+  countDown: "00:00",
+  endTime: null
+}; //action
+
+const TOGGLE_TIMER = 'TOGGLE_TIMER'; //action -----
+
+const timerAction = state => ({
+  type: TOGGLE_TIMER,
+  state
+}); //reducer
+
+
+exports.timerAction = timerAction;
+
+var _default = (state = initialState, action) => {
+  switch (action.type) {
+    case TOGGLE_TIMER:
+      return { ...action.state
+      };
+
+    default:
+      return state;
+  }
+};
+
+exports.default = _default;

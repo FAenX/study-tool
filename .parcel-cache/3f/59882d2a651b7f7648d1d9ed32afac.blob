@@ -1,0 +1,101 @@
+"use strict";
+
+var helpers = require("../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+helpers.prelude(module);
+
+try {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.default = void 0;
+
+  var _react = _interopRequireDefault(require("react"));
+
+  var _core = require("@material-ui/core");
+
+  var _tableReducer = require("../../store/tableReducer");
+
+  var _timerReducer = require("../../store/timerReducer");
+
+  var _moment = _interopRequireDefault(require("moment"));
+
+  var _jsxFileName = "/home/manu/Documents/coderafiki/study-tool/src/components/pomodoro/cell.tsx";
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  function Cell({
+    id,
+    dispatch,
+    state
+  }) {
+    const clickFunction = () => {
+      // start timer
+      if (!state.tableReducer.active) {
+        dispatch((0, _timerReducer.timerAction)({
+          startTime: (0, _moment.default)().format(),
+          active: true,
+          progress: 0,
+          countDown: 'started',
+          endTime: (0, _moment.default)().add(30, 'minutes').format()
+        })); // change state
+
+        dispatch((0, _tableReducer.setTableData)({
+          activeId: id,
+          active: true,
+          done: state.tableReducer.done,
+          day: state.tableReducer.day,
+          id: state.tableReducer.id
+        }));
+      }
+    };
+
+    const color = () => {
+      if (state.tableReducer.activeId === id) {
+        return "green";
+      }
+
+      return state.tableReducer.done.includes(id) ? "maroon" : "grey";
+    };
+
+    const cardStyle = {
+      width: "40px",
+      height: "40px",
+      backgroundColor: color()
+    };
+    return /*#__PURE__*/_react.default.createElement(_core.Button, {
+      onClick: () => clickFunction(),
+      __self: this,
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 52,
+        columnNumber: 5
+      }
+    }, /*#__PURE__*/_react.default.createElement(_core.Card, {
+      id: id,
+      variant: "elevation",
+      elevation: 5,
+      style: cardStyle,
+      __self: this,
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 53,
+        columnNumber: 7
+      }
+    }));
+  }
+
+  _c = Cell;
+  var _default = Cell;
+  exports.default = _default;
+
+  var _c;
+
+  $RefreshReg$(_c, "Cell");
+  helpers.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}

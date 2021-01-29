@@ -1,0 +1,24 @@
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.userAuth = void 0;
+
+var _variables = require("../utils/variables");
+
+const userAuth = () => {
+  let token = localStorage.getItem(_variables.ptfs0u);
+
+  if (!token) {
+    return {};
+  }
+
+  return {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  };
+};
+
+exports.userAuth = userAuth;

@@ -1,0 +1,93 @@
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/esm/extends"));
+
+var React = _interopRequireWildcard(require("react"));
+
+var _clsx = _interopRequireDefault(require("clsx"));
+
+var _withStyles = _interopRequireDefault(require("../styles/withStyles"));
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var styles = function styles(theme) {
+  return {
+    thumb: {
+      '&$open': {
+        '& $offset': {
+          transform: 'scale(1) translateY(-10px)'
+        }
+      }
+    },
+    open: {},
+    offset: (0, _extends2.default)({
+      zIndex: 1
+    }, theme.typography.body2, {
+      fontSize: theme.typography.pxToRem(12),
+      lineHeight: 1.2,
+      transition: theme.transitions.create(['transform'], {
+        duration: theme.transitions.duration.shortest
+      }),
+      top: -34,
+      transformOrigin: 'bottom center',
+      transform: 'scale(0)',
+      position: 'absolute'
+    }),
+    circle: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      width: 32,
+      height: 32,
+      borderRadius: '50% 50% 50% 0',
+      backgroundColor: 'currentColor',
+      transform: 'rotate(-45deg)'
+    },
+    label: {
+      color: theme.palette.primary.contrastText,
+      transform: 'rotate(45deg)'
+    }
+  };
+};
+/**
+ * @ignore - internal component.
+ */
+
+
+function ValueLabel(props) {
+  var children = props.children,
+      classes = props.classes,
+      className = props.className,
+      open = props.open,
+      value = props.value,
+      valueLabelDisplay = props.valueLabelDisplay;
+
+  if (valueLabelDisplay === 'off') {
+    return children;
+  }
+
+  return /*#__PURE__*/React.cloneElement(children, {
+    className: (0, _clsx.default)(children.props.className, (open || valueLabelDisplay === 'on') && classes.open, classes.thumb)
+  }, /*#__PURE__*/React.createElement("span", {
+    className: (0, _clsx.default)(classes.offset, className)
+  }, /*#__PURE__*/React.createElement("span", {
+    className: classes.circle
+  }, /*#__PURE__*/React.createElement("span", {
+    className: classes.label
+  }, value))));
+}
+
+var _default = (0, _withStyles.default)(styles, {
+  name: 'PrivateValueLabel'
+})(ValueLabel);
+
+exports.default = _default;

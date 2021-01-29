@@ -1,0 +1,30 @@
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _redux = require("redux");
+
+var _tableReducer = _interopRequireDefault(require("./tableReducer"));
+
+var _timerReducer = _interopRequireDefault(require("./timerReducer"));
+
+var _pomodorosReducer = _interopRequireDefault(require("./pomodorosReducer"));
+
+var _userReducer = _interopRequireDefault(require("./userReducer"));
+
+var _loginSignup = _interopRequireDefault(require("./loginSignup"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+const rootReducer = (0, _redux.combineReducers)({
+  loginSignup: _loginSignup.default,
+  tableReducer: _tableReducer.default,
+  timerReducer: _timerReducer.default,
+  pomodorosReducer: _pomodorosReducer.default,
+  userReducer: _userReducer.default
+});
+var _default = rootReducer;
+exports.default = _default;

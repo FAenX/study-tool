@@ -12,7 +12,7 @@ function Login({dispatch, state}){
     const [user, setUser] = React.useState({login: '', password: ''})
     
     const signup=()=>{
-        dispatch({type: 'SET_COMPONENT', state: {component: <Signup/>}})
+        dispatch({type: 'SET_COMPONENT', state: {component: 'signup'}})
     }
     const change=(event: { preventDefault: () => void; target: { name: any; value: any } })=>{
         event.preventDefault()
@@ -23,16 +23,18 @@ function Login({dispatch, state}){
         
     }
     const login=async ()=>{
-        const response = await api.login(user.login, user.password)
-        console.log(response.status)
-        if(response.status === 200){
+        try{
+            const response = await api.login(user.login, user.password)
             localStorage.setItem(ptfs0u, response.data.token)
+            dispatch({type: 'SET_COMPONENT', state: {component: null}})
+        }catch(e){
+            console.log(e)
         }
 
     }
     return(
         
-        <div id="login" style={{width: "30vw"}} className="container is-flex is-flex-direction-column is-justify-content-center is-align-content-center">
+        <div id="login" className="container is-flex is-flex-direction-column is-justify-content-center is-align-content-center">
             <div className="p-4">Login</div>
             <div className="field">
                 <div className="control m-2">
@@ -45,7 +47,7 @@ function Login({dispatch, state}){
                 </div>                
             </div>
             <div>
-                <div><a type="button" className="button m-4 is-rounded" onClick={login}>login</a></div>
+                <div className="m-4"><a type="button" className="button is-rounded" onClick={login}>login</a></div>
                 <div className="m-4" ><a onClick={signup}>register</a></div>
             </div>
             

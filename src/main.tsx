@@ -12,6 +12,7 @@ import Chart from './components/data-display/lineGraph';
 import {api} from "./api/users";
 import Login from './components/login';
 import {userAuth} from './api/auth'
+import Signup from "./components/signup";
 
 
 // const LoginSignup
@@ -23,15 +24,14 @@ const Main = ({state, dispatch}) => {
     if(headers){
       //
     }else{
-      dispatch({type: 'SET_COMPONENT', state: {component: <Login/>}})
-      console.log(state.loginSignup.component)
+      dispatch({type: 'SET_COMPONENT', state: {component: 'login'}})
     }
     
   }, [])
 
   return(   
     <div className="container is-flex is-justify-content-center is-align-content-center"> 
-    <div className="mt-6">{state.loginSignup.component}</div>
+    <div className="mt-6">{state.loginSignup.component === 'login'? <Login/> : state.loginSignup.component === 'signup'? <Signup/>:null}</div>
       
         <div className="is-flex m-4 is-flex-direction-column">
             <div className="container m-4">

@@ -2,9 +2,6 @@
   "name": "using-wordpress-with-react",
   "version": "1.0.0",
   "main": "index.js",
-  "module": "index.js",
-  "browser": "index.js",
-  "source": "index.js",
   "author": "<kipronofb@gmail.com>",
   "license": "MIT",
   "scripts": {
@@ -22,7 +19,6 @@
     "dotenv": "^8.2.0",
     "graphql": "^15.4.0",
     "moment": "^2.27.0",
-    "parcel": "^1.11.0",
     "react": "^17.0.1",
     "react-chartjs-2": "^2.10.0",
     "react-dom": "^16.8.0",
@@ -42,8 +38,8 @@
     "@types/react": "^16.8.6",
     "@types/react-redux": "^7.1.9",
     "http-proxy-middleware": "^1.0.6",
+    "parcel": "^2.0.0-beta.1",
     "react-test-renderer": "^16.13.1",
-    "parcel": "next",
     "sass": "^1.26.10",
     "typescript": "^3.9.7"
   }

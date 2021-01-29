@@ -1,0 +1,145 @@
+"use strict";
+
+var helpers = require("../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+helpers.prelude(module);
+
+try {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.default = void 0;
+
+  var _react = _interopRequireWildcard(require("react"));
+
+  var _core = require("@material-ui/core");
+
+  var _moment = _interopRequireDefault(require("moment"));
+
+  var _timerReducer = require("../../store/timerReducer");
+
+  var _tableReducer = require("../../store/tableReducer");
+
+  var _jsxFileName = "/home/manu/Documents/coderafiki/study-tool/src/components/data-display/timer.tsx",
+      _s = $RefreshSig$();
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+  function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+  const Progress = ({
+    progress
+  }) => {
+    return /*#__PURE__*/_react.default.createElement(_core.LinearProgress, {
+      className: "linear-progress",
+      variant: "determinate",
+      color: progress < 10 ? "secondary" : "primary",
+      value: progress,
+      __self: void 0,
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 11,
+        columnNumber: 7
+      }
+    });
+  };
+
+  _c = Progress;
+
+  const Timer = ({
+    state,
+    dispatch
+  }) => {
+    _s();
+
+    let timerReducer = state.timerReducer;
+    let tableReducer = state.tableReducer;
+    (0, _react.useEffect)(() => {
+      const timer = setInterval(() => updateClock(), 1000);
+      return function cleanup() {
+        clearInterval(timer);
+      };
+    });
+
+    const updateClock = () => {
+      if ((0, _moment.default)() < (0, _moment.default)(timerReducer.endTime)) {
+        // set up
+        let start = (0, _moment.default)(timerReducer.startTime);
+        let end = (0, _moment.default)(timerReducer.endTime);
+        let diff = end.diff(start);
+
+        let countDown = _moment.default.utc(diff).format("mm:ss"); // progress percentage
+
+
+        let t = parseFloat(_moment.default.utc(diff).format("mm.ss"));
+        const progress = t / 30 * 100;
+        dispatch((0, _timerReducer.timerAction)({
+          startTime: (0, _moment.default)().format(),
+          active: timerReducer.active,
+          progress: progress,
+          countDown: countDown,
+          endTime: timerReducer.endTime
+        }));
+      } else if ((0, _moment.default)().format('mm') === (0, _moment.default)(timerReducer.endTime).format('mm')) {
+        dispatch((0, _timerReducer.timerAction)({
+          startTime: null,
+          active: false,
+          progress: 0,
+          countDown: '00:00',
+          endTime: null
+        }));
+        dispatch((0, _tableReducer.setTableData)({
+          done: tableReducer.done.concat(tableReducer.activeId),
+          active: false,
+          activeId: null,
+          day: tableReducer.day,
+          id: tableReducer.id
+        })); //here
+      }
+    };
+
+    return /*#__PURE__*/_react.default.createElement("div", {
+      id: "progress-bar",
+      __self: void 0,
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 83,
+        columnNumber: 5
+      }
+    }, /*#__PURE__*/_react.default.createElement(Progress, {
+      progress: timerReducer.progress,
+      __self: void 0,
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 84,
+        columnNumber: 7
+      }
+    }), /*#__PURE__*/_react.default.createElement("div", {
+      __self: void 0,
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 85,
+        columnNumber: 7
+      }
+    }, timerReducer.countDown));
+  };
+
+  _s(Timer, "OD7bBpZva5O2jO+Puf00hKivP7c=");
+
+  _c2 = Timer;
+  var _default = Timer;
+  exports.default = _default;
+
+  var _c, _c2;
+
+  $RefreshReg$(_c, "Progress");
+  $RefreshReg$(_c2, "Timer");
+  helpers.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}

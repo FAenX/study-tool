@@ -1,0 +1,195 @@
+"use strict";
+
+var helpers = require("../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+helpers.prelude(module);
+
+try {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.default = void 0;
+
+  var _react = _interopRequireDefault(require("react"));
+
+  var _header = _interopRequireDefault(require("./components/header"));
+
+  var _reactRedux = require("react-redux");
+
+  var _summary = _interopRequireDefault(require("./components/data-display/summary"));
+
+  var _cellsTable = _interopRequireDefault(require("./components/pomodoro/cellsTable"));
+
+  var _lineGraph = _interopRequireDefault(require("./components/data-display/lineGraph"));
+
+  var _login = _interopRequireDefault(require("./components/login"));
+
+  var _auth = require("./api/auth");
+
+  var _signup = _interopRequireDefault(require("./components/signup"));
+
+  var _jsxFileName = "/home/manu/Documents/coderafiki/study-tool/src/main.tsx",
+      _s = $RefreshSig$();
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  // const LoginSignup
+  const Main = ({
+    state,
+    dispatch
+  }) => {
+    _s();
+
+    _react.default.useEffect(() => {
+      const headers = (0, _auth.userAuth)().headers;
+      console.log(headers);
+
+      if (headers) {//
+      } else {
+        dispatch({
+          type: 'SET_COMPONENT',
+          state: {
+            component: 'login'
+          }
+        });
+      }
+    }, []);
+
+    return /*#__PURE__*/_react.default.createElement("div", {
+      className: "container is-flex is-justify-content-center is-align-content-center",
+      __self: void 0,
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 33,
+        columnNumber: 5
+      }
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "mt-6",
+      __self: void 0,
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 34,
+        columnNumber: 5
+      }
+    }, state.loginSignup.component === 'login' ? /*#__PURE__*/_react.default.createElement(_login.default, {
+      __self: void 0,
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 34,
+        columnNumber: 69
+      }
+    }) : state.loginSignup.component === 'signup' ? /*#__PURE__*/_react.default.createElement(_signup.default, {
+      __self: void 0,
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 34,
+        columnNumber: 122
+      }
+    }) : null), /*#__PURE__*/_react.default.createElement("div", {
+      className: "is-flex m-4 is-flex-direction-column",
+      __self: void 0,
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 36,
+        columnNumber: 9
+      }
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "container m-4",
+      __self: void 0,
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 37,
+        columnNumber: 13
+      }
+    }, /*#__PURE__*/_react.default.createElement(_header.default, {
+      __self: void 0,
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 38,
+        columnNumber: 15
+      }
+    })), /*#__PURE__*/_react.default.createElement("div", {
+      className: "container p-4",
+      __self: void 0,
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 40,
+        columnNumber: 13
+      }
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "is-flex is-flex-direction-row is-align-content-center is-justify-content-center is-flex-wrap-wrap",
+      __self: void 0,
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 41,
+        columnNumber: 15
+      }
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "m-2",
+      __self: void 0,
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 42,
+        columnNumber: 17
+      }
+    }, /*#__PURE__*/_react.default.createElement(_summary.default, {
+      __self: void 0,
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 43,
+        columnNumber: 19
+      }
+    })), /*#__PURE__*/_react.default.createElement("div", {
+      className: "m-2",
+      __self: void 0,
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 45,
+        columnNumber: 17
+      }
+    }, /*#__PURE__*/_react.default.createElement(_cellsTable.default, {
+      __self: void 0,
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 46,
+        columnNumber: 19
+      }
+    })), /*#__PURE__*/_react.default.createElement("div", {
+      className: "m-2",
+      __self: void 0,
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 48,
+        columnNumber: 17
+      }
+    }, /*#__PURE__*/_react.default.createElement(_lineGraph.default, {
+      __self: void 0,
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 49,
+        columnNumber: 19
+      }
+    }))))));
+  };
+
+  _s(Main, "OD7bBpZva5O2jO+Puf00hKivP7c=");
+
+  _c = Main;
+
+  var _default = (0, _reactRedux.connect)((state, dispatch) => ({
+    state,
+    dispatch
+  }))(Main);
+
+  exports.default = _default;
+
+  var _c;
+
+  $RefreshReg$(_c, "Main");
+  helpers.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}

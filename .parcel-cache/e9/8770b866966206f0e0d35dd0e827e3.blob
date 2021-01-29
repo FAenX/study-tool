@@ -1,0 +1,179 @@
+"use strict";
+
+var helpers = require("../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+helpers.prelude(module);
+
+try {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.default = void 0;
+
+  var _react = _interopRequireDefault(require("react"));
+
+  var _timer = _interopRequireDefault(require("./timer"));
+
+  var _reactRedux = require("react-redux");
+
+  var _jsxFileName = "/home/manu/Documents/coderafiki/study-tool/src/components/data-display/summary.tsx";
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  const makeList = num => {
+    const list = [];
+
+    for (let i = 0; i < num; i += 1) {
+      list.push(i);
+    }
+
+    return list;
+  };
+
+  function TotalTime() {
+    return /*#__PURE__*/_react.default.createElement("div", {
+      __self: this,
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 16,
+        columnNumber: 4
+      }
+    }, " ", " days");
+  }
+
+  _c = TotalTime;
+
+  function Summary({
+    dispatch,
+    state
+  }) {
+    return /*#__PURE__*/_react.default.createElement("div", {
+      className: "summary-wrapper is-flex is-justify-content-center is-align-content-center is-flex-direction-column ",
+      __self: this,
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 23,
+        columnNumber: 9
+      }
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "summary p-2",
+      __self: this,
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 24,
+        columnNumber: 11
+      }
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      __self: this,
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 25,
+        columnNumber: 13
+      }
+    }, "Timer:"), /*#__PURE__*/_react.default.createElement(_timer.default, {
+      dispatch: dispatch,
+      state: state,
+      __self: this,
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 26,
+        columnNumber: 13
+      }
+    })), /*#__PURE__*/_react.default.createElement("div", {
+      className: "summary p-2",
+      __self: this,
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 29,
+        columnNumber: 11
+      }
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      __self: this,
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 30,
+        columnNumber: 13
+      }
+    }, "Total time:")), /*#__PURE__*/_react.default.createElement("div", {
+      className: "summary p-2",
+      __self: this,
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 33,
+        columnNumber: 11
+      }
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      __self: this,
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 34,
+        columnNumber: 13
+      }
+    }, "Streak:")), /*#__PURE__*/_react.default.createElement("div", {
+      className: "summary p-2",
+      __self: this,
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 37,
+        columnNumber: 11
+      }
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      __self: this,
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 38,
+        columnNumber: 13
+      }
+    }, "Best time:")), /*#__PURE__*/_react.default.createElement("div", {
+      className: "summary p-2",
+      __self: this,
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 41,
+        columnNumber: 11
+      }
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      __self: this,
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 42,
+        columnNumber: 13
+      }
+    }, "Avarage today:")), /*#__PURE__*/_react.default.createElement("div", {
+      className: "summary p-2",
+      __self: this,
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 45,
+        columnNumber: 11
+      }
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      __self: this,
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 46,
+        columnNumber: 13
+      }
+    }, "Time to mastery:")));
+  }
+
+  _c2 = Summary;
+
+  var _default = (0, _reactRedux.connect)((state, dispatch) => ({
+    state,
+    dispatch
+  }))(Summary);
+
+  exports.default = _default;
+
+  var _c, _c2;
+
+  $RefreshReg$(_c, "TotalTime");
+  $RefreshReg$(_c2, "Summary");
+  helpers.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Study tool</title>
+   
+  </head>
+  <body>
+    <div class="hero is-dark is-fullheight is-flex is-flex-direction-column">
+      <div id="app" class="container"></div>
+    </div>
+    
+    <script src="2c675511266601f8dafb9a0315d9112e"></script>
+  </body>
+</html>

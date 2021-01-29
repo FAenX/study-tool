@@ -1,19 +1,29 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { setUser } from '../store/userReducer'
+import { ptfs0u } from '../utils/variables'
 import {api} from '../api/users'
+import { connect } from 'react-redux'
 
 
-function Signup(){
+function Signup({state, dispatch}){
     const [user, setUser] = React.useState({login: '', password: ''})
     const signup =async ()=>{
         try{
-            const response = await api.register({...user})
-            console.log(response)
-            console.log(response.status)
+            await api.register({...user})
+            const log = await api.login(user.login, user.password)
+            
+            localStorage.setItem(ptfs0u, log.data.token)
+            dispatch({type: 'SET_COMPONENT', state: {component: null}})
+        
         }catch(e){
             console.log(e.message)
         }
         
+    }
+
+    const login=()=>{
+        dispatch({type: 'SET_COMPONENT', state: {component: 'login'}})
     }
 
     const change=(event: { preventDefault: () => void; target: { name: any; value: any } })=>{
@@ -40,12 +50,12 @@ function Signup(){
                 </div>                
             </div>
             <div>
-                <a type="button" className="button m-4 is-rounded" onClick={signup}>register</a>
+                <div className="m-4 "> <a type="button" className="button is-rounded" onClick={signup}>register</a> </div>
+                <div className="m-4"><a onClick={login}>login</a> </div>
             </div>
-            
         </div>
     
     )
 }
 
-export default Signup
+export default connect((state, dispatch)=>({state, dispatch}))(Signup)

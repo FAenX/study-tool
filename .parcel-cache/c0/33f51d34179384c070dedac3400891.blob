@@ -1,0 +1,8 @@
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.ptfs0u = void 0;
+const ptfs0u = "ptfs0u";
+exports.ptfs0u = ptfs0u;

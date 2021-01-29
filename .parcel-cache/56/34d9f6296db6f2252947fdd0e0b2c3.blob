@@ -1,0 +1,41 @@
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.api = void 0;
+
+var _axios = _interopRequireDefault(require("axios"));
+
+var _auth = require("./auth");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+const api = {
+  login(login, password) {
+    return _axios.default.post(`/api/users/login`, {
+      login,
+      password
+    });
+  },
+
+  register(user) {
+    return _axios.default.post(`/api/users`, { ...user
+    });
+  },
+
+  updatePassword(currentPassword, newPassword) {
+    return _axios.default.patch(`/api/users/change_password`, {
+      currentPassword,
+      newPassword
+    }, (0, _auth.userAuth)());
+  },
+
+  resetPassword(newPassword) {
+    return _axios.default.patch(`/api/user/reset_password`, {
+      newPassword
+    }, (0, _auth.userAuth)());
+  }
+
+};
+exports.api = api;

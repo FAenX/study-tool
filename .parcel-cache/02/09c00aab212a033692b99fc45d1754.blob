@@ -1,0 +1,74 @@
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = ScrollbarSize;
+
+var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/esm/extends"));
+
+var _objectWithoutProperties2 = _interopRequireDefault(require("@babel/runtime/helpers/esm/objectWithoutProperties"));
+
+var React = _interopRequireWildcard(require("react"));
+
+var _propTypes = _interopRequireDefault(require("prop-types"));
+
+var _debounce = _interopRequireDefault(require("../utils/debounce"));
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var styles = {
+  width: 99,
+  height: 99,
+  position: 'absolute',
+  top: -9999,
+  overflow: 'scroll'
+};
+/**
+ * @ignore - internal component.
+ * The component originates from https://github.com/STORIS/react-scrollbar-size.
+ * It has been moved into the core in order to minimize the bundle size.
+ */
+
+function ScrollbarSize(props) {
+  var onChange = props.onChange,
+      other = (0, _objectWithoutProperties2.default)(props, ["onChange"]);
+  var scrollbarHeight = React.useRef();
+  var nodeRef = React.useRef(null);
+
+  var setMeasurements = function setMeasurements() {
+    scrollbarHeight.current = nodeRef.current.offsetHeight - nodeRef.current.clientHeight;
+  };
+
+  React.useEffect(function () {
+    var handleResize = (0, _debounce.default)(function () {
+      var prevHeight = scrollbarHeight.current;
+      setMeasurements();
+
+      if (prevHeight !== scrollbarHeight.current) {
+        onChange(scrollbarHeight.current);
+      }
+    });
+    window.addEventListener('resize', handleResize);
+    return function () {
+      handleResize.clear();
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [onChange]);
+  React.useEffect(function () {
+    setMeasurements();
+    onChange(scrollbarHeight.current);
+  }, [onChange]);
+  return /*#__PURE__*/React.createElement("div", (0, _extends2.default)({
+    style: styles,
+    ref: nodeRef
+  }, other));
+}
+
+"development" !== "production" ? ScrollbarSize.propTypes = {
+  onChange: _propTypes.default.func.isRequired
+} : void 0;
