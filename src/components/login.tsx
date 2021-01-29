@@ -45,8 +45,8 @@ function Login({dispatch, state}){
                 </div>                
             </div>
             <div>
-                <a type="button" className="button m-4 is-rounded" onClick={login}>login</a>
-                <a type="button" className="button m-4 is-rounded" onClick={signup}>register</a>
+                <div><a type="button" className="button m-4 is-rounded" onClick={login}>login</a></div>
+                <div className="m-4" ><a onClick={signup}>register</a></div>
             </div>
             
         </div>

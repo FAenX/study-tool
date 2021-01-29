@@ -6,8 +6,14 @@ import {api} from '../api/users'
 function Signup(){
     const [user, setUser] = React.useState({login: '', password: ''})
     const signup =async ()=>{
-        const response = await api.register({...user})
-        console.log(response)
+        try{
+            const response = await api.register({...user})
+            console.log(response)
+            console.log(response.status)
+        }catch(e){
+            console.log(e.message)
+        }
+        
     }
 
     const change=(event: { preventDefault: () => void; target: { name: any; value: any } })=>{
