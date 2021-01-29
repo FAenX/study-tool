@@ -1,10 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { createStore } from "redux";
-import rootReducer from './src/store/rootReducer'
+import rootReducer from './store/rootReducer'
 import { Provider } from 'react-redux'
 import './app.scss';
-import Main from './src/main'
+import Main from './main'
 
 
 const store = createStore(rootReducer);
