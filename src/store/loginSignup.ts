@@ -1,5 +1,3 @@
-import Login from '../components/login'
-
 export interface Component{ 
     component: string | null
 }

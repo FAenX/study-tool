@@ -5,6 +5,7 @@ import { api } from '../api/users'
 import { userAuth } from '../api/auth'
 import Signup from './signup'
 import { ptfs0u } from "../utils/variables";
+import { console, setTimeout } from '@ungap/global-this'
 
 
 function Login({dispatch, state}){
@@ -26,9 +27,18 @@ function Login({dispatch, state}){
         try{
             const response = await api.login(user.login, user.password)
             localStorage.setItem(ptfs0u, response.data.token)
+           
             dispatch({type: 'SET_COMPONENT', state: {component: null}})
+            dispatch({type: 'SET_NOTIFICATION', state: {component: 'notify', color: 'is-success', message: 'Login successful'}})
+            setTimeout(()=>{
+                dispatch({type: 'SET_NOTIFICATION', state: {component: null}})
+            }, 5000)
+            
         }catch(e){
-            console.log(e)
+            dispatch({type: 'SET_NOTIFICATION', state: {component: 'notify', color: 'is-danger', message: e.message}})
+            setTimeout(()=>{
+                dispatch({type: 'SET_NOTIFICATION', state: {component: null}})
+            }, 5000)
         }
 
     }

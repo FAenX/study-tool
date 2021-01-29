@@ -1,4 +1,12 @@
-@import './node_modules//bulma/bulma.sass';
+@import './node_modules/bulma/bulma.sass';
+@import './node_modules/animate.css/animate';
+
+#snackbar {
+    position: fixed;
+    z-index: 1000;
+    top: 10px;
+    right: 10px
+}
 
 .pomodoro-table{
     width: 500px;
@@ -51,6 +59,30 @@
     background-color: rgb(95, 95, 95);
 }
 
+.bounce {
+    display: inline-block;
+    margin: 0 0.5rem;
+  
+    animation: bounce; /* referring directly to the animation's @keyframe declaration */
+    animation-duration: 2s; /* don't forget to set a duration! */
+  }
 
+.loader-wrapper{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 999;
+    background-color: rgba(65, 65, 65, 0.562);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    .loader{
+        height: 40px;
+        width: 40px;
+
+    }
+}
+  
 
 

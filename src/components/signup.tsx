@@ -4,21 +4,45 @@ import { setUser } from '../store/userReducer'
 import { ptfs0u } from '../utils/variables'
 import {api} from '../api/users'
 import { connect } from 'react-redux'
+import console from 'console'
+import { useQuery } from 'react-query'
+
 
 
 function Signup({state, dispatch}){
     const [user, setUser] = React.useState({login: '', password: ''})
+
     const signup =async ()=>{
         try{
             await api.register({...user})
             const log = await api.login(user.login, user.password)
-            
             localStorage.setItem(ptfs0u, log.data.token)
             dispatch({type: 'SET_COMPONENT', state: {component: null}})
+            dispatch({type: 'SET_NOTIFICATION', state: {
+                component: 'notify', 
+                color: 'is-success', 
+                message: 'Your have been logged in'
+            }})
+            setTimeout(()=>{
+                dispatch({type: 'SET_NOTIFICATION', state: {component: null}})
+            }, 5000)
+            
         
         }catch(e){
-            console.log(e.message)
+            console.log(e)
+            dispatch({type: 'SET_NOTIFICATION', state: {
+                component: 'notify', 
+                color: 'is-danger', 
+                message: e.message}})
+            setTimeout(()=>{
+                dispatch({type: 'SET_NOTIFICATION', state: {
+                    component: null
+                }})
+            }, 5000)
         }
+
+        
+        
         
     }
 
