@@ -1,7 +1,7 @@
 {
   "name": "using-wordpress-with-react",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "index.html",
   "author": "<kipronofb@gmail.com>",
   "license": "MIT",
   "scripts": {
