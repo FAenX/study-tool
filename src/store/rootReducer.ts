@@ -5,6 +5,7 @@ import pomodorosReducer from './pomodorosReducer'
 import userReducer from './userReducer'
 import loginSignup from './loginSignup'
 import notification from './notification'
+import loader from './loader'
 
 const rootReducer = combineReducers({
         loginSignup,
@@ -12,7 +13,8 @@ const rootReducer = combineReducers({
         timerReducer, 
         pomodorosReducer, 
         userReducer,
-        notification
+        notification,
+        loader
     });
 export default rootReducer
 

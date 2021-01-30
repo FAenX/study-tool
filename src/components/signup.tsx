@@ -14,9 +14,13 @@ function Signup({state, dispatch}){
 
     const signup =async ()=>{
         try{
+            dispatch({type: 'SET_LOADER', state: {loading: true}})
             await api.register({...user})
             const log = await api.login(user.login, user.password)
             localStorage.setItem(ptfs0u, log.data.token)
+            dispatch({type: 'SET_LOADER', state: {loading: false}})
+
+
             dispatch({type: 'SET_COMPONENT', state: {component: null}})
             dispatch({type: 'SET_NOTIFICATION', state: {
                 component: 'notify', 

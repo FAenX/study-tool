@@ -48,7 +48,7 @@ const Main = ({state, dispatch}) => {
       <div className="mt-4 animate__animated animate__fadeIn">
         {state.loginSignup.component === 'login'? <Login/> : state.loginSignup.component === 'signup'? <Signup/>:null}
       </div>
-      {state.notification.loading ? <Loader />:null} 
+      {state.loader.loading ? <Loader />:null} 
       {/* end variables */}
       
       <div className="is-flex m-4 is-flex-direction-column">
