@@ -51,12 +51,16 @@ jobs:
             chmod 400 ~/.ssh/id_rsa
             ls -lhart ~/.ssh/id_rsa
 
-            git remote add develop root@coderafiki.info:/srv/git/study-tool.git
-            git remote add github git@github.com:FAenX/study-tool.git
-            
-            git config --global user.name github-actions
-            git config --global user.email actions@git.com
+            npm run build
 
-      - run: git fetch --unshallow github main
-      - run: git push develop main:master
+      - run: scp dist/* root@coderafiki.info:/srv/www/study-tool/dist/
+
+      #       git remote add develop root@coderafiki.info:/srv/git/study-tool.git
+      #       git remote add github git@github.com:FAenX/study-tool.git
+            
+      #       git config --global user.name github-actions
+      #       git config --global user.email actions@git.com
+
+      # - run: git fetch --unshallow github main
+      # - run: git push develop main:master
       
