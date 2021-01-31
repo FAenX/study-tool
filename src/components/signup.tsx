@@ -1,15 +1,11 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
-import { setUser } from '../store/userReducer'
-import { ptfs0u } from '../utils/variables'
+import { ptfs0u, ptfs1u } from '../utils/variables'
 import {api} from '../api/users'
 import { connect } from 'react-redux'
-import console from 'console'
-import { useQuery } from 'react-query'
 
 
 
-function Signup({state, dispatch}){
+function Signup({dispatch}){
     const [user, setUser] = React.useState({login: '', password: ''})
 
     const signup =async ()=>{
@@ -18,7 +14,16 @@ function Signup({state, dispatch}){
             await api.register({...user})
             const log = await api.login(user.login, user.password)
             localStorage.setItem(ptfs0u, log.data.token)
+
+            
+            const u = await api.get()
+            
+            console.log(u.data)
+            localStorage.setItem(ptfs1u, u.data.id)
+
+
             dispatch({type: 'SET_LOADER', state: {loading: false}})
+            dispatch({type: 'SET_LOGGED_IN_STATUS', state: {isloggedin: true}})
 
 
             dispatch({type: 'SET_COMPONENT', state: {component: null}})
@@ -33,7 +38,7 @@ function Signup({state, dispatch}){
             
         
         }catch(e){
-            console.log(e)
+            dispatch({type: 'SET_LOADER', state: {loading: false}})
             dispatch({type: 'SET_NOTIFICATION', state: {
                 component: 'notify', 
                 color: 'is-danger', 

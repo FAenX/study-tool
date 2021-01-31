@@ -2,8 +2,9 @@ import { ptfs0u } from "../utils/variables";
 
 const userAuth = () => {
   let token = localStorage.getItem(ptfs0u);
+  console.log(token)
   if (!token) {
-    return {};
+    return null;
   }
   return {
     headers: {

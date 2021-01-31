@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { LinearProgress } from '@material-ui/core';
 import moment from 'moment';
 import {timerAction} from '../../store/timerReducer'
-import {setTableData} from '../../store/tableReducer'
+import {postActiveTable} from '../../api/mutations'
 
 
 const Progress = ({progress}) => {
@@ -65,14 +65,17 @@ const Timer = ({state, dispatch}) => {
         endTime: null
       }))
      
-      dispatch(
-        setTableData({
-          done: tableReducer.done.concat(tableReducer.activeId),
+      postActiveTable(tableReducer.done+1)
+      
+      dispatch({type: 'SET_TABLE_DATA', state: {
+          done: tableReducer.done + 1,
           active: false,
           activeId: null,
           day:tableReducer.day,
-          id: tableReducer.id
-      }))
+          id: null
+      }})
+      
+      
       //here
     }
   };

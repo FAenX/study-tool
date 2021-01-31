@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { api } from '../api/users'
 import { userAuth } from '../api/auth'
 import Signup from './signup'
-import { ptfs0u } from "../utils/variables";
+import { ptfs0u, ptfs1u } from "../utils/variables";
 
 
 function Login({dispatch, state}){
@@ -23,13 +23,21 @@ function Login({dispatch, state}){
         
     }
     const login=async ()=>{
+        
         try{
             // loader
             dispatch({type: 'SET_LOADER', state: {loading: true}})
             const response = await api.login(user.login, user.password)
+            console.log(response)
             localStorage.setItem(ptfs0u, response.data.token)
-            dispatch({type: 'SET_LOADER', state: {loading: false}})
+
+            const u = await api.get()
             
+            console.log(u.data)
+            localStorage.setItem(ptfs1u, u.data.id)
+
+            dispatch({type: 'SET_LOADER', state: {loading: false}})
+            dispatch({type: 'SET_LOGGED_IN_STATUS', state: {isloggedin: true}})            
             // end loader
            
             dispatch({type: 'SET_COMPONENT', state: {component: null}})

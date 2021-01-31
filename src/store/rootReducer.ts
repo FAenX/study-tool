@@ -3,12 +3,13 @@ import tableReducer from './tableReducer';
 import timerReducer from './timerReducer';
 import pomodorosReducer from './pomodorosReducer'
 import userReducer from './userReducer'
-import loginSignup from './loginSignup'
+import {loggedInStatus, logInOrSignUp} from './logged-in-status'
 import notification from './notification'
 import loader from './loader'
 
 const rootReducer = combineReducers({
-        loginSignup,
+        loggedInStatus,
+        logInOrSignUp,
         tableReducer,
         timerReducer, 
         pomodorosReducer, 
