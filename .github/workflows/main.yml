@@ -51,6 +51,7 @@ jobs:
             chmod 400 ~/.ssh/id_rsa
             ls -lhart ~/.ssh/id_rsa
 
+            npm install
             npm run build
 
       - run: scp dist/* root@coderafiki.info:/srv/www/study-tool/dist/

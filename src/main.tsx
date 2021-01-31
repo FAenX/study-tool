@@ -14,33 +14,16 @@ import Login from './components/login';
 import Signup from "./components/signup";
 import SnackBar from "./components/common/snackbar"
 import Loader from './components/common/loader'
-import { useQuery } from "react-query";
-import {ptfs0u, ptfs1u} from './utils/variables'
-import {User} from './models/user'
+import {getUser, getActiveTable} from './api/queries'
 
 
 // const LoginSignup
 
 const Main = ({state, dispatch}) => {  
-  const load =async()=>{
-    try{
-      dispatch({type: 'SET_LOADER', state: {loading: true}})
-      const user = await api.get()
-      dispatch({type: 'SET_LOADER', state: {loading: false}})
-      dispatch({type: 'SET_LOGGED_IN_STATUS', state: {isloggedin: true}})
-
-      
-      console.log(user.data)
-      localStorage.setItem(ptfs1u, user.data.id)
-    }catch(e){
-      dispatch({type: 'SET_LOADER', state: {loading: false}})
-      dispatch({type: 'SET_LOGGED_IN_STATUS', state: {isloggedin: false}})
-      dispatch({type: 'SET_COMPONENT', state: {component: 'login'}})
-      localStorage.removeItem(ptfs1u)
-    }
-  } 
+  
   React.useEffect(()=>{ 
-    load()
+    getUser(dispatch)
+    getActiveTable(dispatch)
   }, [])
 
   return(   

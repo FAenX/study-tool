@@ -14,21 +14,6 @@ const makeList = (num: number) => {
 
 // table
 function Table({dispatch, state}){
-
-  const request = async()=>{
-    try{
-      const res = await api.getRunningTable()
-      console.log(res.data)
-      dispatch({type: 'SET_TABLE_DATA', state: {done: res.data.count}})
-      console.log(res.data.count)
-    }catch(e){
-      console.log(e)
-    }
- 
-  }
-  React.useEffect(()=>{
-      request()
-  }, [null])
   
   return (
     <div className="pomodoro-table">     

@@ -3,7 +3,6 @@ export interface TableState{
   done: number | null,
   active: boolean,
   day: string,
-  id?: string
 }
 
 export interface CellAction{
