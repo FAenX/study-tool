@@ -17,7 +17,7 @@ function Cell ({id, dispatch, state}){
           active: true,
           progress: 0,
           countDown: 'started',
-          endTime: moment().add(30, 'minutes').format()
+          endTime: moment().add(1, 'minutes').format()
   
         })
       )

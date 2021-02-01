@@ -21,11 +21,7 @@ const App = () => {
 
   return(  
     <Provider store={store}> 
-     <QueryClientProvider client={queryClient}>
-      <div className="container">   
         <Main/>
-      </div> 
-    </QueryClientProvider>
   </Provider>  
   );
 }
