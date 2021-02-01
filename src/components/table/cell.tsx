@@ -4,6 +4,7 @@ import {
   } from '@material-ui/core';
 import {timerAction} from '../../store/timerReducer'
 import moment from 'moment'
+import { getActiveTable } from '../../api/queries';
 
 
 function Cell ({id, dispatch, state}){
@@ -17,7 +18,8 @@ function Cell ({id, dispatch, state}){
           active: true,
           progress: 0,
           countDown: 'started',
-          endTime: moment().add(1, 'minutes').format()
+          // time
+          endTime: moment().add(30, 'minutes').format()
   
         })
       )
@@ -39,7 +41,7 @@ function Cell ({id, dispatch, state}){
     if (state.tableReducer.activeId === id){
       return "green"
     }
-    return state.tableReducer.done && state.tableReducer.done >= id  ? "maroon" : "grey"
+    return state.tableReducer.done >= id  ? "maroon" : "grey"
   }
   const cardStyle={
     width: "40px",

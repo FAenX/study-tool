@@ -15,15 +15,22 @@ import Signup from "./components/signup";
 import SnackBar from "./components/common/snackbar"
 import Loader from './components/common/loader'
 import {getUser, getActiveTable} from './api/queries'
+import { ptfs1u } from "./utils/variables";
 
 
 
 
-const Main = ({state, dispatch}) => {  
+const Main = ({state, dispatch}) => { 
   
   React.useEffect(()=>{ 
-    getUser(dispatch)
-    getActiveTable(dispatch)
+    const user = localStorage.getItem(ptfs1u)
+    // 
+    if(user){
+      dispatch({type: 'SET_LOGGED_IN_STATUS', state: {isloggedin: true}})
+      getActiveTable(dispatch)
+    }else{
+      dispatch({type: 'SET_LOGGED_IN_STATUS', state: {isloggedin: false}})
+    }
   }, [])
 
   return(   

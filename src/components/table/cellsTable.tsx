@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from "react-redux";
 import Cell from './cell'
-import {api} from '../../api/table'
+import { getUser, getActiveTable } from '../../api/queries';
 
 const makeList = (num: number) => {
   const list = [];
@@ -18,7 +18,7 @@ function Table({dispatch, state}){
   return (
     <div className="pomodoro-table">     
       <div className="cells">
-        {makeList(24).map((i) => (
+        {makeList(30).map((i) => (
           <Cell key={i} id={i} dispatch={dispatch} state={state}/>
          ))} 
       </div>

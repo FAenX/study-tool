@@ -1,7 +1,8 @@
 import React from 'react'
 import { ptfs0u, ptfs1u } from '../utils/variables'
-import {api} from '../api/users'
 import { connect } from 'react-redux'
+import {register} from '../api/mutations'
+import { getActiveTable } from '../api/queries'
 
 
 
@@ -9,50 +10,7 @@ function Signup({dispatch}){
     const [user, setUser] = React.useState({login: '', password: ''})
 
     const signup =async ()=>{
-        try{
-            dispatch({type: 'SET_LOADER', state: {loading: true}})
-            await api.register({...user})
-            const log = await api.login(user.login, user.password)
-            localStorage.setItem(ptfs0u, log.data.token)
-
-            
-            const u = await api.get()
-            
-            console.log(u.data)
-            localStorage.setItem(ptfs1u, u.data.id)
-
-
-            dispatch({type: 'SET_LOADER', state: {loading: false}})
-            dispatch({type: 'SET_LOGGED_IN_STATUS', state: {isloggedin: true}})
-
-
-            dispatch({type: 'SET_COMPONENT', state: {component: null}})
-            dispatch({type: 'SET_NOTIFICATION', state: {
-                component: 'notify', 
-                color: 'is-success', 
-                message: 'Your have been logged in'
-            }})
-            setTimeout(()=>{
-                dispatch({type: 'SET_NOTIFICATION', state: {component: null}})
-            }, 5000)
-            
-        
-        }catch(e){
-            dispatch({type: 'SET_LOADER', state: {loading: false}})
-            dispatch({type: 'SET_NOTIFICATION', state: {
-                component: 'notify', 
-                color: 'is-danger', 
-                message: e.message}})
-            setTimeout(()=>{
-                dispatch({type: 'SET_NOTIFICATION', state: {
-                    component: null
-                }})
-            }, 5000)
-        }
-
-        
-        
-        
+        register(dispatch, user).then(res=>getActiveTable(dispatch)).catch(e=>e)
     }
 
     const login=()=>{
@@ -83,7 +41,7 @@ function Signup({dispatch}){
                 </div>                
             </div>
             <div>
-                <div className="m-4 "> <a type="button" className="button is-rounded" onClick={signup}>register</a> </div>
+                <div className="m-4 "> <a type="button" className="button" onClick={signup}>register</a> </div>
                 <div className="m-4"><a onClick={login}>login</a> </div>
             </div>
         </div>
