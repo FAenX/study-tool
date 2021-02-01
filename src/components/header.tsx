@@ -10,6 +10,8 @@ const Header = ({state, dispatch}) => {
       localStorage.removeItem(ptfs1u)
       dispatch({type: 'SET_COMPONENT', state: {component: 'login'}})
       dispatch({type: 'SET_LOGGED_IN_STATUS', state: {isloggedin: false}})
+      dispatch({type: 'SET_TABLE_DATA'})
+
   }
   
   const button = <a onClick={logout}>logout</a>
