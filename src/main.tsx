@@ -17,7 +17,16 @@ import Loader from './components/common/loader'
 import {getUser, getActiveTable} from './api/queries'
 
 
-// const LoginSignup
+const LoginSignup = ()=>{
+  return (
+    <div id="account-action" className="is-flex is-flex-direction-column 
+      is-justify-content-center 
+      is-align-content-center 
+      animate__animated animate__fadeIn">
+       
+      </div>
+  )
+}
 
 const Main = ({state, dispatch}) => {  
   
@@ -32,13 +41,11 @@ const Main = ({state, dispatch}) => {
       <div className="mt-4 animate__fadeIn">
         {state.notification.component === 'notify'? <SnackBar/> : null}
       </div>
-      <div className="mt-4 animate__animated animate__fadeIn">
-        {state.logInOrSignUp.component === 'login'? <Login/> : state.logInOrSignUp.component === 'signup'? <Signup/>:null}
-      </div>
+      {state.logInOrSignUp.component === 'login'? <Login/> : state.logInOrSignUp.component === 'signup'? <Signup/>:null}
       {state.loader.loading ? <Loader />:null} 
       {/* end variables */}
       
-      <div className="is-flex m-4 is-flex-direction-column">
+      <div className="is-flex is-flex-direction-column">
           <div className="container m-4">
             <Header />
           </div> 
