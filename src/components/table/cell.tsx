@@ -41,7 +41,7 @@ function Cell ({id, dispatch, state}){
     if (state.tableReducer.activeId == id){
       return "green"
     }
-    return state.tableReducer.done & state.tableReducer.done >= id  ? "maroon" : "grey"
+    return state.tableReducer.done && state.tableReducer.done >= id  ? "maroon" : "grey"
   }
   const cardStyle={
     width: "40px",
