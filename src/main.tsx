@@ -24,12 +24,14 @@ const Main = ({state, dispatch}) => {
   
   React.useEffect(()=>{ 
     const user = localStorage.getItem(ptfs1u)
+    console.log(user)
     // 
     if(user){
       dispatch({type: 'SET_LOGGED_IN_STATUS', state: {isloggedin: true}})
       getActiveTable(dispatch)
     }else{
       dispatch({type: 'SET_LOGGED_IN_STATUS', state: {isloggedin: false}})
+      dispatch({type: 'SET_COMPONENT', state: {component: 'login'}})
     }
   }, [])
 
