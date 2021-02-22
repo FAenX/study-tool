@@ -1,6 +1,6 @@
 import { ptfs0u, ptfs1u } from '../utils/variables'
 import {api as apiU} from './users'
-import {api as apiT} from './table'
+import {getRunningTable, postActiveTable, history} from './table'
 
 export async function login(dispatch: any, user: any){
     try{
@@ -52,9 +52,21 @@ export async function getUser(dispatch: any ){
 
 export async function getActiveTable(dispatch: any){
     try{
-        const res = await apiT.getRunningTable()
+        const res = await getRunningTable()
         console.log(res.data)
         dispatch({type: 'SET_TABLE_DATA', state: {done: res.data.count}})
+        console.log(res.data.count)
+    }catch(e){
+        console.log(e.message)
+    }
+}
+
+
+export async function getActiveTables(dispatch: any){
+    try{
+        const res = await history()
+        console.log(res.data)
+        dispatch({type: 'SET_HISTORY', state: res.data})
         console.log(res.data.count)
     }catch(e){
         console.log(e.message)

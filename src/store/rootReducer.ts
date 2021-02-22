@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import tableReducer from './tableReducer';
+import {activeTableReducer, historyReducer} from './tableReducer';
 import timerReducer from './timerReducer';
 import pomodorosReducer from './pomodorosReducer'
 import userReducer from './userReducer'
@@ -10,9 +10,9 @@ import loader from './loader'
 const rootReducer = combineReducers({
         loggedInStatus,
         logInOrSignUp,
-        tableReducer,
-        timerReducer, 
-        pomodorosReducer, 
+        activeTableReducer,
+        historyReducer,
+        timerReducer,  
         userReducer,
         notification,
         loader

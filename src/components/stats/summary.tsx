@@ -1,6 +1,7 @@
 import React from 'react'
 import Timer from './timer'
 import {connect} from 'react-redux'
+import { getActiveTables } from '../../api/queries';
 
 const makeList = (num: number) => {
   const list = [];
@@ -19,6 +20,10 @@ function TotalTime(){
   
 
 function Summary({dispatch, state,}){
+
+  React.useEffect(()=>{
+    getActiveTables(dispatch)
+  }, [null])
     return(
         <div className="summary-wrapper is-flex is-justify-content-center is-align-content-center is-flex-direction-column ">
           <div className="summary p-2">

@@ -11,7 +11,7 @@ function Cell ({id, dispatch, state}){
 
   const clickFunction=()=>{
     // start timer
-    if(!state.tableReducer.active){
+    if(!state.activeTableReducer.active){
       dispatch(
         timerAction({
           startTime: new Date().toString(),
@@ -28,9 +28,9 @@ function Cell ({id, dispatch, state}){
         state:{
         activeId: id,
         active: true,
-        done: state.tableReducer.done,
-        day: state.tableReducer.day,
-        id: state.tableReducer.id
+        done: state.activeTableReducer.done,
+        day: state.activeTableReducer.day,
+        id: state.activeTableReducer.id
         }
       })
     }  
@@ -38,10 +38,10 @@ function Cell ({id, dispatch, state}){
 
 
   const color = ()=>{
-    if (state.tableReducer.activeId == id){
+    if (state.activeTableReducer && state.activeTableReducer.activeId == id){
       return "green"
     }
-    return state.tableReducer.done && state.tableReducer.done >= id  ? "maroon" : "grey"
+    return state.activeTableReducer && state.activeTableReducer.done >= id  ? "maroon" : "grey"
   }
   const cardStyle={
     width: "40px",
