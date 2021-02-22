@@ -15,6 +15,6 @@ export const postActiveTable=(count: number)=>{
 
 export const history=()=>{   
   const id = localStorage.getItem(ptfs1u)
-  return Axios.patch(`/api/users/${id}/activetables`, userAuth());   
+  return Axios.get(`/api/users/${id}/activetables`, userAuth());   
 }
 

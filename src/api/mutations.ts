@@ -1,11 +1,11 @@
 import { ptfs0u, ptfs1u } from '../utils/variables'
-import {api as apiT} from './table'
+import {postActiveTable} from './table'
 import {api as apiU} from './users'
 
 
-export const postActiveTable=async (count: number)=>{
+export const postActiveTableM=async (count: number)=>{
     try{
-        const resp = await apiT.postActiveTable(count)
+        const resp = await postActiveTable(count)
         console.log(resp)
     }catch(e){
         console.log(e)

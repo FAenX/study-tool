@@ -5,12 +5,6 @@ import rootReducer from './store/rootReducer'
 import { Provider } from 'react-redux'
 import './app.scss';
 import Main from './main'
-import { QueryClient, QueryClientProvider, useQuery } from 'react-query'
-
- 
-
- const queryClient = new QueryClient()
-
 
 
 const store = createStore(rootReducer);
