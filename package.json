@@ -1,12 +1,12 @@
 {
   "name": "study-tool",
   "version": "0.0.1",
-  "main": "src/index.html",
+  "main": "dist/index.html",
   "author": "<kipronofb@gmail.com>",
   "license": "MIT",
   "scripts": {
     "start": "parcel src/index.html",
-    "build": "parcel build src/index.html"
+    "build": "parcel build --dist-dir ./dist src/index.html"
   },
   "dependencies": {
     "@material-ui/core": "^4.11.3",
