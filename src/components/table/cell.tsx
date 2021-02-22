@@ -2,9 +2,7 @@ import React from 'react'
 import {
     Button, Card,
   } from '@material-ui/core';
-import {timerAction} from '../../store/timerReducer'
 import moment from 'moment'
-import { getActiveTable } from '../../api/queries';
 
 
 function Cell ({id, dispatch, state}){

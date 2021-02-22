@@ -40,7 +40,7 @@ function Login({dispatch, state}){
                 </div>                
             </div>
             <div>
-                <div className="m-4"><a type="button" className="button" onClick={login}>login</a></div>
+                <div className="m-4"><button type="button" className="button" onClick={login}>login</button></div>
                 <div className="m-4" ><a onClick={signup}>register</a></div>
             </div>
             
