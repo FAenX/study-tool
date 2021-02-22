@@ -19,7 +19,7 @@ function Table({dispatch, state}){
     <div className="pomodoro-table">     
       <div className="cells">
         {makeList(30).map((i) => (
-          <Cell key={i} id={i} dispatch={dispatch} state={state}/>
+          <Cell key={i} id={i+1} dispatch={dispatch} state={state}/>
          ))} 
       </div>
     </div>

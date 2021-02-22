@@ -1,7 +1,6 @@
 import { combineReducers } from 'redux';
 import {activeTableReducer, historyReducer} from './tableReducer';
 import timerReducer from './timerReducer';
-import pomodorosReducer from './pomodorosReducer'
 import userReducer from './userReducer'
 import {loggedInStatus, logInOrSignUp} from './logged-in-status'
 import notification from './notification'

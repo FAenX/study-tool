@@ -54,7 +54,7 @@ export async function getActiveTable(dispatch: any){
     try{
         const res = await getRunningTable()
         console.log(res.data)
-        dispatch({type: 'SET_TABLE_DATA', state: {done: res.data.count}})
+        dispatch({type: 'SET_TABLE_DATA', state: {done: res.data.count, day: res.data.dayOfYear}})
         console.log(res.data.count)
     }catch(e){
         console.log(e.message)

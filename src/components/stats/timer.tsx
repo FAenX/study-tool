@@ -44,35 +44,33 @@ const Timer = ({state, dispatch}) => {
       let t: number = parseFloat(moment.utc(diff).format("mm.ss"));
       const progress = (t/30)*100;
 
-      dispatch(
-        timerAction({
+      dispatch({type: 'TOGGLE_TIMER', state:{
         startTime: moment().format(),
         active: timerReducer.active,
         progress: progress,
         countDown: countDown,
         endTime: timerReducer.endTime
-      }))
+      }})
+
     }else if(
       moment().format('mm') === moment(timerReducer.endTime)
       .format('mm')){
         
-      dispatch(
-        timerAction({
+      dispatch({type: 'TOGGLE_TIMER', state:{
         startTime: null,
         active: false,
         progress: 0,
         countDown: '00:00',
         endTime: null
-      }))
+      }})
      
-      postActiveTableM(tableReducer.done+1)
+      postActiveTableM(tableReducer.done + 1)
       
       dispatch({type: 'SET_TABLE_DATA', state: {
           done: tableReducer.done + 1,
           active: false,
           activeId: null,
           day:tableReducer.day,
-          id: null
       }})
       
       

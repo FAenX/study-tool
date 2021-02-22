@@ -11,6 +11,9 @@ const Header = ({state, dispatch}) => {
       dispatch({type: 'SET_COMPONENT', state: {component: 'login'}})
       dispatch({type: 'SET_LOGGED_IN_STATUS', state: {isloggedin: false}})
       dispatch({type: 'SET_TABLE_DATA'})
+      dispatch({type: 'SET_TABLE_DATA'})
+      dispatch({type: 'SET_HISTORY'})
+      dispatch({type: 'TOGGLE_TIMER'})
 
   }
   

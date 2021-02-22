@@ -12,17 +12,16 @@ function Cell ({id, dispatch, state}){
   const clickFunction=()=>{
     // start timer
     if(!state.activeTableReducer.active){
-      dispatch(
-        timerAction({
-          startTime: new Date().toString(),
-          active: true,
-          progress: 0,
-          countDown: 'started',
-          // time
-          endTime: moment().add(30, 'minutes').format()
-  
-        })
-      )
+      dispatch({type: 'TOGGLE_TIMER', state: {
+        startTime: new Date().toString(),
+        active: true,
+        progress: 0,
+        countDown: 'started',
+        // time
+        endTime: moment().add(30, 'minutes').format()
+
+      }})
+
        // change state
       dispatch({type: 'SET_TABLE_DATA', 
         state:{
